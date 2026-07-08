@@ -18,8 +18,8 @@ import mockData, {
     auditorThree,
     auditorFour,
     auditorFive
-} from "./data/mockData.js";
-import Auditor from "./models/Auditor.js";
+} from "../data/mockData.js";
+import Auditor from "./Auditor.js";
 
 
 

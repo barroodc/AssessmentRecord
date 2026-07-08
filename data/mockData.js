@@ -22,7 +22,7 @@ export const assessmentRecord0002 = new AssessmentRecord("AR0002", "The applicat
 export const assessmentRecord0003 = new AssessmentRecord("AR0003", "The application displays the End-to-End Encrypted label within the chat interface.",
     "In Progress", "AT742462", "none", new Date(2026,6,5), "Low", false, 0);
 export const assessmentRecord0004 = new AssessmentRecord("AR0004", "Users can access privacy settings from the Account Settings menu.",
-    "Pending Auditor Review","AT677009", "Returned for Review", new Date(2026,1,15), "Low", true, 57);
+    "Active","AT677009", "Returned for Review", new Date(2026,1,15), "Low", true, 57);
 export const assessmentRecord0005 = new AssessmentRecord("AR0005", "The application displays contextual help text explaining why location permission is requested.",
     "Active", "AT364367", "Validated", new Date(2026, 2, 21), "Low", true, 4);
 
