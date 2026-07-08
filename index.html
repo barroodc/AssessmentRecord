@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Audit Tracker</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Audit Tracker</h1>
+    <div class="resultsSection">
+    <button onclick="getTotalAudits()">Show Total Audits</button>
+    <p id="resultOfTotalAudits"></p>
+    </div>
+
+    <div class="showAllAuditorsSection">  
+        <button onclick="getFullNamesOfAllAuditors()">Show Auditors</button>
+        <p id="auditors"></p>
+    </div>
+
+    <div class="addAdditionalAuditsToAll">
+        <input type="number" name="addAudits" id="addAuditsInputField" placeholder="Enter the additional amount of audits">
+        <button onclick="addAuditsToAll()" id="addAuditsButton">Add Audits</button>
+        <p id="additionalAudits"></p>
+    </div>
+
+    <div class="topAuditor">
+        <button onclick="getWhoHasTheMostAuditsCompleted()" id="topAuditorsButton">Show Top Auditor</button>
+        <p id="topAuditor"></p>
+    </div>
+
+    <div class="averageAudits">
+        <button onclick="getAverageAudits()">Show Average Audits</button>
+        <p id="avgAudits"></p>
+    </div>
+
+    <div class="inputFieldForNewAuditor">
+        <h3>Add in New Auditor</h3>
+        <input type="text" name="addAuditorFirstName" id="addAuditorFirstName" placeholder="Auditor First Name" required>
+        <br>
+        <input type="text" name="addAuditorLastName" id="addAuditorLastName" placeholder="Auditor Last Name" required>
+        <br>
+        <input type="text" name="addAuditorID" id="addAuditorID" placeholder="Auditor ID" required>
+        <br>
+        <button onclick="addAdditionalAuditors()">Add Auditor</button>
+    </div>
+
+    <div class="auditorSearch">
+        <h3>Auditor Lookup By ID</h3>
+        <input type="number" name="idNumber" id="idNumber" placeholder="Auditor ID Number" required>
+        <button onclick="findAuditorByIDNumber()">Find Auditor</button>
+        <p id="auditorFoundByID"></p>
+    </div>
+
+    <div class="auditorStatistics">
+        <h3>Auditor Quick Stats</h3>
+        <button onclick="auditorQuickStats()">Get All Auditor Stats</button>
+        <p id="auditorStatsDisplay"></p>
+    </div>
+
+    <div class="removalOfAuditors">
+        <h3>Remove Auditor</h3>
+        <input type="number" name="idNumberOfAuditorToRemove" id="idNumberOfAuditorToRemove" placeholder="ID Number of Auditor To Remove" required>
+        <button onclick="removeAuditor()">Remove Auditor</button>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
