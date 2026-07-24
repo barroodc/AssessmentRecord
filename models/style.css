@@ -382,6 +382,27 @@ main > section > p {
     background-color: #8055ef;
 }
 
+.avatar-blue {
+    background-color: #079fdf;
+}
+
+.avatar-teal   {
+    background-color: #0d9488;
+}
+
+.avatar-amber  {
+    background-color: #d97706;
+}
+
+.avatar-rose   {
+    background-color: #e11d48;
+}
+
+.avatar-indigo {
+    background-color: #4f46e5;
+}
+
+
 .badge {
     display: inline-flex;
     align-items: center;
@@ -415,8 +436,6 @@ main > section > p {
     white-space: nowrap;
 }
 
-.avatar-blue {
-    background-color: #079fdf;
-}
+
 
 

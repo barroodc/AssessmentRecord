@@ -1,4 +1,6 @@
 
+
+export const allInstancesOfAuditorsCatalog = [];
 class Auditor {
 
     constructor(employeeUniqueID, firstName, lastName, profileImage, inOfficeStatus, onAssignmentBoard) {
@@ -9,6 +11,11 @@ class Auditor {
         this.inOfficeStatus = inOfficeStatus;
         this.onAssignmentBoard = onAssignmentBoard;
         this.assessmentRecords = new Map(); //Assessment Records are keyed by ID for fast lookup.
+        allInstancesOfAuditorsCatalog.push(this);
+    }
+
+    getAllAuditors() {
+        return allInstancesOfAuditorsCatalog;
     }
 
     addAssessmentRecord(assessmentRecord) {

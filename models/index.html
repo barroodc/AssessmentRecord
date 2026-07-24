@@ -96,9 +96,11 @@
                 <select class="filter-select status-filter">
                     <option>All auditor statuses</option>
                     <option>Validated</option>
-                    <option>Pending Response</option>
-                    <option>Evidence Required</option>
+                    <option>Pending Auditor Re-review</option>
+                    <option>Evidence Deficient</option>
                     <option>Retired</option>
+                    <option>Returned for Review</option>
+                    <option>None</option>
                 </select>
 
             </form>
@@ -109,102 +111,32 @@
 
     <div class="audit-table-scroll">
 
-    <section class="audit-table">
+        <section class="audit-table">
 
-        <div class="audit-table-header audit-grid">
+            <div class="audit-table-header audit-grid">
 
-            <div>Record ID</div>
-            <div>Description</div>
-            <div>Status</div>
-            <div>Project</div>
-            <div>Eng Contact</div>
-            <div>Auditor Status</div>
-            <div>Risk</div>
-            <div>Created</div>
-            <div>Days on Board</div>
-            <div>Assigned Auditor</div>
-
-        </div>
-
-        <article class="audit-row audit-grid">
-
-            <div class="record-id">
-                AR0001
-            </div>
-
-            <div class="description-cell">
-
-                <p>
-                    The application displays a privacy policy link from the
-                    Settings page.
-                </p>
-
-                <button class="show-more-btn">
-                    <span class="show-more-icon">
-                        &gt;
-                    </span>
-                    Show more
-                </button>
-            </div>
-
-            <div>
-                <span class="active-status">
-                    <span class="status-dot"></span>
-                    Active
-                </span>
-            </div>
-
-            <div class="project-id">
-                AT177734
-            </div>
-
-            <div class="person">
-                <span class="avatar avatar-purple">
-                    OG
-                </span>
-                <span>
-                    Olivia Grant
-                </span>
-            </div>
-
-            <div>
-                <span class="badge badge-gray">
-                    Untouched
-                </span>
-            </div>
-
-            <div>
-                <span class="badge badge-low">
-                    Low
-                </span>
-            </div>
-
-            <div class="date-cell">
-                2026-05-29
-            </div>
-
-
-            <div class="days-cell">
-                5
-            </div>
-
-            <div class="person">
-                <span class="avatar avatar-blue">
-                    CB
-                </span>
-
-                <span>
-                    Christopher Barrood
-                </span>
+                <div>Record ID</div>
+                <div>Description</div>
+                <div>Status</div>
+                <div>Project</div>
+                <div>Eng Contact</div>
+                <div>Auditor Status</div>
+                <div>Risk</div>
+                <div>Created</div>
+                <div>Days on Board</div>
+                <div>Assigned Auditor</div>
 
             </div>
-        </article>
-    </section>
+
+            <!-- Container where JavaScript inserts generated Record IDs -->
+            <div id="recordContainer"></div>
+
+        </section>
     </div>
 
 </main>
 
-<script src="audit-tracker/models/app.js"></script>
+<script type="module" src="./app.js"></script>
 
 </body>
 </html>

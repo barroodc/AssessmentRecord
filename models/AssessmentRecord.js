@@ -1,6 +1,10 @@
+
+export const allInstancesOfAssessmentRecordsCatalog = [];
+
+
 class AssessmentRecord {
     constructor(assessmentRecordID, assessmentRecordText, status,projectID,auditorStatus,
-                createdDate, riskLevel, onAuditBoard, daysOnAuditBoard) {
+                createdDate, riskLevel, onAuditBoard, daysOnAuditBoard, engContactAssigned, engProfileImage) {
         this.assessmentRecordID = assessmentRecordID;
         this.assessmentRecordText = assessmentRecordText;
         this.status = status;
@@ -10,13 +14,26 @@ class AssessmentRecord {
         this.riskLevel = riskLevel;
         this.onAuditBoard = onAuditBoard;
         this.daysOnAuditBoard = daysOnAuditBoard;
+        this.engContactAssigned = engContactAssigned;
+        this.engProfileImage = engProfileImage;
+        allInstancesOfAssessmentRecordsCatalog.push(this);
     }
+
+    getAllAssessmentRecords() {
+        return allInstancesOfAssessmentRecordsCatalog;
+    }
+
+    getEngInitials() {
+        return this.engContactAssigned.split(' ').map(word => word.charAt(0)).join('').toUpperCase()
+    }
+
 
     getIsAssessmentRecordOverdue() {
         const highPriority = 5;
         const mediumPriority = 15;
         const lowPriority = 30;
-        const typeOfStatuses = ["Validated", "Pending Response", "Evidence Required", "Retired"];
+        const typeOfStatuses = ["Validated", "Pending Auditor Re-review", "Evidence Deficient", "Retired",
+            "Re-submitted to Eng", "None"];
 
         /*
         If number of days elapsed is greater than {priority level} and the auditor status has not yet moved into one
@@ -105,9 +122,8 @@ class AssessmentRecord {
     isHighRisk() {
         return this.riskLevel === "High";
     }
-
-
-
 }
+
+
 
 export default AssessmentRecord;

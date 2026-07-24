@@ -12,14 +12,26 @@ import mockData, {
     assessmentRecord0010,
     assessmentRecord0011,
     assessmentRecord0012,
-    assessmentRecord0013, assessmentRecord0014, assessmentRecord0015,
+    assessmentRecord0013,
+    assessmentRecord0014,
+    assessmentRecord0015,
     auditorOne,
     auditorTwo,
     auditorThree,
     auditorFour,
-    auditorFive
+    auditorFive,
+    idsFromAllAssessmentRecords,
+    textFromAllAssessmentRecords,
+    statusFromAllAssessmentRecords,
+    projectIDForAllAssessmentRecords,
+    engEmployeeProfilePicsFromAllAssessmentRecords,
+    namesOfEngineersAssignedFromAllAssessmentRecords,
+    auditorStatusFromAllAssessmentRecords,
+    riskLevelFromAllAssessmentRecords, createdDateFromAllAssessmentRecords, daysOnAuditBoardFromAllAssessmentRecords
 } from "../data/mockData.js";
-import Auditor from "./Auditor.js";
+import {allInstancesOfAuditorsCatalog} from "./Auditor.js";
+import {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
+
 
 
 
@@ -38,5 +50,34 @@ auditorFour.addAssessmentRecord(assessmentRecord0012);
 auditorFive.addAssessmentRecord(assessmentRecord0013);
 auditorFive.addAssessmentRecord(assessmentRecord0014);
 auditorFive.addAssessmentRecord(assessmentRecord0015);
+
+
+
+
+export const auditorAssignments = new Map();
+
+for (const auditor of allInstancesOfAuditorsCatalog) {
+    const matchingIDs = [];
+
+    for (const assessmentID of idsFromAllAssessmentRecords) {
+        if (auditor.assessmentRecords.has(assessmentID)) {
+            matchingIDs.push(assessmentID);
+        }
+    }
+
+    if (matchingIDs.length > 0) {
+        // Store the auditor object itself as the map key
+        auditorAssignments.set(auditor, matchingIDs);
+    }
+}
+
+export function getAuditorForRecord(recordId, assignmentsMap) {
+    for (const [auditor, recordIds] of assignmentsMap.entries()) {
+        if (recordIds.includes(recordId)) {
+            return auditor;
+        }
+    }
+    return null;
+}
 
 
