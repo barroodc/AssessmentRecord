@@ -46,24 +46,16 @@
 
         <section id="analytics-dashboard">
 
-            <article class="metric-card">
-                <h3>ACTIVE RECORDS</h3>
-                <p>24</p>
+            <article class="metric-card" id="active-records">
             </article>
 
-            <article class="metric-card">
-                <h3>UNASSIGNED</h3>
-                <p>4</p>
+            <article class="metric-card" id="unassigned">
             </article>
 
-            <article class="metric-card">
-                <h3>HIGH RISK</h3>
-                <p>5</p>
+            <article class="metric-card" id="high-risk">
             </article>
 
-            <article class="metric-card">
-                <h3>PENDING RESPONSE</h3>
-                <p>6</p>
+            <article class="metric-card" id="pending-response">
             </article>
 
         </section>
@@ -82,18 +74,18 @@
                     >
                 </div>
 
-                <select class="filter-select">
+                <select class="filter-select" id="project-filter">
                     <option>All projects</option>
                 </select>
 
-                <select class="filter-select risk-filter">
+                <select class="filter-select" id="risk-filter">
                     <option>All Risk</option>
                     <option>High</option>
                     <option>Medium</option>
                     <option>Low</option>
                 </select>
 
-                <select class="filter-select status-filter">
+                <select class="filter-select" id="status-filter">
                     <option>All auditor statuses</option>
                     <option>Validated</option>
                     <option>Pending Auditor Re-review</option>
@@ -118,7 +110,7 @@
                 <div>Record ID</div>
                 <div>Description</div>
                 <div>Status</div>
-                <div>Project</div>
+                <div>Project ID</div>
                 <div>Eng Contact</div>
                 <div>Auditor Status</div>
                 <div>Risk</div>

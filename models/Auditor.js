@@ -1,3 +1,4 @@
+import {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
 
 
 export const allInstancesOfAuditorsCatalog = [];
@@ -19,6 +20,7 @@ class Auditor {
     }
 
     addAssessmentRecord(assessmentRecord) {
+        assessmentRecord.assignedAuditor = `${this.firstName} ${this.lastName}`
         this.assessmentRecords.set(assessmentRecord.assessmentRecordID, assessmentRecord);
     }
 

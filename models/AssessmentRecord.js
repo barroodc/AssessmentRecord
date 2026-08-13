@@ -4,7 +4,7 @@ export const allInstancesOfAssessmentRecordsCatalog = [];
 
 class AssessmentRecord {
     constructor(assessmentRecordID, assessmentRecordText, status,projectID,auditorStatus,
-                createdDate, riskLevel, onAuditBoard, daysOnAuditBoard, engContactAssigned, engProfileImage) {
+                createdDate, riskLevel, onAuditBoard, daysOnAuditBoard, engContactAssigned, engProfileImage, assignedAuditor) {
         this.assessmentRecordID = assessmentRecordID;
         this.assessmentRecordText = assessmentRecordText;
         this.status = status;
@@ -16,11 +16,16 @@ class AssessmentRecord {
         this.daysOnAuditBoard = daysOnAuditBoard;
         this.engContactAssigned = engContactAssigned;
         this.engProfileImage = engProfileImage;
+        this.assignedAuditor = assignedAuditor;
         allInstancesOfAssessmentRecordsCatalog.push(this);
     }
 
     getAllAssessmentRecords() {
         return allInstancesOfAssessmentRecordsCatalog;
+    }
+
+    getAssignedAuditor() {
+        return this.assignedAuditor;
     }
 
     getEngInitials() {

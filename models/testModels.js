@@ -20,14 +20,7 @@ import mockData, {
     auditorThree,
     auditorFour,
     auditorFive,
-    idsFromAllAssessmentRecords,
-    textFromAllAssessmentRecords,
-    statusFromAllAssessmentRecords,
-    projectIDForAllAssessmentRecords,
-    engEmployeeProfilePicsFromAllAssessmentRecords,
-    namesOfEngineersAssignedFromAllAssessmentRecords,
-    auditorStatusFromAllAssessmentRecords,
-    riskLevelFromAllAssessmentRecords, createdDateFromAllAssessmentRecords, daysOnAuditBoardFromAllAssessmentRecords
+    idsFromAllAssessmentRecords
 } from "../data/mockData.js";
 import {allInstancesOfAuditorsCatalog} from "./Auditor.js";
 import {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
@@ -66,10 +59,10 @@ for (const auditor of allInstancesOfAuditorsCatalog) {
     }
 
     if (matchingIDs.length > 0) {
-        // Store the auditor object itself as the map key
         auditorAssignments.set(auditor, matchingIDs);
     }
 }
+
 
 export function getAuditorForRecord(recordId, assignmentsMap) {
     for (const [auditor, recordIds] of assignmentsMap.entries()) {
@@ -79,5 +72,3 @@ export function getAuditorForRecord(recordId, assignmentsMap) {
     }
     return null;
 }
-
-

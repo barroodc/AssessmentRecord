@@ -1,4 +1,4 @@
-import Auditor from "../models/Auditor.js";
+import Auditor, {allInstancesOfAuditorsCatalog} from "../models/Auditor.js";
 import AssessmentRecord, {
     allInstancesOfAssessmentRecordsCatalog
 } from "../models/AssessmentRecord.js";
@@ -94,9 +94,6 @@ for (const record of allInstancesOfAssessmentRecordsCatalog) {
     createdDateFromAllAssessmentRecords.push(record.createdDate);
     daysOnAuditBoardFromAllAssessmentRecords.push(record.daysOnAuditBoard);
 }
-
-
-
 
 
 export default mockData;
