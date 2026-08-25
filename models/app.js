@@ -14,6 +14,8 @@ import {auditorAssignments, getAuditorForRecord} from "./testModels.js";
 import AssessmentRecord, {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
 
 
+//Will set up code here to replace images of Engineers and Auditors who do not have an uploaded image.
+
 const avatarColors = [
     "avatar-purple",
     "avatar-blue",
@@ -27,11 +29,13 @@ const recordContainer = document.getElementById("recordContainer");
 const riskFilter = document.getElementById("risk-filter");
 const searchInput = document.querySelector(".search-input");
 const auditorStatusFilter = document.getElementById('status-filter');
+const projectSelectionFilter = document.getElementById('project-filter');
+
 
 let currentSearchQuery = "";
 let currentRiskFilter = "All Risk";
 let currentStatusFilter = "All auditor statuses"
-//const auditorStatusType = (record.auditorStatus || "").toLowerCase();
+let currentProjectFilter = "All Projects"
 
 function updateDashboard() {
     recordContainer.innerHTML = '';
@@ -41,6 +45,7 @@ function updateDashboard() {
         const projectId = projectIDForAllAssessmentRecords[i];
         const recordRisk = riskLevelFromAllAssessmentRecords[i].toLowerCase();
         const auditorStatusType = (auditorStatusFromAllAssessmentRecords[i] || "").toLowerCase();
+        const projectSelected = String(projectId || "").trim().toLowerCase();
 
 
         if (currentRiskFilter !== "All Risk" && currentRiskFilter !== "" && recordRisk !== currentRiskFilter) {
@@ -48,6 +53,10 @@ function updateDashboard() {
         }
 
         if (currentStatusFilter !== "All auditor statuses" && currentStatusFilter !== "" && auditorStatusType !== currentStatusFilter) {
+            continue;
+        }
+
+        if (currentProjectFilter !== "All Projects" && currentProjectFilter !== "" && projectSelected !== currentProjectFilter) {
             continue;
         }
 
@@ -120,11 +129,17 @@ if (auditorStatusFilter) {
     })
 }
 
+if (projectSelectionFilter) {
+    projectSelectionFilter.addEventListener("change", (event) => {
+        currentProjectFilter = event.target.value.trim().toLowerCase();
+        updateDashboard();
+    })
+}
+
 updateDashboard();
 
 
 
-const projectSelectionFilter = document.getElementById('project-filter');
 Object.entries(projectIDForAllAssessmentRecords).forEach(([key, projectId]) => {
     const optionForProjectId = document.createElement('option');
     optionForProjectId.value = String(projectId).trim();
@@ -132,56 +147,7 @@ Object.entries(projectIDForAllAssessmentRecords).forEach(([key, projectId]) => {
     projectSelectionFilter.appendChild(optionForProjectId);
 });
 
-if (projectSelectionFilter) {
-    projectSelectionFilter.addEventListener("change", (event) => {
-        const projectSelection = event.target.value.trim().toLowerCase();
-        let rowsHtml = "";
 
-        for (let i = 0; i < allInstancesOfAssessmentRecordsCatalog.length; i++) {
-            const record = allInstancesOfAssessmentRecordsCatalog[i];
-            const projectSelected = String(record.projectID || "").trim().toLowerCase();
-
-            if (projectSelection === "" || projectSelection === "all projects" || projectSelected === projectSelection) {
-                const assignedAuditor = getAuditorForRecord(record.assessmentRecordID, auditorAssignments);
-
-                rowsHtml += `
-                    <article class="audit-row audit-grid">
-                        <div class="record-id">${record.assessmentRecordID}</div>
-                        <div class="description-cell">
-                            <p>${record.assessmentRecordText}</p>
-                            <button class="show-more-btn">
-                                <span class="show-more-icon">&gt;</span> Show more
-                            </button>
-                        </div>
-                        <div>
-                            <span class="active-status">
-                                <span class="status-dot"></span>
-                                ${record.status}
-                            </span>
-                        </div>
-                        <div class="project-id">${record.projectID}</div>
-                        <div class="person">
-                            <img class="avatar" src="${record.engProfileImage}" alt="Eng assigned profile photo">
-                            <span>${record.engContactAssigned}</span>
-                        </div>
-                        <div><span class="badge">${record.auditorStatus}</span></div>
-                        <div><span class="badge">${record.riskLevel}</span></div>
-                        <div class="date-cell">${new Date(record.createdDate).toLocaleDateString("en-CA")}</div>
-                        <div>${record.daysOnAuditBoard}</div>
-                        <div class="person">
-                           ${assignedAuditor ? `
-                                <img class="avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
-                                <span>${assignedAuditor.getAuditorFullName()}</span>
-                           ` : `<span class="unassigned-text">None</span>`}
-                        </div>
-                    </article>
-                `;
-            }
-        }
-
-        recordContainer.innerHTML = rowsHtml;
-    });
-}
 
 const activeRecords = document.getElementById('active-records');
 const highRisk = document.getElementById('high-risk');
