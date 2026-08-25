@@ -11,7 +11,7 @@ import {
     textFromAllAssessmentRecords
 } from "../data/mockData.js";
 import {auditorAssignments, getAuditorForRecord} from "./testModels.js";
-import {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
+import AssessmentRecord, {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
 
 
 const avatarColors = [
@@ -24,304 +24,105 @@ const avatarColors = [
 ];
 
 const recordContainer = document.getElementById("recordContainer");
-
-// Clear out anything in the container first
-recordContainer.innerHTML = "";
-
-// Loop through each ID and generate a full table row grid
-for (let i = 0; i < idsFromAllAssessmentRecords.length; i++) {
-
-    const currentRecordId = idsFromAllAssessmentRecords[i];
-    const assignedAuditor = getAuditorForRecord(currentRecordId, auditorAssignments);
-
-
-    recordContainer.innerHTML += `
-        <article class="audit-row audit-grid">
-            <div class="record-id">
-                ${idsFromAllAssessmentRecords[i]}
-            </div>
-            <div class="description-cell">
-                <p>${textFromAllAssessmentRecords[i]}</p>
-                <button class="show-more-btn">
-                    <span class="show-more-icon">&gt;</span>
-                    Show more
-                </button>
-            </div>
-            <div>
-                <span class="active-status">
-                    <span class="status-dot"></span>
-                    ${statusFromAllAssessmentRecords[i]}
-                </span>
-            </div>
-            
-            <div class="project-id">
-               ${projectIDForAllAssessmentRecords[i]}
-            </div>
-            
-            <div class="person">
-                <img class="avatar" src="${engEmployeeProfilePicsFromAllAssessmentRecords[i]}" alt="Eng assigned profile photo">
-                <span>${namesOfEngineersAssignedFromAllAssessmentRecords[i]}</span>
-            </div>
-            
-            <div>
-                <span class="badge">
-                  ${auditorStatusFromAllAssessmentRecords[i]}
-                </span>
-            </div>
-            
-            <div>
-                <span class="badge">
-                  ${riskLevelFromAllAssessmentRecords[i]}
-                </span>
-            </div>
-            
-            <div class="date-cell">
-                  ${createdDateFromAllAssessmentRecords[i].toLocaleDateString("en-CA")}
-            </div>
-            
-            <div>
-                ${daysOnAuditBoardFromAllAssessmentRecords[i]}
-            </div>
-            
-            <div class="person">
-               ${assignedAuditor ? `
-                    <img class="avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
-                    <span>${assignedAuditor.getAuditorFullName()}</span>
-               ` : `<span class="unassigned-text">None</span>`}
-            </div>
-            
-        </article>
-    `;
-}
-
-
-//Search by Record ID or Project ID
-
-document.addEventListener('input', function (event) {
-    const targetElement = event.target.closest('.search-input');
-
-    if (targetElement && targetElement.tagName === "INPUT") {
-        const userInput = targetElement.value.trim().toUpperCase();
-
-        let indexOfSearch = idsFromAllAssessmentRecords.indexOf(userInput);
-        if (indexOfSearch === -1) {
-            indexOfSearch = projectIDForAllAssessmentRecords.indexOf(userInput);
-        }
-
-        if (indexOfSearch !== -1) {
-            const currentRecordId = idsFromAllAssessmentRecords[indexOfSearch];
-            const assignedAuditor = getAuditorForRecord(currentRecordId, auditorAssignments);
-
-            recordContainer.innerHTML = `
-                <article class="audit-row audit-grid">
-                    <div class="record-id">
-                        ${idsFromAllAssessmentRecords[indexOfSearch]}
-                    </div>
-                    <div class="description-cell">
-                        <p>${textFromAllAssessmentRecords[indexOfSearch]}</p>
-                        <button class="show-more-btn">
-                            <span class="show-more-icon">&gt;</span>
-                            Show more
-                        </button>
-                    </div>
-                    <div>
-                        <span class="active-status">
-                            <span class="status-dot"></span>
-                            ${statusFromAllAssessmentRecords[indexOfSearch]}
-                        </span>
-                    </div>
-                    
-                    <div class="project-id">
-                       ${projectIDForAllAssessmentRecords[indexOfSearch]}
-                    </div>
-                    
-                    <div class="person">
-                        <img class="avatar" src="${engEmployeeProfilePicsFromAllAssessmentRecords[indexOfSearch]}" alt="Eng assigned profile photo">
-                        <span>${namesOfEngineersAssignedFromAllAssessmentRecords[indexOfSearch]}</span>
-                    </div>
-                    
-                    <div>
-                        <span class="badge">
-                          ${auditorStatusFromAllAssessmentRecords[indexOfSearch]}
-                        </span>
-                    </div>
-                    
-                    <div>
-                        <span class="badge">
-                          ${riskLevelFromAllAssessmentRecords[indexOfSearch]}
-                        </span>
-                    </div>
-                    
-                    <div class="date-cell">
-                          ${createdDateFromAllAssessmentRecords[indexOfSearch].toLocaleDateString("en-CA")}
-                    </div>
-                    
-                    <div>
-                        ${daysOnAuditBoardFromAllAssessmentRecords[indexOfSearch]}
-                    </div>
-                    
-                    <div class="person">
-                       ${assignedAuditor ? `
-                            <img class="avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
-                            <span>${assignedAuditor.getAuditorFullName()}</span>
-                       ` : `<span class="unassigned-text">None</span>`}
-                    </div>
-                </article>
-            `;
-        }
-    }
-});
-
 const riskFilter = document.getElementById("risk-filter");
+const searchInput = document.querySelector(".search-input");
+const auditorStatusFilter = document.getElementById('status-filter');
 
-if (riskFilter) {
-    riskFilter.addEventListener("change", (event) => {
-        const riskLevelSelection = event.target.value.trim().toLowerCase();
-        recordContainer.innerHTML = "";
+let currentSearchQuery = "";
+let currentRiskFilter = "All Risk";
+let currentStatusFilter = "All auditor statuses"
+//const auditorStatusType = (record.auditorStatus || "").toLowerCase();
 
-        // Loop through the catalog array directly as you originally wrote it
-        for (let i = 0; i < allInstancesOfAssessmentRecordsCatalog.length; i++) {
-            const record = allInstancesOfAssessmentRecordsCatalog[i];
-            const recordRisk = (record.riskLevel || "").toLowerCase();
+function updateDashboard() {
+    recordContainer.innerHTML = '';
 
-            // Check if the risk matches selection
-            if (riskLevelSelection === "all" || riskLevelSelection === "" || recordRisk === riskLevelSelection) {
-                const assignedAuditor = getAuditorForRecord(record.assessmentRecordID, auditorAssignments);
+    for (let i = 0; i < idsFromAllAssessmentRecords.length; i++) {
+        const recordId = idsFromAllAssessmentRecords[i];
+        const projectId = projectIDForAllAssessmentRecords[i];
+        const recordRisk = riskLevelFromAllAssessmentRecords[i].toLowerCase();
+        const auditorStatusType = (auditorStatusFromAllAssessmentRecords[i] || "").toLowerCase();
 
-                recordContainer.innerHTML += `
-                    <article class="audit-row audit-grid">
-                        <div class="record-id">
-                            ${record.assessmentRecordID}
-                        </div>
-                        <div class="description-cell">
-                            <p>${record.assessmentRecordText}</p>
-                            <button class="show-more-btn">
-                                <span class="show-more-icon">&gt;</span>
-                                Show more
-                            </button>
-                        </div>
-                        <div>
-                            <span class="active-status">
-                                <span class="status-dot"></span>
-                                ${record.status}
-                            </span>
-                        </div>
-                        
-                        <div class="project-id">
-                           ${record.projectID}
-                        </div>
-                        
-                        <div class="person">
-                            <img class="avatar" src="${record.engProfileImage}" alt="Eng assigned profile photo">
-                            <span>${record.engContactAssigned}</span>
-                        </div>
-                        
-                        <div>
-                            <span class="badge">
-                              ${record.auditorStatus}
-                            </span>
-                        </div>
-                        <div>
-                            <span class="badge">
-                              ${record.riskLevel}
-                            </span>
-                        </div>
-                        
-                        <div class="date-cell">
-                              ${record.createdDate.toLocaleDateString("en-CA")}
-                        </div>
-                        
-                        <div>
-                            ${record.daysOnAuditBoard}
-                        </div>
-                        
-                        <div class="person">
-                           ${assignedAuditor ? `
-                                <img class="avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
-                                <span>${assignedAuditor.getAuditorFullName()}</span>
-                           ` : `<span class="unassigned-text">None</span>`}
-                        </div>
-                    </article>
-                `;
+
+        if (currentRiskFilter !== "All Risk" && currentRiskFilter !== "" && recordRisk !== currentRiskFilter) {
+            continue;
+        }
+
+        if (currentStatusFilter !== "All auditor statuses" && currentStatusFilter !== "" && auditorStatusType !== currentStatusFilter) {
+            continue;
+        }
+
+
+        if (currentSearchQuery !== "") {
+            const matchesRecordId = recordId.toUpperCase().includes(currentSearchQuery);
+            const matchesProjectId = projectId.toUpperCase().includes(currentSearchQuery);
+
+            if (!matchesRecordId && !matchesProjectId) {
+                continue;
             }
         }
+
+        const assignedAuditor = getAuditorForRecord(recordId, auditorAssignments);
+        recordContainer.innerHTML += `
+        <article class="audit-row audit-grid">
+                <div class="record-id">${recordId}</div>
+                <div class="description-cell">
+                    <p>${textFromAllAssessmentRecords[i]}</p>
+                    <button class="show-more-btn">
+                        <span class="show-more-icon">&gt;</span>
+                        Show more
+                    </button>
+                </div>
+                <div>
+                 <span class="active-status">
+                        <span class="status-dot"></span>
+                        ${statusFromAllAssessmentRecords[i]}
+                    </span>
+                </div>
+                <div class="project-id">${projectId}</div>
+                <div class="person">
+                    <img class="avatar" src="${engEmployeeProfilePicsFromAllAssessmentRecords[i]}" alt="Eng assigned profile photo">
+                    <span>${namesOfEngineersAssignedFromAllAssessmentRecords[i]}</span>
+                </div>
+                <div><span class="badge">${auditorStatusFromAllAssessmentRecords[i]}</span></div>
+                <div><span class="badge">${riskLevelFromAllAssessmentRecords[i]}</span></div>
+                <div class="date-cell">${createdDateFromAllAssessmentRecords[i].toLocaleDateString("en-CA")}</div>
+                <div>${daysOnAuditBoardFromAllAssessmentRecords[i]}</div>
+                <div class="person">
+                   ${assignedAuditor ? `
+                        <img class="avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
+                        <span>${assignedAuditor.getAuditorFullName()}</span>
+                   ` : `<span class="unassigned-text">None</span>`}
+                </div>
+            </article>
+        `;
+
+    }
+}
+
+if (searchInput) {
+    searchInput.addEventListener('input', (event) => {
+        currentSearchQuery = event.target.value.trim().toUpperCase();
+        updateDashboard();
     });
 }
 
-const auditorStatusFilter = document.getElementById('status-filter');
+if (riskFilter) {
+    riskFilter.addEventListener("change", (event) => {
+        currentRiskFilter = event.target.value.trim().toLowerCase();
+        updateDashboard();
+    });
+}
 
 if (auditorStatusFilter) {
     auditorStatusFilter.addEventListener("change", (event) => {
-        const auditorStatusLevelSelection = event.target.value.trim().toLowerCase();
-        recordContainer.innerHTML = "";
-
-        for (let i = 0; i < allInstancesOfAssessmentRecordsCatalog.length; i++) {
-            const record = allInstancesOfAssessmentRecordsCatalog[i];
-            const auditorStatusType = (record.auditorStatus || "").toLowerCase();
-
-
-            if (auditorStatusLevelSelection === "All auditor statuses" || auditorStatusLevelSelection === "" || auditorStatusType === auditorStatusLevelSelection) {
-                const assignedAuditor = getAuditorForRecord(record.assessmentRecordID, auditorAssignments);
-
-                recordContainer.innerHTML += `
-                    <article class="audit-row audit-grid">
-                        <div class="record-id">
-                            ${record.assessmentRecordID}
-                        </div>
-                        <div class="description-cell">
-                            <p>${record.assessmentRecordText}</p>
-                            <button class="show-more-btn">
-                                <span class="show-more-icon">&gt;</span>
-                                Show more
-                            </button>
-                        </div>
-                        <div>
-                            <span class="active-status">
-                                <span class="status-dot"></span>
-                                ${record.status}
-                            </span>
-                        </div>
-                        
-                        <div class="project-id">
-                           ${record.projectID}
-                        </div>
-                        
-                        <div class="person">
-                            <img class="avatar" src="${record.engProfileImage}" alt="Eng assigned profile photo">
-                            <span>${record.engContactAssigned}</span>
-                        </div>
-                        
-                        <div>
-                            <span class="badge">
-                              ${record.auditorStatus}
-                            </span>
-                        </div>
-                        <div>
-                            <span class="badge">
-                              ${record.riskLevel}
-                            </span>
-                        </div>
-                        
-                        <div class="date-cell">
-                              ${record.createdDate.toLocaleDateString("en-CA")}
-                        </div>
-                        
-                        <div>
-                            ${record.daysOnAuditBoard}
-                        </div>
-                        
-                        <div class="person">
-                           ${assignedAuditor ? `
-                                <img class="avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
-                                <span>${assignedAuditor.getAuditorFullName()}</span>
-                           ` : `<span class="unassigned-text">None</span>`}
-                        </div>
-                    </article>
-                `;
-            }
-        }
+        currentStatusFilter = event.target.value.trim().toLowerCase();
+        updateDashboard();
     })
 }
+
+updateDashboard();
+
+
 
 const projectSelectionFilter = document.getElementById('project-filter');
 Object.entries(projectIDForAllAssessmentRecords).forEach(([key, projectId]) => {
@@ -402,7 +203,7 @@ for (let i = 0; i < allInstancesOfAssessmentRecordsCatalog.length; i++) {
 
     const pendingResponseCount = allInstancesOfAssessmentRecordsCatalog.reduce((accumulator, currentValue) => {
         if (currentValue.auditorStatus === "Pending Auditor Re-review" || currentValue.auditorStatus === "Evidence Deficient"
-        || currentValue.auditorStatus === "Returned for Review") {
+            || currentValue.auditorStatus === "Returned for Review") {
             accumulator++;
         }
         return accumulator;
@@ -419,5 +220,8 @@ for (let i = 0; i < allInstancesOfAssessmentRecordsCatalog.length; i++) {
 
     unassigned.innerHTML = `<h3>UNASSIGNED</h3> <p>${unassignedCount}</p>`
 }
+
+
+
 
 
