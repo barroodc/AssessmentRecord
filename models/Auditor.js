@@ -4,15 +4,43 @@ import {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
 export const allInstancesOfAuditorsCatalog = [];
 class Auditor {
 
-    constructor(employeeUniqueID, firstName, lastName, profileImage, inOfficeStatus, onAssignmentBoard) {
+    constructor(employeeUniqueID, firstName, lastName, profileImage, inOfficeStatus, onAssignmentBoard, title, email,
+                reportsTo, phone) {
         this.employeeUniqueID = employeeUniqueID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profileImage = profileImage;
         this.inOfficeStatus = inOfficeStatus;
         this.onAssignmentBoard = onAssignmentBoard;
+        this.title = title;
+        this.email = email;
+        this.reportsTo = reportsTo;
+        this.phone = phone;
         this.assessmentRecords = new Map(); //Assessment Records are keyed by ID for fast lookup.
         allInstancesOfAuditorsCatalog.push(this);
+    }
+
+    getTitle() {
+        return this.title;
+    }
+
+    getEmail() {
+        return this.email;
+    }
+
+    getReportsTo() {
+        return this.reportsTo;
+    }
+
+    getPhone() {
+        return this.phone;
+    }
+    getEmployeeUniqueID() {
+        return this.employeeUniqueID;
+    }
+
+    getInOfficeStatus() {
+        return this.inOfficeStatus;
     }
 
     getAllAuditors() {

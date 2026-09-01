@@ -1,6 +1,17 @@
-class FullTimeEngineer{
-    constructor(engineersUniqueID, firstName, lastName, profileImage, inOfficeStatus, title, team, email, reportsTo) {
-        this.engineersUniqueID = engineersUniqueID;
+
+/*
+The Auditors are not full time employees. They are contingent workers.
+This class is to represent the full time employees at the assigned company.
+ */
+
+import {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
+
+export const allInstancesOfFullTimeEmployees = [];
+
+export class FullTimeEmployee {
+    constructor(employeesUniqueID, firstName, lastName, profileImage, inOfficeStatus, title, team, email, reportsTo, phone,
+                joinedDate, workStream) {
+        this.employeesUniqueID = employeesUniqueID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profileImage = profileImage;
@@ -9,39 +20,58 @@ class FullTimeEngineer{
         this.team = team;
         this.email = email;
         this.reportsTo = reportsTo;
+        this.phone = phone;
+        this.joinedDate = joinedDate;
+        this.workStream = workStream;
+        allInstancesOfFullTimeEmployees.push(this);
     }
 
-    getFTEngineersUniqueID() {
-        return this.engineersUniqueID;
+    getJoinedDate() {
+        return this.joinedDate;
     }
 
-    getFTEngineersFirstName() {
+    getAllFullTimeEmployees() {
+        return allInstancesOfFullTimeEmployees;
+    }
+
+
+    getFTEmployeesUniqueID() {
+        return this.employeesUniqueID;
+    }
+
+    getFTEmployeesFirstName() {
         return this.firstName;
     }
 
-    getFTEngineersLastName() {
+    getFTEmployeesLastName() {
         return this.lastName;
     }
 
-    getFTEngineersProfileImage() {
+    getFTEmployeesProfileImage() {
         return this.profileImage;
     }
 
-    getFTEngineersOfficeStatus() {
+    getFTEmployeesOfficeStatus() {
         return this.inOfficeStatus;
     }
 
-    getFTEngineersTitle() {
+    getFTEmployeesTitle() {
         return this.title;
     }
 
-    getFTEngineersTeam() {
+    getFTEmployeesTeam() {
         return this.team;
     }
 
-    getFTEngineersEmail() {
+    getFTEmployeesEmail() {
         return this.email;
     }
 
-    getFTEngineersDirect
+    getFTEmployeesManager() {
+        return this.reportsTo;
+    }
+
+    getFTEmployeesPhoneNumber() {
+        return this.phone;
+    }
 }

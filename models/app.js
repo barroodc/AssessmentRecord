@@ -12,6 +12,7 @@ import {
 } from "../data/mockData.js";
 import {auditorAssignments, getAuditorForRecord} from "./testModels.js";
 import AssessmentRecord, {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
+import {allInstancesOfFullTimeEmployees} from "./FullTimeEmployee.js";
 
 
 //Will set up code here to replace images of Engineers and Auditors who do not have an uploaded image.
@@ -89,7 +90,7 @@ function updateDashboard() {
                 </div>
                 <div class="project-id">${projectId}</div>
                 <div class="person">
-                    <img class="avatar" src="${engEmployeeProfilePicsFromAllAssessmentRecords[i]}" alt="Eng assigned profile photo">
+                    <img class="avatar eng-avatar" src="${engEmployeeProfilePicsFromAllAssessmentRecords[i]}" alt="Eng assigned profile photo">
                     <span>${namesOfEngineersAssignedFromAllAssessmentRecords[i]}</span>
                 </div>
                 <div><span class="badge">${auditorStatusFromAllAssessmentRecords[i]}</span></div>
@@ -98,7 +99,7 @@ function updateDashboard() {
                 <div>${daysOnAuditBoardFromAllAssessmentRecords[i]}</div>
                 <div class="person">
                    ${assignedAuditor ? `
-                        <img class="avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
+                        <img class="avatar auditor-avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
                         <span>${assignedAuditor.getAuditorFullName()}</span>
                    ` : `<span class="unassigned-text">None</span>`}
                 </div>
@@ -191,3 +192,286 @@ for (let i = 0; i < allInstancesOfAssessmentRecordsCatalog.length; i++) {
 
 
 
+let engOrAuditorProfilePic = document.querySelectorAll(".eng-avatar");
+
+for (let i = 0; i < engOrAuditorProfilePic.length; i++) {
+
+    const image = engOrAuditorProfilePic[i];
+
+    let hideTimeout;
+    let cardContainer = null;
+
+    image.addEventListener("mouseover", (event) => {
+
+        clearTimeout(hideTimeout);
+
+        if (!cardContainer) {
+            cardContainer = document.createElement("div");
+            cardContainer.className = "employeeCard";
+        }
+
+        const employee = allInstancesOfFullTimeEmployees[i];
+
+        if (employee) {
+            cardContainer.innerHTML = `
+                <div class="employeeCardHeader"></div>
+
+                <section class="employeeIdentitySection">
+
+                    <div class="employeeProfileImageContainer">
+
+                        <img
+                            class="employeeProfileImage"
+                            src="${employee.profileImage}"
+                            alt="${employee.firstName} ${employee.lastName}"
+                        >
+
+                        <span
+                            class="employeeStatusIndicator ${getEmployeeStatusClass(employee.inOfficeStatus)}"
+                            title="${getEmployeeStatusText(employee.inOfficeStatus)}">
+                        </span>
+
+                    </div>
+
+                    <div class="employeeNameAndTitle">
+                        <h1>${employee.firstName} ${employee.lastName}</h1>
+                        <p>${employee.title}</p>
+                    </div>
+
+                </section>
+
+                <section class="employeeDetails">
+
+                    <div class="employeeDetail">
+                        <div class="employeeDetailIcon">
+                            <img
+                                src="../assets/ProfileCardIcons/clock-4.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div>
+                            <p class="employeeDetailLabel">TENURE</p>
+                            <p class="employeeDetailValue">
+                                ${employee.joinedDate}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="employeeDetail">
+                        <div class="employeeDetailIcon">
+                            <img
+                                src="../assets/ProfileCardIcons/users.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div>
+                            <p class="employeeDetailLabel">TEAM</p>
+                            <p class="employeeDetailValue">
+                                ${employee.team}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="employeeDetail">
+                        <div class="employeeDetailIcon">
+                            <img
+                                src="../assets/ProfileCardIcons/layers.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div>
+                            <p class="employeeDetailLabel">WORK STREAM</p>
+                            <p class="employeeDetailValue">
+                                ${employee.workStream}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="employeeDetail">
+                        <div class="employeeDetailIcon">
+                            <img
+                                src="../assets/ProfileCardIcons/user-round-pen.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div>
+                            <p class="employeeDetailLabel">REPORTS TO</p>
+                            <p class="employeeDetailValue">
+                                ${employee.reportsTo}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="employeeDetail">
+                        <div class="employeeDetailIcon">
+                            <img
+                                src="../assets/ProfileCardIcons/mail.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div>
+                            <p class="employeeDetailLabel">EMAIL</p>
+                            <p class="employeeDetailValue">
+                                ${employee.email}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="employeeDetail">
+                        <div class="employeeDetailIcon">
+                            <img
+                                src="../assets/ProfileCardIcons/phone.svg"
+                                alt=""
+                            >
+                        </div>
+
+                        <div>
+                            <p class="employeeDetailLabel">PHONE</p>
+                            <p class="employeeDetailValue">
+                                ${employee.phone}
+                            </p>
+                        </div>
+                    </div>
+
+                </section>
+
+                <section class="employeeContactMethods">
+
+                    <button class="contactButton primaryContactButton">
+                        <img
+                            src="../assets/ProfileCardIcons/mail.svg"
+                            alt=""
+                        >
+                        <span>Email</span>
+                    </button>
+
+                    <button class="contactButton">
+                        <img
+                            src="../assets/ProfileCardIcons/phone.svg"
+                            alt=""
+                        >
+                        <span>Call</span>
+                    </button>
+
+                    <button class="contactButton">
+                        <img
+                            src="../assets/ProfileCardIcons/message-square.svg"
+                            alt=""
+                        >
+                        <span>Message</span>
+                    </button>
+
+                </section>
+            `;
+        }
+
+        document.body.appendChild(cardContainer);
+
+        cardContainer.style.position = "absolute";
+        cardContainer.style.zIndex = "1000";
+        cardContainer.style.left = event.pageX + 15 + "px";
+        cardContainer.style.top = event.pageY + 15 + "px";
+
+        cardContainer.addEventListener("mouseover", () => {
+            clearTimeout(hideTimeout);
+        });
+
+        cardContainer.addEventListener("mouseleave", () => {
+            startHideTimer();
+        });
+
+    });
+
+
+    function startHideTimer() {
+
+        clearTimeout(hideTimeout);
+
+        hideTimeout = setTimeout(() => {
+
+            if (cardContainer) {
+                cardContainer.remove();
+                cardContainer = null;
+            }
+
+        }, 400);
+    }
+
+
+    function getEmployeeStatusClass(status) {
+
+        if (!status) {
+            return "offline";
+        }
+
+        const normalizedStatus = status
+            .toString()
+            .trim()
+            .toLowerCase();
+
+        switch (normalizedStatus) {
+
+            case "online":
+            case "available":
+            case "active":
+                return "online";
+
+            case "away":
+                return "away";
+
+            case "offline":
+                return "offline";
+
+            case "afterhours":
+            case "after hours":
+            case "outside working hours":
+            case "outside of available working hours":
+                return "afterHours";
+
+            default:
+                return "offline";
+        }
+    }
+
+
+    function getEmployeeStatusText(status) {
+
+        if (!status) {
+            return "Offline";
+        }
+
+        const normalizedStatus = status
+            .toString()
+            .trim()
+            .toLowerCase();
+
+        switch (normalizedStatus) {
+
+            case "online":
+            case "available":
+            case "active":
+                return "Available";
+
+            case "away":
+                return "Away";
+
+            case "offline":
+                return "Offline";
+
+            case "afterhours":
+            case "after hours":
+            case "outside working hours":
+            case "outside of available working hours":
+                return "Outside of Available Working Hours";
+
+            default:
+                return "Status Unknown";
+        }
+    }
+
+}

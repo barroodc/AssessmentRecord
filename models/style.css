@@ -436,6 +436,265 @@ main > section > p {
     white-space: nowrap;
 }
 
+.employeeCard {
+    position: absolute;
+    z-index: 1000;
 
+    width: 540px;
 
+    background-color: #ffffff;
 
+    border: 1px solid #e3ddd1;
+    border-radius: 22px;
+
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14);
+
+    overflow: hidden;
+    pointer-events: auto;
+
+    font-family: inherit;
+    color: #111827;
+}
+
+.employeeCardHeader {
+    height: 92px;
+
+    background: linear-gradient(
+            115deg,
+            #234b75 0%,
+            #7890a8 48%,
+            #e9e6de 100%
+    );
+}
+
+.employeeIdentitySection {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    padding: 0 28px;
+
+    margin-top: -42px;
+}
+
+.employeeProfileImageContainer {
+    position: relative;
+
+    width: 88px;
+    height: 88px;
+
+    flex-shrink: 0;
+
+    padding: 4px;
+
+    background-color: white;
+
+    border-radius: 20px;
+
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.16);
+}
+
+.employeeProfileImage {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 16px;
+
+    display: block;
+}
+
+.employeeStatusIndicator {
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    right: 4px;
+    bottom: 4px;
+
+    border-radius: 50%;
+
+    border: 3px solid white;
+
+    box-sizing: content-box;
+
+    z-index: 10;
+}
+
+.employeeStatusIndicator.online {
+    background-color: #22c55e;
+}
+
+.employeeStatusIndicator.away {
+    background-color: #facc15;
+}
+
+.employeeStatusIndicator.offline {
+    background-color: #9ca3af;
+}
+
+.employeeStatusIndicator.afterHours {
+    background-color: #ef4444;
+}
+
+.employeeNameAndTitle {
+    margin-top: 40px;
+}
+
+.employeeNameAndTitle h1 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    line-height: 1.15;
+
+    color: #111827;
+}
+
+.employeeNameAndTitle p {
+    margin: 4px 0 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #64748b;
+}
+
+.employeeDetails {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    column-gap: 42px;
+    row-gap: 22px;
+
+    padding: 32px 28px 26px;
+}
+
+.employeeDetail {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+.employeeDetailIcon {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #f3efe5;
+}
+
+.employeeDetailIcon img {
+    width: 17px;
+    height: 17px;
+
+    opacity: 0.72;
+}
+
+.employeeDetailLabel {
+    margin: 0 0 3px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #64748b;
+}
+
+.employeeDetailValue {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #111827;
+
+    line-height: 1.3;
+
+    overflow-wrap: anywhere;
+}
+
+.employeeContactMethods {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr 1fr;
+
+    gap: 10px;
+
+    padding: 0 28px 24px;
+}
+
+.contactButton {
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    background-color: white;
+
+    border: 1px solid #ddd5c8;
+    border-radius: 999px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #111827;
+
+    cursor: pointer;
+
+    transition:
+            background-color 150ms ease,
+            transform 150ms ease,
+            box-shadow 150ms ease;
+}
+
+.contactButton img {
+    width: 16px;
+    height: 16px;
+}
+
+.contactButton:hover {
+    background-color: #f8fafc;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+}
+
+.primaryContactButton {
+    background-color: #244a73;
+    border-color: #244a73;
+
+    color: white;
+}
+
+.primaryContactButton img {
+    filter: brightness(0) invert(1);
+}
+
+.primaryContactButton:hover {
+    background-color: #1e3f63;
+}

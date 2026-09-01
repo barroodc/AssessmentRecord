@@ -3,6 +3,8 @@ import AssessmentRecord, {
     allInstancesOfAssessmentRecordsCatalog
 } from "../models/AssessmentRecord.js";
 
+import {allInstancesOfFullTimeEmployees, FullTimeEmployee} from "../models/FullTimeEmployee.js";
+
 
 
 //Note: We are going to name our Launch Manager Service Atlas.
@@ -11,15 +13,81 @@ import AssessmentRecord, {
 const assetPath = "../assets/FakePeople/";
 
 export const auditorOne = new Auditor("307548758","Charlie", "Guzman",
-    assetPath + "guzman_charles.jpg", "Active", true);
+    assetPath + "guzman_charles.jpg", "Active", true, "Technical Auditor",
+    "charles_guzman@mycompany.com", "Ashley Robertson", "+1 6803933867");
 export const auditorTwo = new Auditor("196054197", "Keith", "Dickerson",
-    assetPath + "dickerson_keith.jpg", "Active", true);
+    assetPath + "dickerson_keith.jpg", "Active", true, "Technical Auditor",
+    "dickerson_keith@mycompany.com", "Ashley Robertson", "+1 9832722666");
 export const auditorThree = new Auditor("872774855", "Ashley", "Robertson",
-    assetPath + "robertson_ashley.jpg", "Active", true);
+    assetPath + "robertson_ashley.jpg", "Active", true, "Lead Technical Auditor",
+    "robertson_ashley@mycompany.com", "Brian Cox", "+1 3059415010");
 export const auditorFour = new Auditor("917622676", "Trevor", "Griffin",
-    assetPath + "griffin_trevor.jpg", "Active", true);
+    assetPath + "griffin_trevor.jpg", "Active", true, "Technical Auditor",
+    "griffin_trevor@mycompany.com", "Ashley Robertson", "+1 2835442087");
 export const auditorFive = new Auditor("601724248", "Amber", "Moss",
-    assetPath + "moss_amber.jpg", "Active", true);
+    assetPath + "moss_amber.jpg", "Active", true, "Technical Auditor",
+    "moss_amber@mycompany.com", "Ashley Robertson", "+1 3052012442");
+
+export const fteOne = new FullTimeEmployee("892968605", "Arnold", "Shultz",
+    assetPath + "shultz_arnold.jpg", "Active", "Software Engineer", "Data Platform Infrastructure",
+    "shultz_arnold@mycompany.com", "Marcus Vance", "+1 5057870571", new Date(2019, 3,13),
+    "Cloud Foundations & Scale");
+
+export const fteTwo = new FullTimeEmployee("803350500", "Tony", "Gifford", assetPath + "gifford_tony.jpg",
+    "Active", "Software Engineer", "Core Monetization Systems", "gifford_tony@mycompany.com", "Elena Rostova", "+1 9072479555", new Date(2019,8,20),
+    "Ads Revenue & Commerce");
+
+export const fteThree = new FullTimeEmployee("808587381", "Jeffrey", "Powell", assetPath + "powell_jeffery.jpg",
+    "Active", "Software Engineer", "Integrity Machine Learning", "powell_jeffery@mycompany.com", "Julian Thorne", "+1 2277377316", new Date(2019,11,14),
+    "Trust, Safety & AI");
+
+export const fteFour = new FullTimeEmployee("507724695", "Nathan", "Morgan", assetPath + "morgan_nathan.jpg",
+    "Active", "Software Engineer", "Developer Productivity Tools", "morgan_nathan@mycompany.com", "Maya Lin", "+1 3052870818", new Date(2020, 2, 10),
+    "Engineering Efficiency");
+
+export const fteFive = new FullTimeEmployee("639439054", "Robert", "Kearns", assetPath + "robert_kearns.jpg",
+    "Active", "Software Engineer", "Immersive Reality Core", "kearns_robert@mycompany.com", "Devante Brooks", "+1 9837914897", new Date(2020, 7, 15),
+    "Workspaceverse & Spatial Computing");
+
+export const fteSix = new FullTimeEmployee("877014864", "April", "Pullum", assetPath + "pullum_april.jpg",
+    "Active", "Software Engineer", "Messaging Platform Services", "pullum_april@mycompany.com", "Chloe Davenport", "+1 3052262096", new Date(2020,10,15),
+    "Consumer Communications");
+
+export const fteSeven= new FullTimeEmployee("226485097", "Clara", "Phillips", assetPath + "phillips_clara.jpg",
+    "Active", "Software Engineer", "Distributed Storage Engineering", "phillips_clara@mycompany.com", "Mateo Alvarez", "+1 5053134016", new Date(2021,4,8),
+    "Core Infrastructure");
+
+export const fteEight = new FullTimeEmployee("536290456", "Patricia", "Bisson", assetPath + "bisson_patricia.jpg",
+    "Active", "Software Engineer", "Feed Ranking Algorithms", "bisson_patricia@mycompany.com", "Priya Nair", "+1 3052024739", new Date(2021,9,14),
+    "Discovery & Recommendations");
+
+export const fteNine = new FullTimeEmployee("787419668", "Cynthia", "Eley", assetPath + "eley_cynthia.jpg",
+    "Active", "Software Engineer", "Enterprise Security Operations", "eley_cynthia@mycompany.com", "Samuel O'Connor", "+1 3016462497", new Date(2022,5,11),
+    "Information Security");
+
+export const fteTen = new FullTimeEmployee("398228860", "Rose", "Brewer", assetPath + "brewer_rose.jpg",
+    "Active", "Software Engineer", "Growth Experiments Framework", "brewer_rose@mycompany.com", "Nadia Kalu", "+1 5056442654", new Date(2022,10,27),
+    "User Growth & Acquisition");
+
+export const fteEleven = new FullTimeEmployee("867589469", "Kathleen", "Pierre", assetPath + "pierre_kathleen.jpg",
+    "Active", "Software Engineer", "Web Application Architecture", "pierre_kathleen@mycompany.com", "Lucas Moreau", "+1 5057112982", new Date(2023,2,17),
+    "Frontend Foundations");
+
+export const fteTwelve = new FullTimeEmployee("281925873", "Rebecca", "Smith", assetPath + "smith_rebecca.jpg",
+    "Active", "Software Engineer", "Contextual Recommendations", "smith_rebecca@mycompany.com", "Harper Sterling", "+1 3646273693", new Date(2023, 8, 10),
+    "Personalization & AI");
+
+export const fteThirteen = new FullTimeEmployee("518500061", "Wendy", "Moser", assetPath + "moser_wendy.jpg",
+    "Active", "Software Engineer", "Real-Time Collaboration", "moser_wendy@mycompany.com", "Jin-woo Park", "+1 4724078105", new Date(2023,11,14),
+    "Workspace & Productivity");
+
+export const fteFourteen = new FullTimeEmployee("894888506", "Veronica", "Collins", assetPath + "collins_veronica.jpg",
+    "Active", "Software Engineer", "Video Streaming Infrastructure", "collins_veronica@mycompany.com", "Freja Lindstrom", "+1 9837285396", new Date(2024, 3, 20),
+    "Media Delivery Systems");
+
+export const fteFifteen = new FullTimeEmployee("271152906", "Arlo", "Kaufman", assetPath + "kaufman_arlo.jpg",
+    "Active", "Software Engineer", "Network Protocols & Edge", "kauman_arlo@mycompany.com", "Darius Vance", "+1 3052711829", new Date(2025, 8, 18),
+    "Global Backbone & Edge Computing");
 
 //low risk
 export const assessmentRecord0001 = new AssessmentRecord("AR0001", "The application displays a privacy policy link from the Settings page.",
@@ -94,6 +162,8 @@ for (const record of allInstancesOfAssessmentRecordsCatalog) {
     createdDateFromAllAssessmentRecords.push(record.createdDate);
     daysOnAuditBoardFromAllAssessmentRecords.push(record.daysOnAuditBoard);
 }
+
+
 
 
 export default mockData;
