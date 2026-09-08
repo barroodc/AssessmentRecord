@@ -20,10 +20,13 @@ import mockData, {
     auditorThree,
     auditorFour,
     auditorFive,
-    idsFromAllAssessmentRecords
+    idsFromAllAssessmentRecords,
+    engEmployeeProfilePicsFromAllAssessmentRecords,
+    namesOfEngineersAssignedFromAllAssessmentRecords
 } from "../data/mockData.js";
 import {allInstancesOfAuditorsCatalog} from "./Auditor.js";
 import {allInstancesOfAssessmentRecordsCatalog} from "./AssessmentRecord.js";
+import {allInstancesOfFullTimeEmployees} from "./FullTimeEmployee.js";
 
 
 
@@ -72,4 +75,5 @@ export function getAuditorForRecord(recordId, assignmentsMap) {
     }
     return null;
 }
+
 

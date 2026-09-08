@@ -91,7 +91,7 @@ function updateDashboard() {
                 </div>
                 <div class="project-id">${projectId}</div>
                 <div class="person">
-                    <img class="avatar eng-avatar" src="${engEmployeeProfilePicsFromAllAssessmentRecords[i]}" alt="Eng assigned profile photo">
+                    <img class="avatar eng-avatar" data-eng-name = "${namesOfEngineersAssignedFromAllAssessmentRecords[i]}" src="${engEmployeeProfilePicsFromAllAssessmentRecords[i]}" alt="Eng assigned profile photo">
                     <span>${namesOfEngineersAssignedFromAllAssessmentRecords[i]}</span>
                 </div>
                 <div><span class="badge">${auditorStatusFromAllAssessmentRecords[i]}</span></div>
@@ -100,7 +100,7 @@ function updateDashboard() {
                 <div>${daysOnAuditBoardFromAllAssessmentRecords[i]}</div>
                 <div class="person">
                    ${assignedAuditor ? `
-                        <img class="avatar auditor-avatar" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
+                        <img class="avatar auditor-avatar" data-auditor-name="${assignedAuditor.getAuditorFullName()}" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
                         <span>${assignedAuditor.getAuditorFullName()}</span>
                    ` : `<span class="unassigned-text">None</span>`}
                 </div>
@@ -114,6 +114,8 @@ if (searchInput) {
     searchInput.addEventListener('input', (event) => {
         currentSearchQuery = event.target.value.trim().toUpperCase();
         updateDashboard();
+        employeeProfileCards.employeeProfilesOnDashboard();
+        employeeProfileCards.auditorProfilesOnDashboard();
     });
 }
 
@@ -121,6 +123,8 @@ if (riskFilter) {
     riskFilter.addEventListener("change", (event) => {
         currentRiskFilter = event.target.value.trim().toLowerCase();
         updateDashboard();
+        employeeProfileCards.employeeProfilesOnDashboard();
+        employeeProfileCards.auditorProfilesOnDashboard();
     });
 }
 
@@ -128,6 +132,8 @@ if (auditorStatusFilter) {
     auditorStatusFilter.addEventListener("change", (event) => {
         currentStatusFilter = event.target.value.trim().toLowerCase();
         updateDashboard();
+        employeeProfileCards.employeeProfilesOnDashboard();
+        employeeProfileCards.auditorProfilesOnDashboard();
     })
 }
 
@@ -135,6 +141,8 @@ if (projectSelectionFilter) {
     projectSelectionFilter.addEventListener("change", (event) => {
         currentProjectFilter = event.target.value.trim().toLowerCase();
         updateDashboard();
+        employeeProfileCards.employeeProfilesOnDashboard();
+        employeeProfileCards.auditorProfilesOnDashboard();
     })
 }
 
@@ -187,10 +195,14 @@ for (let i = 0; i < allInstancesOfAssessmentRecordsCatalog.length; i++) {
     }, 0);
 
     unassigned.innerHTML = `<h3>UNASSIGNED</h3> <p>${unassignedCount}</p>`
+
+
 }
 
-
 employeeProfileCards.employeeProfilesOnDashboard();
+employeeProfileCards.auditorProfilesOnDashboard();
+
+
 
 
 
