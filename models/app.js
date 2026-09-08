@@ -73,15 +73,18 @@ function updateDashboard() {
         }
 
         const assignedAuditor = getAuditorForRecord(recordId, auditorAssignments);
+        const descriptionText = textFromAllAssessmentRecords[i];
         recordContainer.innerHTML += `
         <article class="audit-row audit-grid">
                 <div class="record-id">${recordId}</div>
                 <div class="description-cell">
-                    <p>${textFromAllAssessmentRecords[i]}</p>
-                    <button class="show-more-btn">
-                        <span class="show-more-icon">&gt;</span>
-                        Show more
+                    <p>${descriptionText.length > 60 ? descriptionText.substring(0, 60) + "..." : descriptionText}</p>
+                    
+                    ${descriptionText.length > 60 ? `
+                    <button class="show-more-btn" data-index="${i}"> 
+                    <span class="show-more-icon">&gt;</span> Show more 
                     </button>
+                    ` : ''}
                 </div>
                 <div>
                  <span class="active-status">
@@ -109,6 +112,8 @@ function updateDashboard() {
 
     }
 }
+
+
 
 if (searchInput) {
     searchInput.addEventListener('input', (event) => {
@@ -146,9 +151,26 @@ if (projectSelectionFilter) {
     })
 }
 
+
+recordContainer.addEventListener('click', (event) => {
+    const showMoreButton = event.target.closest('.show-more-btn');
+    if (showMoreButton) {
+        const recordIndex = showMoreButton.dataset.index;
+        const fullDescriptionText = textFromAllAssessmentRecords[recordIndex];
+
+        const cell = showMoreButton.closest('.description-cell');
+
+        if (cell) {
+            cell.innerHTML = `<p>${fullDescriptionText}</p>`
+        }
+    }
+})
+
+
+
+
+
 updateDashboard();
-
-
 
 Object.entries(projectIDForAllAssessmentRecords).forEach(([key, projectId]) => {
     const optionForProjectId = document.createElement('option');
