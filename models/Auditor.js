@@ -5,7 +5,7 @@ export const allInstancesOfAuditorsCatalog = [];
 class Auditor {
 
     constructor(employeeUniqueID, firstName, lastName, profileImage, inOfficeStatus, onAssignmentBoard, title, email,
-                reportsTo, phone) {
+                reportsTo, phone, joinedDate, team, workStream) {
         this.employeeUniqueID = employeeUniqueID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -16,8 +16,23 @@ class Auditor {
         this.email = email;
         this.reportsTo = reportsTo;
         this.phone = phone;
+        this.joinedDate = joinedDate;
+        this.team = team;
+        this.workStream = workStream;
         this.assessmentRecords = new Map(); //Assessment Records are keyed by ID for fast lookup.
         allInstancesOfAuditorsCatalog.push(this);
+    }
+
+    getWorkStream() {
+        return this.workStream;
+    }
+
+    getTeam() {
+        return this.team;
+    }
+
+    getJoinedDate() {
+        return this.joinedDate;
     }
 
     getTitle() {

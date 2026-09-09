@@ -14,19 +14,24 @@ const assetPath = "../assets/FakePeople/";
 
 export const auditorOne = new Auditor("307548758","Charlie", "Guzman",
     assetPath + "guzman_charles.jpg", "Active", true, "Technical Auditor",
-    "charles_guzman@mycompany.com", "Ashley Robertson", "+1 6803933867");
+    "charles_guzman@mycompany.com", "Ashley Robertson", "+1 6803933867", new Date(2019,6, 12),
+    "Privacy Technical Auditing", "Privacy Evidence Review");
 export const auditorTwo = new Auditor("196054197", "Keith", "Dickerson",
     assetPath + "dickerson_keith.jpg", "Active", true, "Technical Auditor",
-    "dickerson_keith@mycompany.com", "Ashley Robertson", "+1 9832722666");
+    "dickerson_keith@mycompany.com", "Ashley Robertson", "+1 9832722666", new Date(2021, 11, 10),
+    "Privacy Technical Auditing", "Privacy Evidence Review");
 export const auditorThree = new Auditor("872774855", "Ashley", "Robertson",
     assetPath + "robertson_ashley.jpg", "Active", true, "Lead Technical Auditor",
-    "robertson_ashley@mycompany.com", "Brian Cox", "+1 3059415010");
+    "robertson_ashley@mycompany.com", "Brian Cox", "+1 3059415010", new Date(2022,3,8),
+    "Privacy Technical Auditing", "Privacy Evidence Review");
 export const auditorFour = new Auditor("917622676", "Trevor", "Griffin",
     assetPath + "griffin_trevor.jpg", "Active", true, "Technical Auditor",
-    "griffin_trevor@mycompany.com", "Ashley Robertson", "+1 2835442087");
+    "griffin_trevor@mycompany.com", "Ashley Robertson", "+1 2835442087", new Date(2024,7,17),
+    "Privacy Technical Auditing", "Privacy Evidence Review");
 export const auditorFive = new Auditor("601724248", "Amber", "Moss",
     assetPath + "moss_amber.jpg", "Active", true, "Technical Auditor",
-    "moss_amber@mycompany.com", "Ashley Robertson", "+1 3052012442");
+    "moss_amber@mycompany.com", "Ashley Robertson", "+1 3052012442", new Date(2025,5,14),
+    "Privacy Technical Auditing", "Privacy Evidence Review");
 
 export const fteOne = new FullTimeEmployee("892968605", "Arnold", "Shultz",
     assetPath + "shultz_arnold.jpg", "Active", "Software Engineer", "Data Platform Infrastructure",
