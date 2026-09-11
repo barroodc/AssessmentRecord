@@ -169,8 +169,13 @@ for (const record of allInstancesOfAssessmentRecordsCatalog) {
 }
 
 
+ export const auditorFullNames = allInstancesOfAuditorsCatalog.map((auditor) => {
+    return `${auditor.firstName} ${auditor.lastName}`
+})
 
 
-
+for (let i = 0; i < 15; i++) {
+    console.log(auditorFullNames[i]);
+}
 
 export default mockData;

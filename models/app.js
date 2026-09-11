@@ -1,4 +1,5 @@
 import {
+    auditorFullNames,
     auditorStatusFromAllAssessmentRecords,
     createdDateFromAllAssessmentRecords,
     daysOnAuditBoardFromAllAssessmentRecords,
@@ -34,6 +35,7 @@ const auditorStatusFilter = document.getElementById('status-filter');
 const projectSelectionFilter = document.getElementById('project-filter');
 
 
+
 let currentSearchQuery = "";
 let currentRiskFilter = "All Risk";
 let currentStatusFilter = "All auditor statuses"
@@ -63,16 +65,22 @@ function updateDashboard() {
         }
 
 
+        const assignedAuditor = getAuditorForRecord(recordId, auditorAssignments);
+
         if (currentSearchQuery !== "") {
             const matchesRecordId = recordId.toUpperCase().includes(currentSearchQuery);
             const matchesProjectId = projectId.toUpperCase().includes(currentSearchQuery);
 
-            if (!matchesRecordId && !matchesProjectId) {
+            const auditorsNameCheck = assignedAuditor ? assignedAuditor.getAuditorFullName().toUpperCase() : "";
+
+            const matchesAuditorName = auditorsNameCheck.includes(currentSearchQuery);
+
+            if (!matchesRecordId && !matchesProjectId && !matchesAuditorName) {
                 continue;
             }
         }
 
-        const assignedAuditor = getAuditorForRecord(recordId, auditorAssignments);
+
         const descriptionText = textFromAllAssessmentRecords[i];
         recordContainer.innerHTML += `
         <article class="audit-row audit-grid">
@@ -112,7 +120,6 @@ function updateDashboard() {
 
     }
 }
-
 
 
 if (searchInput) {
@@ -161,10 +168,35 @@ recordContainer.addEventListener('click', (event) => {
         const cell = showMoreButton.closest('.description-cell');
 
         if (cell) {
-            cell.innerHTML = `<p>${fullDescriptionText}</p>`
+            cell.innerHTML = `<p>${fullDescriptionText}</p>
+            <button class="show-less-btn" data-index="${recordIndex}"> 
+                    <span class="show-less-icon">&lt;</span> Show less 
+                    </button>`
         }
     }
 })
+
+recordContainer.addEventListener('click', (event) => {
+    const showLessButton = event.target.closest('.show-less-btn');
+    if (showLessButton) {
+        const recordIndex = showLessButton.dataset.index;
+
+        const fullDescriptionText = textFromAllAssessmentRecords[recordIndex];
+
+        const cell = showLessButton.closest('.description-cell');
+
+        if (cell) {
+            cell.innerHTML = `
+                <p>${fullDescriptionText.length > 60 ? fullDescriptionText.substring(0, 60) + "..." : fullDescriptionText}</p>
+                ${fullDescriptionText.length > 60 ? `
+                    <button class="show-more-btn" data-index="${recordIndex}"> 
+                        <span class="show-more-icon">&gt;</span> Show more 
+                    </button>
+                ` : ''}
+            `;
+        }
+    }
+});
 
 
 

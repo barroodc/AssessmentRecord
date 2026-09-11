@@ -75,5 +75,3 @@ export function getAuditorForRecord(recordId, assignmentsMap) {
     }
     return null;
 }
-
-

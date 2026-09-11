@@ -317,7 +317,7 @@ main > section > p {
     line-height: 1.55;
 }
 
-.show-more-btn {
+.show-more-btn, .show-less-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -332,7 +332,7 @@ main > section > p {
     cursor: pointer;
 }
 
-.show-more-icon {
+.show-more-icon, .show-less-icon{
     display: inline-block;
     font-size: 16px;
     font-weight: 300;
