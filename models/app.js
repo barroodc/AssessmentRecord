@@ -66,22 +66,24 @@ function updateDashboard() {
 
 
         const assignedAuditor = getAuditorForRecord(recordId, auditorAssignments);
+        const descriptionText = textFromAllAssessmentRecords[i];
 
         if (currentSearchQuery !== "") {
             const matchesRecordId = recordId.toUpperCase().includes(currentSearchQuery);
             const matchesProjectId = projectId.toUpperCase().includes(currentSearchQuery);
+            const matchesDescriptionText = descriptionText.toUpperCase().includes(currentSearchQuery);
 
             const auditorsNameCheck = assignedAuditor ? assignedAuditor.getAuditorFullName().toUpperCase() : "";
 
             const matchesAuditorName = auditorsNameCheck.includes(currentSearchQuery);
 
-            if (!matchesRecordId && !matchesProjectId && !matchesAuditorName) {
+            if (!matchesRecordId && !matchesProjectId && !matchesAuditorName && !matchesDescriptionText) {
                 continue;
             }
         }
 
 
-        const descriptionText = textFromAllAssessmentRecords[i];
+
         recordContainer.innerHTML += `
         <article class="audit-row audit-grid">
                 <div class="record-id">${recordId}</div>
