@@ -16,6 +16,7 @@ import AssessmentRecord, {allInstancesOfAssessmentRecordsCatalog} from "./Assess
 import {allInstancesOfFullTimeEmployees} from "./FullTimeEmployee.js";
 import {allInstancesOfAuditorsCatalog} from "./Auditor.js";
 import {employeeProfileCards} from "../ui/employeeProfileCards.js";
+import {renderAssessmentRecordRow} from "../ui/assessmentRecordRowRenderer.js";
 
 //Will set up code here to replace images of Engineers and Auditors who do not have an uploaded image.
 
@@ -48,78 +49,97 @@ function updateDashboard() {
         const recordId = idsFromAllAssessmentRecords[i];
         const projectId = projectIDForAllAssessmentRecords[i];
         const recordRisk = riskLevelFromAllAssessmentRecords[i].toLowerCase();
-        const auditorStatusType = (auditorStatusFromAllAssessmentRecords[i] || "").toLowerCase();
-        const projectSelected = String(projectId || "").trim().toLowerCase();
+        const auditorStatusType =
+            (auditorStatusFromAllAssessmentRecords[i] || "").toLowerCase();
+
+        const projectSelected =
+            String(projectId || "").trim().toLowerCase();
 
 
-        if (currentRiskFilter !== "All Risk" && currentRiskFilter !== "" && recordRisk !== currentRiskFilter) {
+        // Risk filter
+        if (
+            currentRiskFilter !== "All Risk" &&
+            currentRiskFilter !== "" &&
+            recordRisk !== currentRiskFilter
+        ) {
             continue;
         }
 
-        if (currentStatusFilter !== "All auditor statuses" && currentStatusFilter !== "" && auditorStatusType !== currentStatusFilter) {
+
+        // Auditor status filter
+        if (
+            currentStatusFilter !== "All auditor statuses" &&
+            currentStatusFilter !== "" &&
+            auditorStatusType !== currentStatusFilter
+        ) {
             continue;
         }
 
-        if (currentProjectFilter !== "All Projects" && currentProjectFilter !== "" && projectSelected !== currentProjectFilter) {
+
+        // Project filter
+        if (
+            currentProjectFilter !== "All Projects" &&
+            currentProjectFilter !== "" &&
+            projectSelected !== currentProjectFilter
+        ) {
             continue;
         }
 
 
-        const assignedAuditor = getAuditorForRecord(recordId, auditorAssignments);
-        const descriptionText = textFromAllAssessmentRecords[i];
+        const assignedAuditor =
+            getAuditorForRecord(recordId, auditorAssignments);
 
+        const descriptionText =
+            textFromAllAssessmentRecords[i];
+
+
+        // Search
         if (currentSearchQuery !== "") {
-            const matchesRecordId = recordId.toUpperCase().includes(currentSearchQuery);
-            const matchesProjectId = projectId.toUpperCase().includes(currentSearchQuery);
-            const matchesDescriptionText = descriptionText.toUpperCase().includes(currentSearchQuery);
+            const matchesRecordId =
+                recordId.toUpperCase().includes(currentSearchQuery);
 
-            const auditorsNameCheck = assignedAuditor ? assignedAuditor.getAuditorFullName().toUpperCase() : "";
+            const matchesProjectId =
+                projectId.toUpperCase().includes(currentSearchQuery);
 
-            const matchesAuditorName = auditorsNameCheck.includes(currentSearchQuery);
+            const matchesDescriptionText =
+                descriptionText.toUpperCase().includes(currentSearchQuery);
 
-            if (!matchesRecordId && !matchesProjectId && !matchesAuditorName && !matchesDescriptionText) {
+            const auditorsNameCheck = assignedAuditor
+                ? assignedAuditor.getAuditorFullName().toUpperCase()
+                : "";
+
+            const matchesAuditorName =
+                auditorsNameCheck.includes(currentSearchQuery);
+
+
+            if (
+                !matchesRecordId &&
+                !matchesProjectId &&
+                !matchesAuditorName &&
+                !matchesDescriptionText
+            ) {
                 continue;
             }
         }
 
 
+        const rowHTML = renderAssessmentRecordRow({
+            recordId: recordId,
+            descriptionText: descriptionText,
+            status: statusFromAllAssessmentRecords[i],
+            projectId: projectId,
+            engineerName: namesOfEngineersAssignedFromAllAssessmentRecords[i],
+            engineerImage: engEmployeeProfilePicsFromAllAssessmentRecords[i],
+            auditorStatus: auditorStatusFromAllAssessmentRecords[i],
+            risk: riskLevelFromAllAssessmentRecords[i],
+            createdDate: createdDateFromAllAssessmentRecords[i],
+            daysOnBoard: daysOnAuditBoardFromAllAssessmentRecords[i],
+            assignedAuditor: assignedAuditor,
+            index: i
+        });
 
-        recordContainer.innerHTML += `
-        <article class="audit-row audit-grid">
-                <div class="record-id">${recordId}</div>
-                <div class="description-cell">
-                    <p>${descriptionText.length > 60 ? descriptionText.substring(0, 60) + "..." : descriptionText}</p>
-                    
-                    ${descriptionText.length > 60 ? `
-                    <button class="show-more-btn" data-index="${i}"> 
-                    <span class="show-more-icon">&gt;</span> Show more 
-                    </button>
-                    ` : ''}
-                </div>
-                <div>
-                 <span class="active-status">
-                        <span class="status-dot"></span>
-                        ${statusFromAllAssessmentRecords[i]}
-                    </span>
-                </div>
-                <div class="project-id">${projectId}</div>
-                <div class="person">
-                    <img class="avatar eng-avatar" data-eng-name = "${namesOfEngineersAssignedFromAllAssessmentRecords[i]}" src="${engEmployeeProfilePicsFromAllAssessmentRecords[i]}" alt="Eng assigned profile photo">
-                    <span>${namesOfEngineersAssignedFromAllAssessmentRecords[i]}</span>
-                </div>
-                <div><span class="badge">${auditorStatusFromAllAssessmentRecords[i]}</span></div>
-                <div><span class="badge">${riskLevelFromAllAssessmentRecords[i]}</span></div>
-                <div class="date-cell">${createdDateFromAllAssessmentRecords[i].toLocaleDateString("en-CA")}</div>
-                <div>${daysOnAuditBoardFromAllAssessmentRecords[i]}</div>
-                <div class="person">
-                   ${assignedAuditor ? `
-                        <img class="avatar auditor-avatar" data-auditor-name="${assignedAuditor.getAuditorFullName()}" src="${assignedAuditor.profileImage}" alt="${assignedAuditor.getAuditorFullName()}'s profile photo">
-                        <span>${assignedAuditor.getAuditorFullName()}</span>
-                   ` : `<span class="unassigned-text">None</span>`}
-                </div>
-            </article>
-        `;
 
+        recordContainer.innerHTML += rowHTML;
     }
 }
 
