@@ -1,4 +1,4 @@
-function Header() {
+export default function Header() {
     return (
         <header>
             <p>Assessment Record</p>
@@ -6,5 +6,3 @@ function Header() {
         </header>
     )
 }
-
-export default Header;

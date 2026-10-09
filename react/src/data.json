@@ -1,0 +1,206 @@
+[
+    {
+        "assessmentRecordId": "AR0001",
+        "assessmentRecordText": "The application displays a privacy policy link from the Settings page.",
+        "status": "Active",
+        "projectId": "AT177734",
+        "engContact": "Arnold Schultz",
+        "auditorStatus": "none",
+        "riskLevel": "Low",
+        "createdDate": "2026-06-29",
+        "daysOnBoard": 5,
+        "assignedAuditor": "Charlie Guzman"
+    },
+    {
+        "assessmentRecordId": "AR0002",
+        "assessmentRecordText": "The application displays a notice informing users that AI interactions may be used to improve AI models before first use.",
+        "status": "Active",
+        "projectId": "AT948133",
+        "engContact": "Tony Gifford",
+        "auditorStatus": "none",
+        "riskLevel": "Low",
+        "createdDate": "2026-04-25",
+        "daysOnBoard": 12,
+        "assignedAuditor": "Charlie Guzman"
+    },
+    {
+        "assessmentRecordId": "AR0003",
+        "assessmentRecordText": "The application displays the End-to-End Encrypted label within the chat interface.",
+        "status": "In Progress",
+        "projectId": "AT742462",
+        "engContact": "Jeffrey Powell",
+        "auditorStatus": "none",
+        "riskLevel": "Low",
+        "createdDate": "2026-07-05",
+        "flag": false,
+        "daysOnBoard": 0,
+        "assignedAuditor": "Charlie Guzman"
+    },
+    {
+        "assessmentRecordId": "AR0004",
+        "assessmentRecordText": "Users can access privacy settings from the Account Settings menu.",
+        "status": "Active",
+        "projectId": "AT677009",
+        "engContact": "Nathan Morgan",
+        "auditorStatus": "Re-submitted to Eng",
+        "riskLevel": "Low",
+        "createdDate": "2026-02-15",
+        "daysOnBoard": 57,
+        "assignedAuditor": "Keith Dickerson"
+    },
+    {
+        "assessmentRecordId": "AR0005",
+        "assessmentRecordText": "The application displays contextual help text explaining why location permission is requested.",
+        "status": "Active",
+        "projectId": "AT364367",
+        "engContact": "Robert Kearns",
+        "auditorStatus": "Validated",
+        "riskLevel": "Low",
+        "createdDate": "2026-03-21",
+        "daysOnBoard": 4,
+        "assignedAuditor": "Keith Dickerson",
+        "evidence": [
+            {
+                "evidenceId": "EV001",
+                "type": "Behavioral",
+                "platform": "Web",
+                "description": "Screenshot showing the location permission explanation."
+            },
+            {
+                "evidenceId": "EV002",
+                "type": "Behavioral",
+                "platform": "iOS",
+                "description": "Screenshot showing the location permission explanation."
+            },
+            {
+                "evidenceId": "EV003",
+                "type": "Technical",
+                "platform": "Web",
+                "description": "JavaScript code implementing the location permission explanation"
+            }
+        ],
+        "requiredPlatforms": ["Web", "iOS", "Android"]
+    },
+    {
+        "assessmentRecordId": "AR0006",
+        "assessmentRecordText": "Users can disable personalized advertising through Privacy Settings.",
+        "status": "Active",
+        "projectId": "AT492512",
+        "engContact": "April Pullum",
+        "auditorStatus": "none",
+        "riskLevel": "Medium",
+        "createdDate": "2026-05-04",
+        "daysOnBoard": 17,
+        "assignedAuditor": "Keith Dickerson"
+    },
+    {
+        "assessmentRecordId": "AR0007",
+        "assessmentRecordText": "The application stores notification preferences associated with the authenticated user account.",
+        "status": "Active",
+        "projectId": "AT688515",
+        "engContact": "Clara Phillips",
+        "auditorStatus": "none",
+        "riskLevel": "Medium",
+        "createdDate": "2026-04-12",
+        "daysOnBoard": 22,
+        "assignedAuditor": "Ashley Robertson"
+    },
+    {
+        "assessmentRecordId": "AR0008",
+        "assessmentRecordText": "Only authenticated users can access their own privacy settings.",
+        "status": "Active",
+        "projectId": "AT786069",
+        "engContact": "Patricia Bisson",
+        "auditorStatus": "none",
+        "riskLevel": "Medium",
+        "createdDate": "2026-03-02",
+        "daysOnBoard": 27,
+        "assignedAuditor": "Ashley Robertson"
+    },
+    {
+        "assessmentRecordId": "AR0009",
+        "assessmentRecordText": "The application honors the user's selected audience when publishing Stories.",
+        "status": "Active",
+        "projectId": "AT675164",
+        "engContact": "Cynthia Eley",
+        "auditorStatus": "none",
+        "riskLevel": "Medium",
+        "createdDate": "2026-06-27",
+        "daysOnBoard": 45,
+        "assignedAuditor": "Ashley Robertson"
+    },
+    {
+        "assessmentRecordId": "AR0010",
+        "assessmentRecordText": "The application only collects contact information after the user explicitly grants permission.",
+        "status": "In Progress",
+        "projectId": "AT311429",
+        "engContact": "Rose Brewer",
+        "auditorStatus": "none",
+        "riskLevel": "Medium",
+        "createdDate": "2026-05-04",
+        "flag": false,
+        "daysOnBoard": 0,
+        "assignedAuditor": "Trevor Griffin"
+    },
+    {
+        "assessmentRecordId": "AR0011",
+        "assessmentRecordText": "Only authorized employees can access users' private messages through internal support tools.",
+        "status": "Active",
+        "projectId": "AT574830",
+        "engContact": "Kathleen Pierre",
+        "auditorStatus": "Pending Auditor Re-review",
+        "riskLevel": "High",
+        "createdDate": "2026-05-05",
+        "daysOnBoard": 30,
+        "assignedAuditor": "Trevor Griffin"
+    },
+    {
+        "assessmentRecordId": "AR0012",
+        "assessmentRecordText": "The application permanently deletes user data following an approved account deletion request.",
+        "status": "Active",
+        "projectId": "AT706000",
+        "engContact": "Rebecca Smith",
+        "auditorStatus": "Evidence Deficient",
+        "riskLevel": "High",
+        "createdDate": "2026-02-01",
+        "daysOnBoard": 52,
+        "assignedAuditor": "Trevor Griffin"
+    },
+    {
+        "assessmentRecordId": "AR0013",
+        "assessmentRecordText": "The application only shares user location data with third-party partners after obtaining user consent.",
+        "status": "Active",
+        "projectId": "AT442258",
+        "engContact": "Wendy Moser",
+        "auditorStatus": "Retired",
+        "riskLevel": "High",
+        "createdDate": "2026-04-02",
+        "flag": false,
+        "daysOnBoard": 24,
+        "assignedAuditor": "Amber Moss"
+    },
+    {
+        "assessmentRecordId": "AR0014",
+        "assessmentRecordText": "The application encrypts user messages during transmission and while stored on our servers.",
+        "status": "Active",
+        "projectId": "AT658850",
+        "engContact": "Veronica Collins",
+        "auditorStatus": "none",
+        "riskLevel": "High",
+        "createdDate": "2026-06-05",
+        "daysOnBoard": 27,
+        "assignedAuditor": "Amber Moss"
+    },
+    {
+        "assessmentRecordId": "AR0015",
+        "assessmentRecordText": "The application prevents users from accessing another user's private content through authorization enforcement.",
+        "status": "Active",
+        "projectId": "AT593551",
+        "engContact": "Arlo Kaufman",
+        "auditorStatus": "none",
+        "riskLevel": "High",
+        "createdDate": "2026-04-12",
+        "daysOnBoard": 27,
+        "assignedAuditor": "Amber Moss"
+    }
+]

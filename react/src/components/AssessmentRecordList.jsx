@@ -1,38 +1,50 @@
-function AssessmentRecordList() {
-    return (
-        <section>
-            <table>
-                <thead>
-                <tr>
-                    <th scope="col">Record ID</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Project ID</th>
-                    <th scope="col">Eng Contact</th>
-                    <th scope="col">Auditor Status</th>
-                    <th scope="col">Risk</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">Days on Board</th>
-                    <th scope="col">Assigned Auditor</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">AR0001</th>
-                    <td>The application displays a privacy policy link from the Settings page.</td>
-                    <td>Active</td>
-                    <td>AT177734</td>
-                    <td>Arnold Schultz</td>
-                    <td>none</td>
-                    <td>Low</td>
-                    <td>2026-06-29</td>
-                    <td>5</td>
-                    <td>Charlie Guzman</td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
-    )
-}
+import data from "../data.json"
+import AssessmentRecordRow from "./AssessmentRecordRow.jsx";
 
-export default AssessmentRecordList;
+export default function AssessmentRecordList({search, selectAssessmentRecord}) {
+
+
+    const assessmentRecords = data.filter((assessRecs) => {
+        return assessRecs.assessmentRecordId.includes(search);
+    }).map((assessRecs) => {
+        return (
+            <section key={assessRecs.assessmentRecordId}>
+                <AssessmentRecordRow
+                    clickAssessmentRecord = {selectAssessmentRecord}
+                    assessmentRecordId={assessRecs.assessmentRecordId}
+                    assessmentRecordText={assessRecs.assessmentRecordText}
+                    status={assessRecs.status}
+                    projectId={assessRecs.projectId}
+                    engContact={assessRecs.engContact}
+                    auditorStatus={assessRecs.auditorStatus}
+                    riskLevel={assessRecs.riskLevel}
+                    createdDate={assessRecs.createdDate}
+                    daysOnBoard={assessRecs.daysOnBoard}
+                    assignedAuditor={assessRecs.assignedAuditor}
+                />
+            </section>
+        );
+    });
+    return (
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Record ID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Project ID</th>
+                <th scope="col">Eng Contact</th>
+                <th scope="col">Auditor Status</th>
+                <th scope="col">Risk</th>
+                <th scope="col">Created</th>
+                <th scope="col">Days on Board</th>
+                <th scope="col">Assigned Auditor</th>
+            </tr>
+            </thead>
+            <tbody>
+            {assessmentRecords}
+            </tbody>
+        </table>
+    );
+
+}

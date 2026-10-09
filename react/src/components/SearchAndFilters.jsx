@@ -1,8 +1,13 @@
-export function Search() {
+export function Search({searchFields, searchUpdate}) {
+
+    function handleSearch(event) {
+        searchUpdate(event.target.value);
+    }
     return (
         <section>
             <label htmlFor="site-search">Search the dashboard:</label>
             <input
+                onChange={handleSearch}
                 className="search-input"
                 type="search"
                 placeholder="Search by record ID, project, auditor, or description..."
