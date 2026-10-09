@@ -79,7 +79,34 @@
                 "description": "JavaScript code implementing the location permission explanation"
             }
         ],
-        "requiredPlatforms": ["Web", "iOS", "Android"]
+        "requiredPlatforms": ["Web", "iOS", "Android"],
+        "reviewChecks": [
+            {
+                "id": "RC001",
+                "label": "Evidence reviewed",
+                "completed": true
+            },
+            {
+                "id": "RC002",
+                "label": "Platform coverage verified",
+                "completed": false
+            },
+            {
+                "id": "RC003",
+                "label": "Technical evidence reviewed",
+                "completed": true
+            },
+            {
+                "id": "RC004",
+                "label": "Behavioral evidence reviewed",
+                "completed": true
+            },
+            {
+                "id": "RC005",
+                "label": "Outstanding gaps resolved",
+                "completed": false
+            }
+        ]
     },
     {
         "assessmentRecordId": "AR0006",
