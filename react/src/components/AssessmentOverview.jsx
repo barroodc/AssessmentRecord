@@ -1,5 +1,6 @@
 import AssessmentSummary from "./AssessmentSummary.jsx";
 import NeedsAttention from "./NeedsAttention.jsx";
+import NextAction from "./NextAction.jsx";
 
 export default function AssessmentOverview({record}) {
     const evidence = record.evidence ?? [];
@@ -16,22 +17,32 @@ export default function AssessmentOverview({record}) {
         const hasEvidence = evidence.some((evid) => evid.platform === platform);
         return !hasEvidence;
     })
+    const nextAction = missingPlatforms.length > 0 ? "Request missing evidence" :
+        totalChecks === 0 ? "Review setup required" :
+            (completedChecks !== totalChecks) ? "Continue assessment review" :
+                "Review ready for final decision";
 
+    let nextActionDescription;
 
+    if (missingPlatforms.length > 0) {
+        nextActionDescription = `Review missing ${missingPlatforms.join(", ")} evidence and resolve remaining gaps before completing the assessment.`;
+    } else if (totalChecks === 0) {
+        nextActionDescription = "Configure the review checklist before continuing the assessment.";
+    } else if (completedChecks !== totalChecks) {
+        nextActionDescription = "Complete the remaining review checks before making a final decision.";
+    } else {
+        nextActionDescription = "All review checks are complete. The assessment is ready for a final decision.";
+    }
     return (
         <section>
 
             <h2>Assessment Overview</h2>
-            <p>{record.assessmentRecordId}</p>
-            <p>{record.assessmentRecordText}</p>
-            <p>{totalEvidence}</p>
-            <p>{behavioralEvidence}</p>
-            <p>{technicalEvidence}</p>
             <AssessmentSummary totalEvidence={totalEvidence} behavioralEvidence={behavioralEvidence}
                                technicalEvidence={technicalEvidence} evidence={evidence} platforms={platforms}
                                allPlatforms={allPlatforms} totalChecks={totalChecks} completedChecks={completedChecks}
                                completionPercentage={completionPercentage}/>
             <NeedsAttention missingPlatforms={missingPlatforms}/>
+            <NextAction nextAction={nextAction} nextActionDescription={nextActionDescription}/>
         </section>
 
     )
