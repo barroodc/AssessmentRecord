@@ -2,7 +2,7 @@ import AssessmentSummary from "./AssessmentSummary.jsx";
 import NeedsAttention from "./NeedsAttention.jsx";
 import NextAction from "./NextAction.jsx";
 
-export default function AssessmentOverview({record}) {
+export default function AssessmentOverview({record, setActiveTab, setIsReviewerNotesOpen}) {
     const evidence = record.evidence ?? [];
     const platforms = record.requiredPlatforms ?? [];
     const totalEvidence = evidence.length;
@@ -42,7 +42,8 @@ export default function AssessmentOverview({record}) {
                                allPlatforms={allPlatforms} totalChecks={totalChecks} completedChecks={completedChecks}
                                completionPercentage={completionPercentage}/>
             <NeedsAttention missingPlatforms={missingPlatforms}/>
-            <NextAction nextAction={nextAction} nextActionDescription={nextActionDescription}/>
+            <NextAction nextAction={nextAction} nextActionDescription={nextActionDescription} setActiveTab={setActiveTab}
+            setIsReviewerNotesOpen={setIsReviewerNotesOpen}/>
         </section>
 
     )

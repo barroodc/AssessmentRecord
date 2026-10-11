@@ -1,0 +1,56 @@
+.next-action-prompt {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    text-align: left;
+}
+
+.heading-for-next-action {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin: 0 0 0.75rem 0;
+}
+
+.main-action-text {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #1e293b;
+    max-width: 52ch;
+    margin: 0 0 1.5rem 0;
+}
+
+.description-for-next-action {
+    font-size: 0.7rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.ctn-review-btn {
+    height: 48px;
+    padding: 0 24px;
+    background-color: #287F7D;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.ctn-review-btn:hover {
+    background-color: #216a68;
+}
+
+.ctn-review-btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
