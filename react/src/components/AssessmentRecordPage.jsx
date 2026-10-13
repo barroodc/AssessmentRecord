@@ -1,6 +1,8 @@
 import AssessmentHeader from "./AssessmentHeader.jsx"
 import AssessmentTabs from "./AssessmentTabs.jsx";
 import AssessmentOverview from "./AssessmentOverview.jsx";
+import ReviewerNotes from "./ReviewerNotes.jsx";
+import AssessmentEvidence from "./AssessmentEvidence.jsx";
 import React from "react";
 
 export default function AssessmentRecordPage({record, clearSelection}) {
@@ -11,9 +13,12 @@ export default function AssessmentRecordPage({record, clearSelection}) {
         <main>
             <AssessmentHeader record={record} clearSelection={clearSelection}/>
             <AssessmentTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
-            {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab}/> :
-                 activeTab === "evidence" ? "Submitted Evidence" :
+            {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab} setIsReviewerNotesOpen={setIsReviewerNotesOpen}/> :
+                 activeTab === "evidence" ? <AssessmentEvidence record={record} /> :
                  activeTab === "review" ? "Auditor Review" : ""}
+            {isReviewerNotesOpen && (
+                <ReviewerNotes setIsReviewerNotesOpen={setIsReviewerNotesOpen}/>
+            )}
         </main>
     )
 }

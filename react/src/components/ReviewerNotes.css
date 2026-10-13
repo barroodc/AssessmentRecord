@@ -1,0 +1,14 @@
+.reviewer-notes-panel {
+    position: fixed;
+    top: 80px;
+    right: 24px;
+    width: 360px;
+    max-height: calc(100vh - 104px);
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    z-index: 20;
+}
