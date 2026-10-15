@@ -79,7 +79,11 @@
                 "description": "JavaScript code implementing the location permission explanation"
             }
         ],
-        "requiredPlatforms": ["Web", "iOS", "Android"],
+        "requiredPlatforms": [
+            "Web",
+            "iOS",
+            "Android"
+        ],
         "reviewChecks": [
             {
                 "id": "RC001",
@@ -105,6 +109,62 @@
                 "id": "RC005",
                 "label": "Outstanding gaps resolved",
                 "completed": false
+            }
+        ],
+        "reviewQuestions": [
+            {
+                "id": "RC001",
+                "label": "Contextual location-permission help is displayed on Web",
+                "description": "Verify that the Web interface displays help text explaining the location-permission request. Confirm its placement and visibility using the submitted screenshot.",
+                "answer": "yes",
+                "evidenceIds": [
+                    "EV001"
+                ],
+                "reviewerNotes": "Mock review outcome based on the submitted Web screenshot description; actual image inspection is still needed.",
+                "flagged": false
+            },
+            {
+                "id": "RC002",
+                "label": "Contextual location-permission help is displayed on iOS",
+                "description": "Verify that the iOS interface displays help text explaining the location-permission request. Confirm its placement and visibility using the submitted screenshot.",
+                "answer": "yes",
+                "evidenceIds": [
+                    "EV002"
+                ],
+                "reviewerNotes": "Mock review outcome based on the submitted iOS screenshot description; actual image inspection is still needed.",
+                "flagged": false
+            },
+            {
+                "id": "RC003",
+                "label": "Location-permission help is verifiable on Android",
+                "description": "Verify that Android displays the explanation in the applicable permission-request flow. Android is a required platform, but no Android evidence has been submitted.",
+                "answer": null,
+                "evidenceIds": [],
+                "reviewerNotes": "Android evidence is missing; request a screenshot or recording of the relevant flow.",
+                "flagged": true
+            },
+            {
+                "id": "RC004",
+                "label": "The explanation clearly describes why location access is requested",
+                "description": "Inspect the actual help text to confirm it explains the purpose of location access in language users can understand, rather than merely naming the permission.",
+                "answer": null,
+                "evidenceIds": [
+                    "EV001",
+                    "EV002"
+                ],
+                "reviewerNotes": "Screenshots are referenced, but their actual text has not been inspected in this mock dataset.",
+                "flagged": false
+            },
+            {
+                "id": "RC005",
+                "label": "The technical implementation presents help at the appropriate time",
+                "description": "Verify that the help text is connected to the relevant location-permission flow and is shown before or alongside the permission decision, where applicable.",
+                "answer": null,
+                "evidenceIds": [
+                    "EV003"
+                ],
+                "reviewerNotes": "The Web code reference exists, but its control flow and timing have not been reviewed.",
+                "flagged": false
             }
         ]
     },

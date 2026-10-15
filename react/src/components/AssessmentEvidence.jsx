@@ -1,24 +1,51 @@
-
+import "./AssessmentEvidence.css";
 import React from "react";
 
 export default function AssessmentEvidence({record}) {
     const evidence = record.evidence ?? [];
     const [selectedEvidenceId, setSelectedEvidenceId] = React.useState(evidence[0]?.evidenceId ?? null);
-    const selectedEvidence = evidence.find((evid) => evid.evidenceId === selectedEvidenceId);
-    const selectedEvidenceIndex = evidence.findIndex((evid) => evid.evidenceId === selectedEvidenceId);
+    const [evidenceFilter, setEvidenceFilter] = React.useState("All");
+    const filteredEvidence = evidence.filter((evid) => {
+        return evidenceFilter === "All" || evid.type === evidenceFilter;
+    })
+    const selectedEvidence = filteredEvidence.find((evid) => evid.evidenceId === selectedEvidenceId);
+    const selectedEvidenceIndex = filteredEvidence.findIndex((evid) => evid.evidenceId === selectedEvidenceId);
     return (
         <section>
+            <button type="button" aria-pressed={evidenceFilter === "All"} onClick={() => {
+                setEvidenceFilter("All")
+                setSelectedEvidenceId(evidence[0]?.evidenceId ?? null);
+            }}>All</button>
+            <button type="button" aria-pressed={evidenceFilter === "Behavioral"} onClick={() => {
+                setEvidenceFilter("Behavioral")
+                const firstBehavioralEvidence = evidence.find(evid => evid.type === "Behavioral");
+                setSelectedEvidenceId(
+                    firstBehavioralEvidence?.evidenceId ?? null
+                )
+            }}>Behavioral</button>
+            <button type="button" aria-pressed={evidenceFilter === "Technical"} onClick={() => {
+                setEvidenceFilter("Technical")
+                const firstTechnicalEvidence = evidence.find(evid => evid.type === "Technical");
+                setSelectedEvidenceId(
+                    firstTechnicalEvidence?.evidenceId ?? null
+                );
+            }}>Technical</button>
             <h3>Submitted Evidence</h3>
             <p>Total number of evidence items: {evidence.length}</p>
-            {evidence.map((evid) => (
-                <article key={evid.evidenceId}>
+            {filteredEvidence.map((evid) => (
+                <article key={evid.evidenceId} className={evid.evidenceId === selectedEvidenceId ? "selected-evidence" : ""}>
                     <p>{evid.evidenceId}</p>
                     <p>{evid.type}</p>
                     <p>{evid.platform}</p>
                     <p>{evid.description}</p>
-                    <button type="button" onClick={()=> setSelectedEvidenceId(evid.evidenceId)}>Display Evidence ID</button>
+                    <button type="button" aria-current={evid.evidenceId === selectedEvidenceId ? true : undefined} onClick={()=> setSelectedEvidenceId(evid.evidenceId)}>View {evid.evidenceId}</button>
+
                 </article>
             ))}
+
+            {evidence.length > 0 && filteredEvidence.length === 0 && (
+                <p>No evidence matches this filter.</p>
+            )}
 
             {evidence.length === 0 ? "No evidence submitted" : ""}
             {selectedEvidence && (
@@ -28,9 +55,9 @@ export default function AssessmentEvidence({record}) {
                     <p>{selectedEvidence.type}</p>
                     <p>{selectedEvidence.platform}</p>
                     <p>{selectedEvidence.description}</p>
-                    <button type="button" disabled={selectedEvidenceIndex === evidence.length - 1} onClick={() => setSelectedEvidenceId(evidence[selectedEvidenceIndex + 1].evidenceId)}>Next</button>
-                    <button type="button" disabled={selectedEvidenceIndex === 0} onClick={() => setSelectedEvidenceId(evidence[selectedEvidenceIndex - 1].evidenceId)}>Previous</button>
-                    <p>{selectedEvidenceIndex + 1} / {evidence.length}</p>
+                    <button type="button" disabled={selectedEvidenceIndex === filteredEvidence.length - 1} onClick={() => setSelectedEvidenceId(filteredEvidence[selectedEvidenceIndex + 1].evidenceId)}>Next</button>
+                    <button type="button" disabled={selectedEvidenceIndex === 0} onClick={() => setSelectedEvidenceId(filteredEvidence[selectedEvidenceIndex - 1].evidenceId)}>Previous</button>
+                    <p>{selectedEvidenceIndex + 1} / {filteredEvidence.length}</p>
                 </section>
             )}
         </section>
