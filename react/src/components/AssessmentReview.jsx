@@ -24,6 +24,14 @@ export default function AssessmentReview({record}) {
         }), {})
     );
 
+    const [activeGapQuestionId, setActiveGapQuestionId] = useState(null);
+
+    const [gapTitle, setGapTitle] = useState("");
+
+    const [gapDescription, setGapDescription] = useState("");
+
+
+
     const totalQuestions = reviewQuestions.length;
     const answeredQuestions = (Object.values(answers).filter((actualQuestions) => actualQuestions !== null && actualQuestions !== undefined)).length;
     let progressPercentage = 0;
@@ -87,6 +95,19 @@ export default function AssessmentReview({record}) {
                                 }))} aria-label={flags[reviewItems.id] === false ? "Flag an issue" : "Remove flag"} title={flags[reviewItems.id] === false ? "Flag an issue" : "Remove flag"}>
                                     <Flag size={18} strokeWidth={1.8}/>
                                 </button>
+
+                                <button type="button" onClick={() => {setActiveGapQuestionId(reviewItems.id); setGapTitle("")} }>+ Create evidence gap</button>
+
+                                {activeGapQuestionId === reviewItems.id && <div>
+                                    <h5>Create Evidence Gap</h5>
+                                    <p>Creating a gap for {reviewItems.id}</p>
+                                    <button type="button" onClick={() =>{setActiveGapQuestionId(null); setGapTitle("");}}>Cancel</button>
+                                    <label htmlFor="evidence-gap-title">Evidence Gap Title</label>
+                                    <input id={"evidence-gap-title"} value={gapTitle} placeholder="Describe the evidence gap" onChange={(event) => setGapTitle(event.target.value)}/>
+                                    <label htmlFor="evidence-gap-description">Evidence Gap Description</label>
+
+                                </div>}
+
                                 <p>Selected answer: {answers[reviewItems.id] ?? "Unanswered"}</p>
                             </div>
 
