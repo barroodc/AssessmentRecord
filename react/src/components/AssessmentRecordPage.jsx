@@ -19,7 +19,7 @@ export default function AssessmentRecordPage({record, clearSelection}) {
             <AssessmentTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
             {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab} setIsReviewerNotesOpen={setIsReviewerNotesOpen}/> :
                  activeTab === "evidence" ? <AssessmentEvidence record={record} /> :
-                 activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps}/> : activeTab==="gapsAndActions" ? <AssessmentGaps createdGaps={createdGaps}/> : ""}
+                 activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps}/> : activeTab==="gapsAndActions" ? <AssessmentGaps createdGaps={createdGaps} setCreatedGaps={setCreatedGaps}/> : ""}
             {isReviewerNotesOpen && (
                 <ReviewerNotes setIsReviewerNotesOpen={setIsReviewerNotesOpen}/>
             )}

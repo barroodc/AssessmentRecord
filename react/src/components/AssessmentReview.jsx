@@ -54,7 +54,8 @@ export default function AssessmentReview({record, setCreatedGaps}) {
             title: gapTitle,
             description: gapDescription,
             requestedEvidence: requestedEvidence,
-            status: "open"
+            status: "open",
+            responses: []
         }
 
         setCreatedGaps(previousGaps => [
