@@ -2,7 +2,7 @@ import "./AssessmentReview.css"
 import React, {useState} from "react";
 import { Flag } from "lucide-react";
 
-export default function AssessmentReview({record}) {
+export default function AssessmentReview({record, setCreatedGaps}) {
     const reviewQuestions = record.reviewQuestions ?? [];
     const [answers, setAnswers] = useState(() =>
         reviewQuestions.reduce((acc, question) => ({
@@ -30,6 +30,7 @@ export default function AssessmentReview({record}) {
 
     const [gapDescription, setGapDescription] = useState("");
 
+    const [requestedEvidence, setRequestedEvidence] = useState("");
 
 
     const totalQuestions = reviewQuestions.length;
@@ -40,7 +41,34 @@ export default function AssessmentReview({record}) {
         progressPercentage = (answeredQuestions / totalQuestions) * 100;
     }
 
+    function handleCreateGap() {
+        if (gapTitle.trim() === "" || gapDescription.trim() === "" || requestedEvidence.trim() === "") {
+            alert("please complete all fields");
+            return
+        }
 
+
+        const newGap = {
+           id: crypto.randomUUID(),
+            reviewQuestionId: activeGapQuestionId,
+            title: gapTitle,
+            description: gapDescription,
+            requestedEvidence: requestedEvidence,
+            status: "open"
+        }
+
+        setCreatedGaps(previousGaps => [
+            ...previousGaps,
+            newGap
+        ]);
+
+        setActiveGapQuestionId(null)
+        setGapTitle("")
+        setGapDescription("")
+        setRequestedEvidence("")
+
+        console.log(newGap);
+    }
 
     return (
         <section>
@@ -96,16 +124,19 @@ export default function AssessmentReview({record}) {
                                     <Flag size={18} strokeWidth={1.8}/>
                                 </button>
 
-                                <button type="button" onClick={() => {setActiveGapQuestionId(reviewItems.id); setGapTitle("")} }>+ Create evidence gap</button>
+                                <button type="button" onClick={() => {setActiveGapQuestionId(reviewItems.id); setGapTitle(""); setGapDescription(""); setRequestedEvidence("");} }>+ Create evidence gap</button>
 
                                 {activeGapQuestionId === reviewItems.id && <div>
                                     <h5>Create Evidence Gap</h5>
                                     <p>Creating a gap for {reviewItems.id}</p>
-                                    <button type="button" onClick={() =>{setActiveGapQuestionId(null); setGapTitle("");}}>Cancel</button>
+                                    <button type="button" onClick={() =>{setActiveGapQuestionId(null); setGapTitle(""); setGapDescription(""); setRequestedEvidence("");}}>Cancel</button>
                                     <label htmlFor="evidence-gap-title">Evidence Gap Title</label>
                                     <input id={"evidence-gap-title"} value={gapTitle} placeholder="Describe the evidence gap" onChange={(event) => setGapTitle(event.target.value)}/>
                                     <label htmlFor="evidence-gap-description">Evidence Gap Description</label>
-
+                                    <textarea id="evidence-gap-description" value={gapDescription} placeholder="Explain what evidence is missing..." onChange={(event) => setGapDescription(event.target.value)}/>
+                                    <label htmlFor="requested-evidence">Requested Evidence</label>
+                                    <textarea id="requested-evidence" value={requestedEvidence} onChange={(event) => setRequestedEvidence(event.target.value)}/>
+                                    <button type="button" onClick={() => handleCreateGap()}>Create Gap</button>
                                 </div>}
 
                                 <p>Selected answer: {answers[reviewItems.id] ?? "Unanswered"}</p>

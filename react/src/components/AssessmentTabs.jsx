@@ -5,6 +5,7 @@ export default function AssessmentTabs({activeTab, setActiveTab}) {
                 <button onClick={() => setActiveTab("overview")}>Overview</button>
                 <button onClick={() => setActiveTab("evidence")}>Evidence</button>
                 <button onClick={() => setActiveTab("review")}>Review</button>
+                <button onClick={() => setActiveTab("gapsAndActions")}>Gaps & Actions</button>
             </nav>
         </section>
     )
