@@ -12,6 +12,7 @@ export default function AssessmentRecordPage({record, clearSelection}) {
     const [activeTab, setActiveTab] = React.useState("overview");
     const [isReviewerNotesOpen, setIsReviewerNotesOpen] = React.useState(false);
     const [createdGaps, setCreatedGaps] = React.useState([]);
+    const [createdActionItems, setCreatedActionItems] = React.useState([]);
 
     return (
         <main>
@@ -19,7 +20,8 @@ export default function AssessmentRecordPage({record, clearSelection}) {
             <AssessmentTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
             {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab} setIsReviewerNotesOpen={setIsReviewerNotesOpen}/> :
                  activeTab === "evidence" ? <AssessmentEvidence record={record} /> :
-                 activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps}/> : activeTab==="gapsAndActions" ? <AssessmentGaps createdGaps={createdGaps} setCreatedGaps={setCreatedGaps}/> : ""}
+                 activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps}/> : activeTab==="gapsAndActions" ?
+                     <AssessmentGaps createdGaps={createdGaps} setCreatedGaps={setCreatedGaps} createdActionItems={createdActionItems} setCreatedActionItems={setCreatedActionItems}/> : ""}
             {isReviewerNotesOpen && (
                 <ReviewerNotes setIsReviewerNotesOpen={setIsReviewerNotesOpen}/>
             )}

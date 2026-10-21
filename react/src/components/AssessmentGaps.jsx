@@ -1,11 +1,16 @@
 import { useState } from "react";
 
-export default function AssessmentGaps({createdGaps, setCreatedGaps}) {
+export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActionItems, setCreatedActionItems}) {
 
     const [activeGapsTab, setActiveGapsTab] = useState("gaps");
     const [expandedGapId, setExpandedGapId] = useState(null);
     const [activeResponseGapId, setActiveResponseGapId] = useState(null);
     const [responseText, setResponseText] = useState("");
+    const [actionTitle, setActionTitle] = useState("");
+    const [actionDescription, setActionDescription] = useState("");
+    const [actionAssignee, setActionAssignee] = useState("");
+    const [actionPriority, setActionPriority] = useState("medium");
+    const [actionEvidenceGapId, setActionEvidenceGapId] = useState("");
 
     function handleResolveGap(gapId, gapStatus) {
         setCreatedGaps(previousGaps => {
@@ -41,6 +46,28 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps}) {
         setResponseText("")
         setActiveResponseGapId(null);
         }
+
+        function handleCreateActionItem() {
+        if (actionTitle.trim() === "" || actionDescription.trim() === "" || actionAssignee.trim() === "") {
+            alert("please be sure to fill out all fields");
+            return;
+        }
+
+        const newActionItem = {
+            id: crypto.randomUUID(),
+            title: actionTitle,
+            description: actionDescription,
+            assignee: actionAssignee,
+            status: "open",
+            evidenceGapId: actionEvidenceGapId || null,
+            priorityLevel: actionPriority
+        }
+
+        setCreatedActionItems(actionItems => [
+            ...actionItems,
+            newActionItem
+        ])
+    }
 
 
     return (
@@ -99,7 +126,25 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps}) {
                     )}
 
                 </article>
-            )): activeGapsTab === "actions" ? <h4>Action Items</h4> : <p>No evidence gaps have been created yet.</p>}
+            )): activeGapsTab === "actions" ?
+                <div>
+                    <h4>Create Action Item</h4>
+                    <input id="action-item-title" value={actionTitle} placeholder="Describe the action item" onChange={(event) => setActionTitle(event.target.value)}/>
+                    <textarea id="action-item-description" value={actionDescription} onChange={(event) => setActionDescription(event.target.value)}/>
+                    <input id="action-item-assignee" value={actionAssignee} placeholder="name of assignee" onChange={(event) => setActionAssignee(event.target.value)}/>
+                    <select value={actionPriority} onChange={(event) => setActionPriority(event.target.value)}>
+                        <option value="low">low</option>
+                        <option value="medium">medium</option>
+                        <option value="high">high</option>
+                    </select>
+                    <select value={actionEvidenceGapId} onChange={(event) => setActionEvidenceGapId(event.target.value)}>
+                        <option value="">No associated evidence gap</option>
+                        {createdGaps.map((gaps) => (
+                            <option value={gaps.id} key={gaps.id}>{gaps.title}</option>
+                        ))}
+                    </select>
+                    <button type="button" onClick={() => handleCreateActionItem()}>Create Action Item</button>
+                </div> : <p>No evidence gaps have been created yet.</p>}
 
         </section>
     )
