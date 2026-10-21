@@ -21,6 +21,28 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps}) {
         });
     }
 
+    function handleSubmitResponse(gapId, gapResponse) {
+
+        if (gapResponse.trim() === "") {
+            alert("please create a response before submitting")
+            return
+        }
+            setCreatedGaps(previousGaps => {
+                return previousGaps.map(gaps => {
+                    if (gapId === gaps.id) {
+                        return {
+                            ...gaps,
+                            responses: [...gaps.responses, gapResponse]
+                        }
+                    }
+                    return gaps;
+                })
+            });
+        setResponseText("")
+        setActiveResponseGapId(null);
+        }
+
+
     return (
         <section>
             <h3>Gaps & Actions</h3>
@@ -42,8 +64,34 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps}) {
                             <p>{gapsMade.description}</p>
                             <p>{gapsMade.requestedEvidence}</p>
 
-                            <button type="button" onClick={() => activeResponseGapId === gapsMade.id ? setActiveResponseGapId(null) : setActiveResponseGapId(gapsMade.id)}>Add Response</button>
-                            {activeResponseGapId === gapsMade.id && <textarea id="active-response-text" value={responseText} onChange={(event) => setResponseText(event.target.value)}/>}
+                            <div>
+                                <h4>Responses</h4>
+                                {gapsMade.responses.length === 0 && (
+                                    <p>No responses yet</p>
+                                )}
+                                {gapsMade.responses.length !== 0 && (
+                                   gapsMade.responses.map((response, index) => {
+                                       return <p key={index}>{response}</p>
+                                   })
+                                )}
+                            </div>
+
+                            <button type="button" onClick={() => {
+                                activeResponseGapId === gapsMade.id ? setActiveResponseGapId(null) : setActiveResponseGapId(gapsMade.id)
+                                setResponseText("");
+                            }
+                            }>Add Response</button>
+                            {
+                               activeResponseGapId === gapsMade.id && (
+                                    <div>
+                                        <textarea id="active-response-text" value={responseText} onChange={(event) => setResponseText(event.target.value)}/>
+
+                                        <button type="button" onClick={() => handleSubmitResponse(gapsMade.id, responseText)}>
+                                            Submit Response
+                                        </button>
+                                    </div>
+                                )
+                            }
 
                                 <button type="button" onClick={() => handleResolveGap(gapsMade.id, gapsMade.status === "open" ?
                                     "resolved" : "open")}>{gapsMade.status === "open" ? "Resolve Gap" : "Reopen Gap"}</button>
