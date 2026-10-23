@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import "./AssessmentGaps.css";
 export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActionItems, setCreatedActionItems}) {
 
     const [activeGapsTab, setActiveGapsTab] = useState("gaps");
@@ -67,8 +67,31 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
             ...actionItems,
             newActionItem
         ])
+
+        setActionTitle("");
+        setActionDescription("");
+        setActionAssignee("");
+        setActionPriority("medium");
+        setActionEvidenceGapId("");
     }
 
+    function handleUpdateActionStatus(actionId, newStatus) {
+        setCreatedActionItems(actionItems => {
+            return actionItems.map((item) => {
+                if (item.id === actionId) {
+                    return {
+                        ...item,
+                        status: newStatus
+                    }
+                }
+                return item;
+            })
+        })
+    }
+
+    const openActionItems = createdActionItems.filter((actionItem) => actionItem.status === "open");
+    const inProgressActionItems = createdActionItems.filter((actionItem) => actionItem.status === "in_progress");
+    const completedActionItems = createdActionItems.filter((actionItem) => actionItem.status === "completed");
 
     return (
         <section>
@@ -144,6 +167,60 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
                         ))}
                     </select>
                     <button type="button" onClick={() => handleCreateActionItem()}>Create Action Item</button>
+                    <div className="action-board">
+                        <section className="action-column">
+                            <h4>Open</h4>
+                            {openActionItems.length}
+                            {openActionItems.length !== 0 ? openActionItems.map((actionItems) => (
+                                <article key={actionItems.id}>
+                                    <p className="action-card-title">{actionItems.title}</p>
+                                    <p className="action-card-assignee">{actionItems.assignee}</p>
+                                    <p className={`action-card-priority priority-${actionItems.priorityLevel}`}>{actionItems.priorityLevel}</p>
+                                    <select value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
+                                        <option value="open">Open</option>
+                                        <option value="in_progress">In progress</option>
+                                        <option value="completed">Completed</option>
+                                    </select>
+                                </article>
+                            )) : "No open action items"}
+                        </section>
+
+                        <section className="action-column">
+                            <h4>In Progress</h4>
+                            {inProgressActionItems.length}
+                            {inProgressActionItems.length !== 0 ? inProgressActionItems.map((actionItems) => (
+                                <article key={actionItems.id}>
+                                    <p className="action-card-title">{actionItems.title}</p>
+                                    <p className="action-card-assignee">{actionItems.assignee}</p>
+                                    <p className={`action-card-priority priority-${actionItems.priorityLevel}`}>{actionItems.priorityLevel}</p>
+                                    <select value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
+                                        <option value="open">Open</option>
+                                        <option value="in_progress">In progress</option>
+                                        <option value="completed">Completed</option>
+                                    </select>
+                                </article>
+                            )) : "No action items in progress"}
+                        </section>
+
+                        <section className="action-column">
+                            <h4>Completed</h4>
+                            {completedActionItems.length}
+                            {completedActionItems.length !== 0 ? completedActionItems.map((actionItems) => (
+                                <article key={actionItems.id}>
+                                    <p className="action-card-title">{actionItems.title}</p>
+                                    <p className="action-card-assignee">{actionItems.assignee}</p>
+                                    <p className={`action-card-priority priority-${actionItems.priorityLevel}`}>{actionItems.priorityLevel}</p>
+                                    <select value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
+                                        <option value="open">Open</option>
+                                        <option value="in_progress">In progress</option>
+                                        <option value="completed">Completed</option>
+                                    </select>
+                                </article>
+                            )) : "No completed action items"}
+                        </section>
+
+                    </div>
+
                 </div> : <p>No evidence gaps have been created yet.</p>}
 
         </section>

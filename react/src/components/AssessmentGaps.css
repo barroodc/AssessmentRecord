@@ -1,0 +1,64 @@
+
+.action-board {
+    display: flex;
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .action-board {
+        flex-direction: column;
+    }
+}
+
+.action-column {
+    background-color: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.action-column article {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.action-card-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.action-card-assignee {
+    font-size: 14px;
+    font-weight: 400;
+    color: #64748b;
+}
+
+.action-card-priority {
+    font-size: 12px;
+    font-weight: 600;
+    width: fit-content;
+    color: #475569;
+    background-color: #e2e8f0;
+    border-radius: 6px;
+    padding: 4px 8px;
+}
+
+.priority-high {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.priority-medium {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.priority-low {
+    background-color: #dcfce7;
+    color: #166534;
+}
