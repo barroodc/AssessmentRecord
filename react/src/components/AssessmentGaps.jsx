@@ -176,7 +176,7 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
                                     <p className="action-card-title">{actionItems.title}</p>
                                     <p className="action-card-assignee">{actionItems.assignee}</p>
                                     <p className={`action-card-priority priority-${actionItems.priorityLevel}`}>{actionItems.priorityLevel}</p>
-                                    <select value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
+                                    <select className="action-card-status" value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
                                         <option value="open">Open</option>
                                         <option value="in_progress">In progress</option>
                                         <option value="completed">Completed</option>
@@ -193,7 +193,7 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
                                     <p className="action-card-title">{actionItems.title}</p>
                                     <p className="action-card-assignee">{actionItems.assignee}</p>
                                     <p className={`action-card-priority priority-${actionItems.priorityLevel}`}>{actionItems.priorityLevel}</p>
-                                    <select value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
+                                    <select className="action-card-status" value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
                                         <option value="open">Open</option>
                                         <option value="in_progress">In progress</option>
                                         <option value="completed">Completed</option>
@@ -210,7 +210,7 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
                                     <p className="action-card-title">{actionItems.title}</p>
                                     <p className="action-card-assignee">{actionItems.assignee}</p>
                                     <p className={`action-card-priority priority-${actionItems.priorityLevel}`}>{actionItems.priorityLevel}</p>
-                                    <select value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
+                                    <select className="action-card-status" value={actionItems.status} onChange={(event) => handleUpdateActionStatus(actionItems.id, event.target.value)}>
                                         <option value="open">Open</option>
                                         <option value="in_progress">In progress</option>
                                         <option value="completed">Completed</option>

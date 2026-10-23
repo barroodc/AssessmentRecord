@@ -25,6 +25,11 @@
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 12px;
+    transition: border-color 0.2s ease;
+}
+
+.action-column article:hover{
+    border-color: #94a3b8;
 }
 
 .action-card-title {
@@ -61,4 +66,23 @@
 .priority-low {
     background-color: #dcfce7;
     color: #166534;
+}
+
+.action-card-status {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.action-card-status:hover {
+    border-color: #94a3b8;
+}
+
+.action-card-status:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
 }

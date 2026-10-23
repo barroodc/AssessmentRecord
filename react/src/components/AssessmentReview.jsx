@@ -2,27 +2,9 @@ import "./AssessmentReview.css"
 import React, {useState} from "react";
 import { Flag } from "lucide-react";
 
-export default function AssessmentReview({record, setCreatedGaps}) {
+export default function AssessmentReview({record, setCreatedGaps, answers, setAnswers,
+                                             notes, setNotes, flags, setFlags, totalQuestions, answeredQuestions, progressPercentage}) {
     const reviewQuestions = record.reviewQuestions ?? [];
-    const [answers, setAnswers] = useState(() =>
-        reviewQuestions.reduce((acc, question) => ({
-            ...acc,
-            [question.id]: question.answer
-        }), {})
-    );
-    const [notes, setNotes] = useState(() =>
-        reviewQuestions.reduce((acc, note) =>({
-            ...acc,
-            [note.id]: note.reviewerNotes ?? ""
-        }), {})
-    );
-
-    const [flags, setFlags] = useState(() =>
-        reviewQuestions.reduce((acc, flag) => ({
-            ...acc,
-            [flag.id]: flag.flagged ?? false
-        }), {})
-    );
 
     const [activeGapQuestionId, setActiveGapQuestionId] = useState(null);
 
@@ -32,14 +14,6 @@ export default function AssessmentReview({record, setCreatedGaps}) {
 
     const [requestedEvidence, setRequestedEvidence] = useState("");
 
-
-    const totalQuestions = reviewQuestions.length;
-    const answeredQuestions = (Object.values(answers).filter((actualQuestions) => actualQuestions !== null && actualQuestions !== undefined)).length;
-    let progressPercentage = 0;
-
-    if (totalQuestions !== 0) {
-        progressPercentage = (answeredQuestions / totalQuestions) * 100;
-    }
 
     function handleCreateGap() {
         if (gapTitle.trim() === "" || gapDescription.trim() === "" || requestedEvidence.trim() === "") {

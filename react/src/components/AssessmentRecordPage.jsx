@@ -5,22 +5,52 @@ import ReviewerNotes from "./ReviewerNotes.jsx";
 import AssessmentEvidence from "./AssessmentEvidence.jsx";
 import AssessmentReview from "./AssessmentReview.jsx"
 import AssessmentGaps from "./AssessmentGaps.jsx";
-import React from "react";
+import React, {useState} from "react";
 
 export default function AssessmentRecordPage({record, clearSelection}) {
 
-    const [activeTab, setActiveTab] = React.useState("overview");
-    const [isReviewerNotesOpen, setIsReviewerNotesOpen] = React.useState(false);
-    const [createdGaps, setCreatedGaps] = React.useState([]);
-    const [createdActionItems, setCreatedActionItems] = React.useState([]);
+    const [activeTab, setActiveTab] = useState("overview");
+    const [isReviewerNotesOpen, setIsReviewerNotesOpen] = useState(false);
+    const [createdGaps, setCreatedGaps] = useState([]);
+    const [createdActionItems, setCreatedActionItems] = useState([]);
+    const [answers, setAnswers] = useState(() =>
+        (record.reviewQuestions ?? []).reduce((acc, question) => ({
+            ...acc,
+            [question.id]: question.answer
+        }), {})
+    );
+
+    const [notes, setNotes] = useState(() => (record.reviewQuestions ?? []).reduce((acc, note) =>({
+        ...acc,
+        [note.id]: note.reviewerNotes ?? ""
+         }), {})
+    );
+
+    const [flags, setFlags] = useState(() => (record.reviewQuestions ?? []).reduce((acc, flag) =>({
+        ...acc,
+        [flag.id]: flag.flagged ?? false
+        }), {})
+    );
+
+    const totalQuestions = (record.reviewQuestions ?? []).length;
+    const answeredQuestions = (Object.values(answers).filter((actualQuestions) => actualQuestions !== null && actualQuestions !== undefined)).length;
+    let progressPercentage = 0;
+
+    if (totalQuestions !== 0) {
+        progressPercentage = (answeredQuestions / totalQuestions) * 100;
+    }
 
     return (
         <main>
             <AssessmentHeader record={record} clearSelection={clearSelection}/>
             <AssessmentTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
-            {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab} setIsReviewerNotesOpen={setIsReviewerNotesOpen}/> :
+            {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab}
+                                                            setIsReviewerNotesOpen={setIsReviewerNotesOpen}
+                                                            totalQuestions={totalQuestions} answeredQuestions={answeredQuestions} progressPercentage={progressPercentage}/> :
                  activeTab === "evidence" ? <AssessmentEvidence record={record} /> :
-                 activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps}/> : activeTab==="gapsAndActions" ?
+                 activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps} answers={answers} setAnswers={setAnswers}
+                                                            notes={notes} setNotes={setNotes} flags={flags} setFlags={setFlags} totalQuestions={totalQuestions}
+                                                            answeredQuestions={answeredQuestions} progressPercentage={progressPercentage}/> : activeTab==="gapsAndActions" ?
                      <AssessmentGaps createdGaps={createdGaps} setCreatedGaps={setCreatedGaps} createdActionItems={createdActionItems} setCreatedActionItems={setCreatedActionItems}/> : ""}
             {isReviewerNotesOpen && (
                 <ReviewerNotes setIsReviewerNotesOpen={setIsReviewerNotesOpen}/>

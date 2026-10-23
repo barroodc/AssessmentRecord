@@ -3,47 +3,48 @@ import "./AssessmentSummary.css";
 export default function AssessmentSummary({totalEvidence, behavioralEvidence, technicalEvidence, evidence, platforms,
                                           allPlatforms, totalChecks, completedChecks, completionPercentage}) {
     return (
-        <section>
+        <section className="assessment-summary-card">
             <h3>Assessment Summary</h3>
-            <article>
-                {totalEvidence}
-                <p>Evidence items</p>
-                <p>Behavioral Evidence: {behavioralEvidence} · Technical Evidence: {technicalEvidence}</p>
-            </article>
-            <div>
-                <p>Platform coverage</p>
-                {allPlatforms.map((platform) => {
-                    const isPlatformRequired = platforms.includes(platform);
-                    const platformEvidenceCount = evidence.filter((evid) => evid.platform === platform).length;
-                    const isEvidenceMissing = isPlatformRequired && platformEvidenceCount === 0;
-
-                    return (
-
-                        <p key={platform}>{platform}: {!isPlatformRequired ? "Not applicable" : isEvidenceMissing ? "Missing"
-                            : "Evidence Present"}</p>
-
-                    )
-                })}
-            </div>
-            <article>
-                <p>Review progress</p>
+            <div className="assessment-summary-grid">
+                <article>
+                    <div className="assessment-evidence-count">{totalEvidence}</div>
+                    <p className="assessment-evidence-label">Evidence items</p>
+                    <p className="assessment-evidence-details">Behavioral Evidence: {behavioralEvidence} · Technical Evidence: {technicalEvidence}</p>
+                </article>
                 <div>
-                    {totalChecks !== 0 ? (
-                        <>
-                            <p>{completedChecks} of {totalChecks} checks completed</p>
-                            <p>{completionPercentage}%</p>
-                        </>
-                    ): "No checks configured"}
+                    <p>Platform coverage</p>
+                    {allPlatforms.map((platform) => {
+                        const isPlatformRequired = platforms.includes(platform);
+                        const platformEvidenceCount = evidence.filter((evid) => evid.platform === platform).length;
+                        const isEvidenceMissing = isPlatformRequired && platformEvidenceCount === 0;
 
+                        return (
+                            <div className="platform-row"><p className={!isPlatformRequired ? "platform-not-applicable" : isEvidenceMissing ? "platform-missing" : "platform-present"} key={platform}>{platform}: {!isPlatformRequired ? "Not applicable" : isEvidenceMissing ? "Missing"
+                                : "Evidence Present"}</p></div>
+                        )
+                    })}
                 </div>
-                <div className="review-progress-track">
-                    <div
-                        className="review-progress-fill"
-                        style={{ width: `${completionPercentage}%` }}
-                    />
-                </div>
+                <article>
+                    <p>Review progress</p>
+                    <div>
+                        {totalChecks !== 0 ? (
+                            <>
+                                <p>{completedChecks} of {totalChecks} checks completed</p>
+                                <p>{completionPercentage}%</p>
+                            </>
+                        ): "No checks configured"}
 
-            </article>
+                    </div>
+                    <div className="review-progress-track">
+                        <div
+                            className="review-progress-fill"
+                            style={{ width: `${completionPercentage}%` }}
+                        />
+                    </div>
+
+                </article>
+            </div>
+
         </section>
     )
 }

@@ -1,8 +1,11 @@
 import AssessmentSummary from "./AssessmentSummary.jsx";
 import NeedsAttention from "./NeedsAttention.jsx";
 import NextAction from "./NextAction.jsx";
+import "./AssessmentOverview.css"
+import React from "react";
 
-export default function AssessmentOverview({record, setActiveTab, setIsReviewerNotesOpen}) {
+export default function AssessmentOverview({record, setActiveTab, setIsReviewerNotesOpen, totalQuestions,
+                                               answeredQuestions,progressPercentage}) {
     const evidence = record.evidence ?? [];
     const platforms = record.requiredPlatforms ?? [];
     const totalEvidence = evidence.length;
@@ -34,7 +37,7 @@ export default function AssessmentOverview({record, setActiveTab, setIsReviewerN
         nextActionDescription = "All review checks are complete. The assessment is ready for a final decision.";
     }
     return (
-        <section>
+        <section className="assessment-overview">
 
             <h2>Assessment Overview</h2>
             <AssessmentSummary totalEvidence={totalEvidence} behavioralEvidence={behavioralEvidence}
@@ -44,6 +47,18 @@ export default function AssessmentOverview({record, setActiveTab, setIsReviewerN
             <NeedsAttention missingPlatforms={missingPlatforms}/>
             <NextAction nextAction={nextAction} nextActionDescription={nextActionDescription} setActiveTab={setActiveTab}
             setIsReviewerNotesOpen={setIsReviewerNotesOpen}/>
+
+            <div>
+                <h3>Auditor Review Progress</h3>
+                <p>{answeredQuestions} out of {totalQuestions} answered</p>
+                <p>{Math.round(progressPercentage)}%</p>
+                <div className="answered-questions-progress-track">
+                    <div
+                        className="answered-questions-progress-fill"
+                        style={{ width: `${progressPercentage}%` }}
+                    />
+                </div>
+            </div>
         </section>
 
     )
