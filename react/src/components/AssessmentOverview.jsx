@@ -39,7 +39,6 @@ export default function AssessmentOverview({record, setActiveTab, setIsReviewerN
     return (
         <section className="assessment-overview">
 
-            <h2>Assessment Overview</h2>
             <AssessmentSummary totalEvidence={totalEvidence} behavioralEvidence={behavioralEvidence}
                                technicalEvidence={technicalEvidence} evidence={evidence} platforms={platforms}
                                allPlatforms={allPlatforms} totalChecks={totalChecks} completedChecks={completedChecks}

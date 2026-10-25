@@ -1,0 +1,48 @@
+.needs-attention-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.needs-attention-title {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.needs-attention-count {
+    text-align: left;
+    font-size: 14px;
+    color: #526570;
+    margin-top: 4px;
+}
+
+.attention-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.attention-row-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.attention-icon {
+    color: #b42318;
+    font-size: 18px;
+}
+
+.attention-message {
+    color: #1f2937;
+    font-size: 14px;
+}
+
+.attention-chevron {
+    color: #9ca3af;
+    font-size: 20px;
+}
