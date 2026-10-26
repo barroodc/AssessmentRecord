@@ -5,6 +5,7 @@ import ReviewerNotes from "./ReviewerNotes.jsx";
 import AssessmentEvidence from "./AssessmentEvidence.jsx";
 import AssessmentReview from "./AssessmentReview.jsx"
 import AssessmentGaps from "./AssessmentGaps.jsx";
+import "./AssessmentRecordPage.css";
 import React, {useState} from "react";
 
 export default function AssessmentRecordPage({record, clearSelection}) {
@@ -32,9 +33,17 @@ export default function AssessmentRecordPage({record, clearSelection}) {
         }), {})
     );
 
+    const [assessmentNotes, setAssessmentNotes] = useState("");
+
     const totalQuestions = (record.reviewQuestions ?? []).length;
     const answeredQuestions = (Object.values(answers).filter((actualQuestions) => actualQuestions !== null && actualQuestions !== undefined)).length;
     let progressPercentage = 0;
+
+    const reviewChecks = record.reviewChecks ?? [];
+    const totalChecks = reviewChecks.length;
+    const completedChecks = reviewChecks.filter((checks) => checks.completed === true).length;
+
+    const openGapsCount = createdGaps.filter((gap) => gap.status === "open").length;
 
     if (totalQuestions !== 0) {
         progressPercentage = (answeredQuestions / totalQuestions) * 100;
@@ -43,18 +52,26 @@ export default function AssessmentRecordPage({record, clearSelection}) {
     return (
         <main>
             <AssessmentHeader record={record} clearSelection={clearSelection}/>
-            <AssessmentTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
-            {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab}
-                                                            setIsReviewerNotesOpen={setIsReviewerNotesOpen}
-                                                            totalQuestions={totalQuestions} answeredQuestions={answeredQuestions} progressPercentage={progressPercentage}/> :
-                 activeTab === "evidence" ? <AssessmentEvidence record={record} /> :
-                 activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps} answers={answers} setAnswers={setAnswers}
-                                                            notes={notes} setNotes={setNotes} flags={flags} setFlags={setFlags} totalQuestions={totalQuestions}
-                                                            answeredQuestions={answeredQuestions} progressPercentage={progressPercentage}/> : activeTab==="gapsAndActions" ?
-                     <AssessmentGaps createdGaps={createdGaps} setCreatedGaps={setCreatedGaps} createdActionItems={createdActionItems} setCreatedActionItems={setCreatedActionItems}/> : ""}
-            {isReviewerNotesOpen && (
-                <ReviewerNotes setIsReviewerNotesOpen={setIsReviewerNotesOpen}/>
-            )}
+            <div className="assessment-workspace">
+                <div className="assessment-main-content">
+                    <AssessmentTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
+                    {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab}
+                                                                    setIsReviewerNotesOpen={setIsReviewerNotesOpen}
+                                                                    totalQuestions={totalQuestions} answeredQuestions={answeredQuestions}
+                                                                    progressPercentage={progressPercentage} createdGaps={createdGaps}/> :
+                        activeTab === "evidence" ? <AssessmentEvidence record={record} /> :
+                            activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps} answers={answers} setAnswers={setAnswers}
+                                                                       notes={notes} setNotes={setNotes} flags={flags} setFlags={setFlags} totalQuestions={totalQuestions}
+                                                                       answeredQuestions={answeredQuestions} progressPercentage={progressPercentage}/> : activeTab==="gapsAndActions" ?
+                                <AssessmentGaps createdGaps={createdGaps} setCreatedGaps={setCreatedGaps} createdActionItems={createdActionItems} setCreatedActionItems={setCreatedActionItems}/> : ""}
+
+                </div>
+                {isReviewerNotesOpen && (
+                    <ReviewerNotes setIsReviewerNotesOpen={setIsReviewerNotesOpen} assessmentNotes={assessmentNotes} setAssessmentNotes={setAssessmentNotes}
+                                   totalChecks={totalChecks} completedChecks={completedChecks} openGapsCount={openGapsCount}/>
+                )}
+            </div>
+
 
         </main>
     )

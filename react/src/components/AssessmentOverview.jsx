@@ -5,7 +5,7 @@ import "./AssessmentOverview.css"
 import React from "react";
 
 export default function AssessmentOverview({record, setActiveTab, setIsReviewerNotesOpen, totalQuestions,
-                                               answeredQuestions,progressPercentage}) {
+                                               answeredQuestions,progressPercentage, createdGaps}) {
     const evidence = record.evidence ?? [];
     const platforms = record.requiredPlatforms ?? [];
     const totalEvidence = evidence.length;
@@ -36,6 +36,8 @@ export default function AssessmentOverview({record, setActiveTab, setIsReviewerN
     } else {
         nextActionDescription = "All review checks are complete. The assessment is ready for a final decision.";
     }
+
+    const openGaps = createdGaps.filter((gap) => gap.status === "open");
     return (
         <section className="assessment-overview">
 
@@ -43,7 +45,7 @@ export default function AssessmentOverview({record, setActiveTab, setIsReviewerN
                                technicalEvidence={technicalEvidence} evidence={evidence} platforms={platforms}
                                allPlatforms={allPlatforms} totalChecks={totalChecks} completedChecks={completedChecks}
                                completionPercentage={completionPercentage}/>
-            <NeedsAttention missingPlatforms={missingPlatforms}/>
+            <NeedsAttention missingPlatforms={missingPlatforms} setActiveTab={setActiveTab} openGaps={openGaps}/>
             <NextAction nextAction={nextAction} nextActionDescription={nextActionDescription} setActiveTab={setActiveTab}
             setIsReviewerNotesOpen={setIsReviewerNotesOpen}/>
 

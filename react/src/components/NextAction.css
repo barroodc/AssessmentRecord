@@ -16,7 +16,7 @@
 }
 
 .main-action-text {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
     color: #1e293b;
@@ -25,14 +25,15 @@
 }
 
 .description-for-next-action {
-    font-size: 0.7rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
     color: #64748b;
     margin: 0;
 }
 
 .ctn-review-btn {
     height: 48px;
-    padding: 0 24px;
+    padding: 0 20px;
     background-color: #287F7D;
     color: white;
     border: none;
@@ -43,7 +44,6 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-top: 24px;
 }
 
 .ctn-review-btn:hover {
@@ -51,6 +51,40 @@
 }
 
 .ctn-review-btn:focus-visible {
-    outline: 2px solid #ffffff;
+    outline: 2px solid #287F7D;
     outline-offset: 2px;
 }
+
+.next-action-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.reviewer-notes-btn {
+    background-color: #f1f3f5;
+    color: #1f2937;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    height: 48px;
+    padding: 0 20px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.reviewer-notes-btn:hover {
+    background-color: #e9ecef;
+}
+
+.reviewer-notes-btn:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+

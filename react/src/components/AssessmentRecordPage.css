@@ -1,0 +1,10 @@
+.assessment-workspace {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.assessment-main-content {
+    flex: 1;
+    min-width: 0;
+}
