@@ -5,7 +5,7 @@ import "./AssessmentOverview.css"
 import React from "react";
 
 export default function AssessmentOverview({record, setActiveTab, setIsReviewerNotesOpen, totalQuestions,
-                                               answeredQuestions,progressPercentage, createdGaps}) {
+                                               answeredQuestions,progressPercentage, createdGaps, missingPlatforms}) {
     const evidence = record.evidence ?? [];
     const platforms = record.requiredPlatforms ?? [];
     const totalEvidence = evidence.length;
@@ -16,10 +16,6 @@ export default function AssessmentOverview({record, setActiveTab, setIsReviewerN
     const totalChecks = reviewChecks.length;
     const completedChecks = reviewChecks.filter((revCheck) => revCheck.completed).length;
     const completionPercentage = totalChecks > 0 ? (completedChecks / totalChecks) * 100 : 0;
-    const missingPlatforms = platforms.filter((platform) => {
-        const hasEvidence = evidence.some((evid) => evid.platform === platform);
-        return !hasEvidence;
-    })
     const nextAction = missingPlatforms.length > 0 ? "Request missing evidence" :
         totalChecks === 0 ? "Review setup required" :
             (completedChecks !== totalChecks) ? "Continue assessment review" :

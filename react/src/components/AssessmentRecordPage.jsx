@@ -35,6 +35,10 @@ export default function AssessmentRecordPage({record, clearSelection}) {
 
     const [assessmentNotes, setAssessmentNotes] = useState("");
 
+    const [evidenceStatuses, setEvidenceStatuses] = useState({});
+
+
+
     const totalQuestions = (record.reviewQuestions ?? []).length;
     const answeredQuestions = (Object.values(answers).filter((actualQuestions) => actualQuestions !== null && actualQuestions !== undefined)).length;
     let progressPercentage = 0;
@@ -45,9 +49,19 @@ export default function AssessmentRecordPage({record, clearSelection}) {
 
     const openGapsCount = createdGaps.filter((gap) => gap.status === "open").length;
 
+    const evidence = record.evidence ?? [];
+    const platforms = record.requiredPlatforms ?? [];
+
+    const missingPlatforms = platforms.filter((platform) => {
+        const hasEvidence = evidence.some((evid) => evid.platform === platform);
+        return !hasEvidence;
+    })
+
     if (totalQuestions !== 0) {
         progressPercentage = (answeredQuestions / totalQuestions) * 100;
     }
+
+    const reviewedEvidenceCount = evidence.filter((evid) => evidenceStatuses[evid.evidenceId] !== undefined).length;
 
     return (
         <main>
@@ -58,8 +72,8 @@ export default function AssessmentRecordPage({record, clearSelection}) {
                     {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab}
                                                                     setIsReviewerNotesOpen={setIsReviewerNotesOpen}
                                                                     totalQuestions={totalQuestions} answeredQuestions={answeredQuestions}
-                                                                    progressPercentage={progressPercentage} createdGaps={createdGaps}/> :
-                        activeTab === "evidence" ? <AssessmentEvidence record={record} /> :
+                                                                    progressPercentage={progressPercentage} createdGaps={createdGaps} missingPlatforms={missingPlatforms}/> :
+                        activeTab === "evidence" ? <AssessmentEvidence record={record} evidenceStatuses={evidenceStatuses} setEvidenceStatuses={setEvidenceStatuses}/> :
                             activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps} answers={answers} setAnswers={setAnswers}
                                                                        notes={notes} setNotes={setNotes} flags={flags} setFlags={setFlags} totalQuestions={totalQuestions}
                                                                        answeredQuestions={answeredQuestions} progressPercentage={progressPercentage}/> : activeTab==="gapsAndActions" ?
@@ -68,7 +82,7 @@ export default function AssessmentRecordPage({record, clearSelection}) {
                 </div>
                 {isReviewerNotesOpen && (
                     <ReviewerNotes setIsReviewerNotesOpen={setIsReviewerNotesOpen} assessmentNotes={assessmentNotes} setAssessmentNotes={setAssessmentNotes}
-                                   totalChecks={totalChecks} completedChecks={completedChecks} openGapsCount={openGapsCount}/>
+                                   totalChecks={totalChecks} completedChecks={completedChecks} openGapsCount={openGapsCount} missingPlatforms={missingPlatforms}/>
                 )}
             </div>
 

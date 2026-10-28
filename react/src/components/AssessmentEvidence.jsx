@@ -1,7 +1,7 @@
 import "./AssessmentEvidence.css";
 import React from "react";
 
-export default function AssessmentEvidence({record}) {
+export default function AssessmentEvidence({record, evidenceStatuses, setEvidenceStatuses}) {
     const evidence = record.evidence ?? [];
     const [selectedEvidenceId, setSelectedEvidenceId] = React.useState(evidence[0]?.evidenceId ?? null);
     const [evidenceFilter, setEvidenceFilter] = React.useState("All");
@@ -10,6 +10,16 @@ export default function AssessmentEvidence({record}) {
     })
     const selectedEvidence = filteredEvidence.find((evid) => evid.evidenceId === selectedEvidenceId);
     const selectedEvidenceIndex = filteredEvidence.findIndex((evid) => evid.evidenceId === selectedEvidenceId);
+
+    function handleUpdateEvidenceStatus(status) {
+        setEvidenceStatuses((previousStatuses) => {
+            return {
+                ...previousStatuses,
+                [selectedEvidence.evidenceId] : status
+            }
+        })
+    }
+
     return (
         <section>
             <button type="button" aria-pressed={evidenceFilter === "All"} onClick={() => {
@@ -58,6 +68,15 @@ export default function AssessmentEvidence({record}) {
                     <button type="button" disabled={selectedEvidenceIndex === filteredEvidence.length - 1} onClick={() => setSelectedEvidenceId(filteredEvidence[selectedEvidenceIndex + 1].evidenceId)}>Next</button>
                     <button type="button" disabled={selectedEvidenceIndex === 0} onClick={() => setSelectedEvidenceId(filteredEvidence[selectedEvidenceIndex - 1].evidenceId)}>Previous</button>
                     <p>{selectedEvidenceIndex + 1} / {filteredEvidence.length}</p>
+                    <section>
+                        <h3>Mark Evidence As</h3>
+                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Reviewed")}>Reviewed</button>
+                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Valid")}>Valid</button>
+                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Needs Clarification")}>Needs Clarification</button>
+                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Insufficient")}>Insufficient</button>
+                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Not Applicable")}>Not Applicable</button>
+                        <p>Current status: {evidenceStatuses[selectedEvidence.evidenceId] ?? "Not reviewed"}</p>
+                    </section>
                 </section>
             )}
         </section>
