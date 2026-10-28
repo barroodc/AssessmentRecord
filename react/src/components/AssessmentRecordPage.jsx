@@ -35,17 +35,18 @@ export default function AssessmentRecordPage({record, clearSelection}) {
 
     const [assessmentNotes, setAssessmentNotes] = useState("");
 
+    const [decisionRationale, setDecisionRationale] = useState("");
+
     const [evidenceStatuses, setEvidenceStatuses] = useState({});
 
+    const [reviewDecision, setReviewDecision] = useState(null);
 
 
     const totalQuestions = (record.reviewQuestions ?? []).length;
     const answeredQuestions = (Object.values(answers).filter((actualQuestions) => actualQuestions !== null && actualQuestions !== undefined)).length;
     let progressPercentage = 0;
 
-    const reviewChecks = record.reviewChecks ?? [];
-    const totalChecks = reviewChecks.length;
-    const completedChecks = reviewChecks.filter((checks) => checks.completed === true).length;
+
 
     const openGapsCount = createdGaps.filter((gap) => gap.status === "open").length;
 
@@ -62,6 +63,54 @@ export default function AssessmentRecordPage({record, clearSelection}) {
     }
 
     const reviewedEvidenceCount = evidence.filter((evid) => evidenceStatuses[evid.evidenceId] !== undefined).length;
+    const totalEvidenceCount = evidence.length;
+    const allEvidenceReviewed = totalEvidenceCount > 0 && reviewedEvidenceCount === totalEvidenceCount;
+    const allPlatformsReviewed = platforms.length > 0 && missingPlatforms.length === 0 && allEvidenceReviewed;
+
+
+    const findingsDocumented = totalQuestions > 0 && totalQuestions === answeredQuestions && (record.reviewQuestions ?? [])
+        .every((revQuest) => {
+            return flags[revQuest.id] === false || (notes[revQuest.id]?.trim().length ?? 0) > 0;
+        });
+
+    const decisionRationaleEntered = decisionRationale.trim() !== "";
+
+    const reviewPrerequisites = [allPlatformsReviewed, allEvidenceReviewed, findingsDocumented, openGapsCount === 0, decisionRationaleEntered];
+    const totalChecks = reviewPrerequisites.length;
+    const completedChecks = reviewPrerequisites.filter(((reviewPreq) => reviewPreq === true)).length;
+    const unansweredQuestions = totalQuestions - answeredQuestions;
+
+    const completionBlockers = [];
+
+    if (reviewDecision === null) {
+        completionBlockers.push("No review decision selected");
+    }
+
+    if (!decisionRationaleEntered) {
+        completionBlockers.push("Decision rationale is required");
+    }
+
+    if (answeredQuestions !== totalQuestions) {
+        completionBlockers.push(`${unansweredQuestions} review criteria remain unanswered`)
+    }
+
+    if (totalQuestions === 0) {
+        completionBlockers.push("No review criteria are available");
+    }
+
+
+   const flaggedAndMissing = (record.reviewQuestions ?? []).filter((revQuest) => {
+       return flags[revQuest.id] === true && (notes[revQuest.id]?.trim().length ?? 0) === 0;
+   })
+
+    if (flaggedAndMissing.length > 0) {
+        completionBlockers.push(`${flaggedAndMissing.length} flagged findings require documentation`);
+    }
+
+
+
+
+
 
     return (
         <main>
@@ -82,7 +131,10 @@ export default function AssessmentRecordPage({record, clearSelection}) {
                 </div>
                 {isReviewerNotesOpen && (
                     <ReviewerNotes setIsReviewerNotesOpen={setIsReviewerNotesOpen} assessmentNotes={assessmentNotes} setAssessmentNotes={setAssessmentNotes}
-                                   totalChecks={totalChecks} completedChecks={completedChecks} openGapsCount={openGapsCount} missingPlatforms={missingPlatforms}/>
+                                   totalChecks={totalChecks} completedChecks={completedChecks} openGapsCount={openGapsCount} missingPlatforms={missingPlatforms}
+                    reviewedEvidenceCount={reviewedEvidenceCount} totalEvidenceCount={totalEvidenceCount} allEvidenceReviewed={allEvidenceReviewed} allPlatformsReviewed={allPlatformsReviewed}
+                    findingsDocumented={findingsDocumented} decisionRationaleEntered={decisionRationaleEntered} reviewDecision={reviewDecision} setReviewDecision={setReviewDecision}
+                                   decisionRationale={decisionRationale} setDecisionRationale={setDecisionRationale}/>
                 )}
             </div>
 

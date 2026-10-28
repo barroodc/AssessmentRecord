@@ -11,3 +11,43 @@
     flex-shrink: 0;
     position: sticky;
 }
+
+.reviewer-decision {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.reviewer-decision button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 58px;
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a5568;
+    background-color: #f2f4f6;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.25;
+    transition: all 0.2s ease;
+}
+
+.reviewer-decision button:hover {
+    background-color: #e8ecef;
+}
+
+.reviewer-decision button:active {
+    background-color: #267975;
+    border-color: #267975;
+    color: #ffffff;
+}
+
+.reviewer-decision button.selected {
+    background-color: #267975;
+    border-color: #267975;
+    color: #ffffff;
+}
