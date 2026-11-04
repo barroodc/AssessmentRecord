@@ -41,6 +41,8 @@ export default function AssessmentRecordPage({record, clearSelection}) {
 
     const [reviewDecision, setReviewDecision] = useState(null);
 
+    const [isReviewComplete, setIsReviewComplete] = useState(false);
+
 
     const totalQuestions = (record.reviewQuestions ?? []).length;
     const answeredQuestions = (Object.values(answers).filter((actualQuestions) => actualQuestions !== null && actualQuestions !== undefined)).length;
@@ -98,6 +100,45 @@ export default function AssessmentRecordPage({record, clearSelection}) {
         completionBlockers.push("No review criteria are available");
     }
 
+    if (reviewDecision === "Approved") {
+        if (openGapsCount > 0) {
+            completionBlockers.push("Approved reviews cannot have open gaps")
+        }
+        if (allEvidenceReviewed === false) {
+            completionBlockers.push("All evidence must be reviewed before approval")
+        }
+        if (allPlatformsReviewed === false) {
+            completionBlockers.push("All required platforms must have reviewed evidence before approval")
+        }
+    }
+
+    if (reviewDecision === "Approved with Follow-up") {
+        if (allEvidenceReviewed === false) {
+            completionBlockers.push("All available evidence must be reviewed before follow-up approval")
+        }
+        if (openGapsCount > 0 && createdActionItems.length === 0) {
+            completionBlockers.push("Open gaps require at least one follow-up action")
+        }
+    }
+
+    if (reviewDecision === "Changes Required") {
+        if (createdGaps.length === 0) {
+            completionBlockers.push("At least one documented gap is required when requesting changes")
+        }
+    }
+
+    if (reviewDecision === "Unable to Verify") {
+        if (assessmentNotes.trim() === "") {
+            completionBlockers.push("Explain why the assessment could not be verified in Reviewer Notes")
+        }
+    }
+
+    if (reviewDecision === "Not Applicable") {
+        if (assessmentNotes.trim() === "") {
+            completionBlockers.push("Explain why the assessment is not applicable in Reviewer Notes")
+        }
+    }
+
 
    const flaggedAndMissing = (record.reviewQuestions ?? []).filter((revQuest) => {
        return flags[revQuest.id] === true && (notes[revQuest.id]?.trim().length ?? 0) === 0;
@@ -134,7 +175,7 @@ export default function AssessmentRecordPage({record, clearSelection}) {
                                    totalChecks={totalChecks} completedChecks={completedChecks} openGapsCount={openGapsCount} missingPlatforms={missingPlatforms}
                     reviewedEvidenceCount={reviewedEvidenceCount} totalEvidenceCount={totalEvidenceCount} allEvidenceReviewed={allEvidenceReviewed} allPlatformsReviewed={allPlatformsReviewed}
                     findingsDocumented={findingsDocumented} decisionRationaleEntered={decisionRationaleEntered} reviewDecision={reviewDecision} setReviewDecision={setReviewDecision}
-                                   decisionRationale={decisionRationale} setDecisionRationale={setDecisionRationale}/>
+                                   decisionRationale={decisionRationale} setDecisionRationale={setDecisionRationale} completionBlockers={completionBlockers}/>
                 )}
             </div>
 

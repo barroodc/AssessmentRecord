@@ -3,7 +3,7 @@ import CompletionChecklist from "./CompletionChecklist.jsx"
 
 export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, setAssessmentNotes, totalChecks, completedChecks, openGapsCount, missingPlatforms,
                                       reviewedEvidenceCount, totalEvidenceCount, allEvidenceReviewed, allPlatformsReviewed, findingsDocumented, decisionRationaleEntered,
-                                          reviewDecision, setReviewDecision, decisionRationale, setDecisionRationale}) {
+                                          reviewDecision, setReviewDecision, decisionRationale, setDecisionRationale, completionBlockers}) {
 
     const reviewDecisionButtons = ["Approved", "Approved with Follow-up", "Changes Required",
         "Unable to Verify", "Not Applicable"];
@@ -21,6 +21,7 @@ export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, 
             </section>
             <textarea value={assessmentNotes} placeholder="Record overall observations, concerns, or context for this assessment..." onChange={(event) => setAssessmentNotes(event.target.value)}/>
             <CompletionChecklist openGapsCount={openGapsCount} allEvidenceReviewed={allEvidenceReviewed} allPlatformsReviewed={allPlatformsReviewed} findingsDocumented={findingsDocumented} decisionRationaleEntered={decisionRationaleEntered}/>
+
             <h4>Review Decision</h4>
             <section className="reviewer-decision">
                 {reviewDecisionButtons.map((decision) => (
@@ -31,6 +32,17 @@ export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, 
                 <h4>Decision Rationale</h4>
                 <textarea value={decisionRationale} placeholder="Explain what the submitted evidence demonstrates and why this decision was reached..." onChange={(event) => setDecisionRationale(event.target.value)}/>
             </section>
+            {completionBlockers.length > 0 && (
+                <section className="completion-blockers">
+                    <h4>Cannot Complete Review</h4>
+
+                    <ul>
+                        {completionBlockers.map((blocker, index) => (
+                            <li key={index}>{blocker}</li>
+                        ))}
+                    </ul>
+                </section>
+            )}
             <button type="button" onClick={()=> setIsReviewerNotesOpen(false)}>Close</button>
         </aside>
     )
