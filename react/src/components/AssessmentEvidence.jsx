@@ -1,7 +1,7 @@
 import "./AssessmentEvidence.css";
 import React from "react";
 
-export default function AssessmentEvidence({record, evidenceStatuses, setEvidenceStatuses}) {
+export default function AssessmentEvidence({record, evidenceStatuses, setEvidenceStatuses, isReviewComplete}) {
     const evidence = record.evidence ?? [];
     const [selectedEvidenceId, setSelectedEvidenceId] = React.useState(evidence[0]?.evidenceId ?? null);
     const [evidenceFilter, setEvidenceFilter] = React.useState("All");
@@ -12,6 +12,10 @@ export default function AssessmentEvidence({record, evidenceStatuses, setEvidenc
     const selectedEvidenceIndex = filteredEvidence.findIndex((evid) => evid.evidenceId === selectedEvidenceId);
 
     function handleUpdateEvidenceStatus(status) {
+        if (isReviewComplete) {
+            return;
+        }
+
         setEvidenceStatuses((previousStatuses) => {
             return {
                 ...previousStatuses,
@@ -70,11 +74,11 @@ export default function AssessmentEvidence({record, evidenceStatuses, setEvidenc
                     <p>{selectedEvidenceIndex + 1} / {filteredEvidence.length}</p>
                     <section>
                         <h3>Mark Evidence As</h3>
-                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Reviewed")}>Reviewed</button>
-                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Valid")}>Valid</button>
-                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Needs Clarification")}>Needs Clarification</button>
-                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Insufficient")}>Insufficient</button>
-                        <button type="button" onClick={() => handleUpdateEvidenceStatus("Not Applicable")}>Not Applicable</button>
+                        <button type="button" disabled={isReviewComplete} onClick={() => handleUpdateEvidenceStatus("Reviewed")}>Reviewed</button>
+                        <button type="button" disabled={isReviewComplete} onClick={() => handleUpdateEvidenceStatus("Valid")}>Valid</button>
+                        <button type="button" disabled={isReviewComplete} onClick={() => handleUpdateEvidenceStatus("Needs Clarification")}>Needs Clarification</button>
+                        <button type="button" disabled={isReviewComplete} onClick={() => handleUpdateEvidenceStatus("Insufficient")}>Insufficient</button>
+                        <button type="button" disabled={isReviewComplete} onClick={() => handleUpdateEvidenceStatus("Not Applicable")}>Not Applicable</button>
                         <p>Current status: {evidenceStatuses[selectedEvidence.evidenceId] ?? "Not reviewed"}</p>
                     </section>
                 </section>

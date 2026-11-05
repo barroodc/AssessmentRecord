@@ -10,6 +10,10 @@ import React, {useState} from "react";
 
 export default function AssessmentRecordPage({record, clearSelection}) {
 
+    const storageKey = `assessmentRecord:${record.assessmentRecordId}`;
+    const savedData = localStorage.getItem(storageKey);
+    const parsedSavedData = savedData ? JSON.parse(savedData) : null;
+
     const [activeTab, setActiveTab] = useState("overview");
     const [isReviewerNotesOpen, setIsReviewerNotesOpen] = useState(false);
     const [createdGaps, setCreatedGaps] = useState([]);
@@ -148,8 +152,12 @@ export default function AssessmentRecordPage({record, clearSelection}) {
         completionBlockers.push(`${flaggedAndMissing.length} flagged findings require documentation`);
     }
 
-
-
+    function handleCompleteReview() {
+        if (completionBlockers.length > 0) {
+            return;
+        }
+        setIsReviewComplete(true);
+    }
 
 
 
@@ -163,11 +171,11 @@ export default function AssessmentRecordPage({record, clearSelection}) {
                                                                     setIsReviewerNotesOpen={setIsReviewerNotesOpen}
                                                                     totalQuestions={totalQuestions} answeredQuestions={answeredQuestions}
                                                                     progressPercentage={progressPercentage} createdGaps={createdGaps} missingPlatforms={missingPlatforms}/> :
-                        activeTab === "evidence" ? <AssessmentEvidence record={record} evidenceStatuses={evidenceStatuses} setEvidenceStatuses={setEvidenceStatuses}/> :
+                        activeTab === "evidence" ? <AssessmentEvidence record={record} evidenceStatuses={evidenceStatuses} setEvidenceStatuses={setEvidenceStatuses} isReviewComplete={isReviewComplete}/> :
                             activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps} answers={answers} setAnswers={setAnswers}
                                                                        notes={notes} setNotes={setNotes} flags={flags} setFlags={setFlags} totalQuestions={totalQuestions}
-                                                                       answeredQuestions={answeredQuestions} progressPercentage={progressPercentage}/> : activeTab==="gapsAndActions" ?
-                                <AssessmentGaps createdGaps={createdGaps} setCreatedGaps={setCreatedGaps} createdActionItems={createdActionItems} setCreatedActionItems={setCreatedActionItems}/> : ""}
+                                                                       answeredQuestions={answeredQuestions} progressPercentage={progressPercentage} isReviewComplete={isReviewComplete}/> : activeTab==="gapsAndActions" ?
+                                <AssessmentGaps createdGaps={createdGaps} setCreatedGaps={setCreatedGaps} createdActionItems={createdActionItems} setCreatedActionItems={setCreatedActionItems} isReviewComplete={isReviewComplete}/> : ""}
 
                 </div>
                 {isReviewerNotesOpen && (
@@ -175,7 +183,7 @@ export default function AssessmentRecordPage({record, clearSelection}) {
                                    totalChecks={totalChecks} completedChecks={completedChecks} openGapsCount={openGapsCount} missingPlatforms={missingPlatforms}
                     reviewedEvidenceCount={reviewedEvidenceCount} totalEvidenceCount={totalEvidenceCount} allEvidenceReviewed={allEvidenceReviewed} allPlatformsReviewed={allPlatformsReviewed}
                     findingsDocumented={findingsDocumented} decisionRationaleEntered={decisionRationaleEntered} reviewDecision={reviewDecision} setReviewDecision={setReviewDecision}
-                                   decisionRationale={decisionRationale} setDecisionRationale={setDecisionRationale} completionBlockers={completionBlockers}/>
+                                   decisionRationale={decisionRationale} setDecisionRationale={setDecisionRationale} completionBlockers={completionBlockers} isReviewComplete={isReviewComplete} handleCompleteReview={handleCompleteReview}/>
                 )}
             </div>
 

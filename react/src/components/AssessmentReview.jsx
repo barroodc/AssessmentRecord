@@ -3,7 +3,8 @@ import React, {useState} from "react";
 import { Flag } from "lucide-react";
 
 export default function AssessmentReview({record, setCreatedGaps, answers, setAnswers,
-                                             notes, setNotes, flags, setFlags, totalQuestions, answeredQuestions, progressPercentage}) {
+                                             notes, setNotes, flags, setFlags, totalQuestions,
+                                             answeredQuestions, progressPercentage, isReviewComplete}) {
     const reviewQuestions = record.reviewQuestions ?? [];
 
     const [activeGapQuestionId, setActiveGapQuestionId] = useState(null);
@@ -16,6 +17,11 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
 
 
     function handleCreateGap() {
+
+        if (isReviewComplete === true) {
+            return
+        }
+
         if (gapTitle.trim() === "" || gapDescription.trim() === "" || requestedEvidence.trim() === "") {
             alert("please complete all fields");
             return
@@ -77,31 +83,31 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                             </div>
 
                             <div>
-                                <button type="button" aria-pressed={answers[reviewItems.id] === "yes"} className={answers[reviewItems.id] === "yes" ? "selected-answer" : ""} onClick={() => setAnswers(previousAnswers => ({
+                                <button type="button" aria-pressed={answers[reviewItems.id] === "yes"} className={answers[reviewItems.id] === "yes" ? "selected-answer" : ""} disabled={isReviewComplete} onClick={() => setAnswers(previousAnswers => ({
                                     ...previousAnswers,
                                     [reviewItems.id]: "yes"
                                 }))}>Yes</button>
 
-                                <button type="button" aria-pressed={answers[reviewItems.id] === "no"} className={answers[reviewItems.id] === "no" ? "selected-answer" : ""} onClick={() => setAnswers(previousAnswers => ({
+                                <button type="button" aria-pressed={answers[reviewItems.id] === "no"} className={answers[reviewItems.id] === "no" ? "selected-answer" : ""} disabled={isReviewComplete} onClick={() => setAnswers(previousAnswers => ({
                                     ...previousAnswers,
                                     [reviewItems.id]: "no"
                                 }))}>No</button>
 
-                                <button type="button" aria-pressed={answers[reviewItems.id] === "n/a"} className={answers[reviewItems.id] === "n/a" ? "selected-answer" : ""}  onClick={() => setAnswers(previousAnswers => ({
+                                <button type="button" aria-pressed={answers[reviewItems.id] === "n/a"} className={answers[reviewItems.id] === "n/a" ? "selected-answer" : ""} disabled={isReviewComplete}  onClick={() => setAnswers(previousAnswers => ({
                                     ...previousAnswers,
                                     [reviewItems.id]: "n/a"
                                 }))}>N/A</button>
 
-                                <button type="button" aria-pressed={flags[reviewItems.id]} className={flags[reviewItems.id] ? "flag-selected" : "no-flag-selected"} onClick={() => setFlags(flag => ({
+                                <button type="button" aria-pressed={flags[reviewItems.id]} className={flags[reviewItems.id] ? "flag-selected" : "no-flag-selected"} disabled={isReviewComplete} onClick={() => setFlags(flag => ({
                                     ...flag,
                                     [reviewItems.id] : !flag[reviewItems.id]
                                 }))} aria-label={flags[reviewItems.id] === false ? "Flag an issue" : "Remove flag"} title={flags[reviewItems.id] === false ? "Flag an issue" : "Remove flag"}>
                                     <Flag size={18} strokeWidth={1.8}/>
                                 </button>
 
-                                <button type="button" onClick={() => {setActiveGapQuestionId(reviewItems.id); setGapTitle(""); setGapDescription(""); setRequestedEvidence("");} }>+ Create evidence gap</button>
+                                <button type="button" disabled={isReviewComplete} onClick={() => {setActiveGapQuestionId(reviewItems.id); setGapTitle(""); setGapDescription(""); setRequestedEvidence("");} }>+ Create evidence gap</button>
 
-                                {activeGapQuestionId === reviewItems.id && <div>
+                                {activeGapQuestionId === reviewItems.id && isReviewComplete === false && <div>
                                     <h5>Create Evidence Gap</h5>
                                     <p>Creating a gap for {reviewItems.id}</p>
                                     <button type="button" onClick={() =>{setActiveGapQuestionId(null); setGapTitle(""); setGapDescription(""); setRequestedEvidence("");}}>Cancel</button>
@@ -117,7 +123,7 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                                 <p>Selected answer: {answers[reviewItems.id] ?? "Unanswered"}</p>
                             </div>
 
-                            <textarea value={notes[reviewItems.id]} placeholder="Reviewer notes..." onChange={(event) => setNotes(changeNotes =>({
+                            <textarea value={notes[reviewItems.id]} placeholder="Reviewer notes..." readOnly={isReviewComplete} onChange={(event) => setNotes(changeNotes =>({
                                 ...changeNotes,
                                 [reviewItems.id]: event.target.value
                             }))}/>

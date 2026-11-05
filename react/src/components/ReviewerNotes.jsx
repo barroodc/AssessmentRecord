@@ -3,7 +3,7 @@ import CompletionChecklist from "./CompletionChecklist.jsx"
 
 export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, setAssessmentNotes, totalChecks, completedChecks, openGapsCount, missingPlatforms,
                                       reviewedEvidenceCount, totalEvidenceCount, allEvidenceReviewed, allPlatformsReviewed, findingsDocumented, decisionRationaleEntered,
-                                          reviewDecision, setReviewDecision, decisionRationale, setDecisionRationale, completionBlockers}) {
+                                          reviewDecision, setReviewDecision, decisionRationale, setDecisionRationale, completionBlockers,isReviewComplete, handleCompleteReview}) {
 
     const reviewDecisionButtons = ["Approved", "Approved with Follow-up", "Changes Required",
         "Unable to Verify", "Not Applicable"];
@@ -19,18 +19,18 @@ export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, 
                     `${missingPlatforms} coverage: Missing` : `Platform coverage: Complete`}</p>
                 <p>Evidence Reviewed: {reviewedEvidenceCount} of {totalEvidenceCount}</p>
             </section>
-            <textarea value={assessmentNotes} placeholder="Record overall observations, concerns, or context for this assessment..." onChange={(event) => setAssessmentNotes(event.target.value)}/>
+            <textarea value={assessmentNotes} placeholder="Record overall observations, concerns, or context for this assessment..." onChange={(event) => setAssessmentNotes(event.target.value)} readOnly={isReviewComplete}/>
             <CompletionChecklist openGapsCount={openGapsCount} allEvidenceReviewed={allEvidenceReviewed} allPlatformsReviewed={allPlatformsReviewed} findingsDocumented={findingsDocumented} decisionRationaleEntered={decisionRationaleEntered}/>
 
             <h4>Review Decision</h4>
             <section className="reviewer-decision">
                 {reviewDecisionButtons.map((decision) => (
-                    <button key={decision} className={reviewDecision === decision ? `selected` :  ``} onClick={() => setReviewDecision(decision)}> {decision} </button>
+                    <button key={decision} className={reviewDecision === decision ? `selected` :  ``} onClick={() => setReviewDecision(decision)} disabled={isReviewComplete === true}> {decision} </button>
                 ))}
             </section>
             <section className="decision-rationale-section">
                 <h4>Decision Rationale</h4>
-                <textarea value={decisionRationale} placeholder="Explain what the submitted evidence demonstrates and why this decision was reached..." onChange={(event) => setDecisionRationale(event.target.value)}/>
+                <textarea value={decisionRationale} placeholder="Explain what the submitted evidence demonstrates and why this decision was reached..." onChange={(event) => setDecisionRationale(event.target.value)} readOnly={isReviewComplete}/>
             </section>
             {completionBlockers.length > 0 && (
                 <section className="completion-blockers">
@@ -43,6 +43,10 @@ export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, 
                     </ul>
                 </section>
             )}
+            {isReviewComplete === true && (
+                <p>Review successfully completed</p>
+            )}
+            <button type="button" onClick={handleCompleteReview} disabled={completionBlockers.length > 0 || isReviewComplete === true}>{isReviewComplete === true ? "Review Completed" : "Complete Review"}</button>
             <button type="button" onClick={()=> setIsReviewerNotesOpen(false)}>Close</button>
         </aside>
     )

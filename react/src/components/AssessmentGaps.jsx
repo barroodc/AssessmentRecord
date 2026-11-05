@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./AssessmentGaps.css";
-export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActionItems, setCreatedActionItems}) {
+export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActionItems, setCreatedActionItems, isReviewComplete}) {
 
     const [activeGapsTab, setActiveGapsTab] = useState("gaps");
     const [expandedGapId, setExpandedGapId] = useState(null);
@@ -13,6 +13,10 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
     const [actionEvidenceGapId, setActionEvidenceGapId] = useState("");
 
     function handleResolveGap(gapId, gapStatus) {
+        if (isReviewComplete) {
+            return;
+        }
+
         setCreatedGaps(previousGaps => {
            return previousGaps.map(gaps => {
                if (gapId === gaps.id) {
@@ -27,6 +31,10 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
     }
 
     function handleSubmitResponse(gapId, gapResponse) {
+
+        if (isReviewComplete) {
+            return;
+        }
 
         if (gapResponse.trim() === "") {
             alert("please create a response before submitting")
@@ -48,6 +56,11 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
         }
 
         function handleCreateActionItem() {
+
+        if (isReviewComplete === true) {
+            return;
+        }
+
         if (actionTitle.trim() === "" || actionDescription.trim() === "" || actionAssignee.trim() === "") {
             alert("please be sure to fill out all fields");
             return;
@@ -126,13 +139,13 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
                                 )}
                             </div>
 
-                            <button type="button" onClick={() => {
+                            <button type="button" disabled={isReviewComplete} onClick={() => {
                                 activeResponseGapId === gapsMade.id ? setActiveResponseGapId(null) : setActiveResponseGapId(gapsMade.id)
                                 setResponseText("");
                             }
                             }>Add Response</button>
                             {
-                               activeResponseGapId === gapsMade.id && (
+                               activeResponseGapId === gapsMade.id && isReviewComplete === false && (
                                     <div>
                                         <textarea id="active-response-text" value={responseText} onChange={(event) => setResponseText(event.target.value)}/>
 
@@ -143,7 +156,7 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
                                 )
                             }
 
-                                <button type="button" onClick={() => handleResolveGap(gapsMade.id, gapsMade.status === "open" ?
+                                <button type="button" disabled={isReviewComplete} onClick={() => handleResolveGap(gapsMade.id, gapsMade.status === "open" ?
                                     "resolved" : "open")}>{gapsMade.status === "open" ? "Resolve Gap" : "Reopen Gap"}</button>
                         </div>
                     )}
@@ -151,22 +164,26 @@ export default function AssessmentGaps({createdGaps, setCreatedGaps, createdActi
                 </article>
             )): activeGapsTab === "actions" ?
                 <div>
-                    <h4>Create Action Item</h4>
-                    <input id="action-item-title" value={actionTitle} placeholder="Describe the action item" onChange={(event) => setActionTitle(event.target.value)}/>
-                    <textarea id="action-item-description" value={actionDescription} onChange={(event) => setActionDescription(event.target.value)}/>
-                    <input id="action-item-assignee" value={actionAssignee} placeholder="name of assignee" onChange={(event) => setActionAssignee(event.target.value)}/>
-                    <select value={actionPriority} onChange={(event) => setActionPriority(event.target.value)}>
-                        <option value="low">low</option>
-                        <option value="medium">medium</option>
-                        <option value="high">high</option>
-                    </select>
-                    <select value={actionEvidenceGapId} onChange={(event) => setActionEvidenceGapId(event.target.value)}>
-                        <option value="">No associated evidence gap</option>
-                        {createdGaps.map((gaps) => (
-                            <option value={gaps.id} key={gaps.id}>{gaps.title}</option>
-                        ))}
-                    </select>
-                    <button type="button" onClick={() => handleCreateActionItem()}>Create Action Item</button>
+                    {isReviewComplete === false && (
+                    <>
+                        <h4>Create Action Item</h4>
+                        <input id="action-item-title" readOnly={isReviewComplete} value={actionTitle} placeholder="Describe the action item" onChange={(event) => setActionTitle(event.target.value)}/>
+                        <textarea id="action-item-description" readOnly={isReviewComplete} value={actionDescription} onChange={(event) => setActionDescription(event.target.value)}/>
+                        <input id="action-item-assignee" readOnly={isReviewComplete} value={actionAssignee} placeholder="name of assignee" onChange={(event) => setActionAssignee(event.target.value)}/>
+                        <select value={actionPriority} disabled={isReviewComplete} onChange={(event) => setActionPriority(event.target.value)}>
+                            <option value="low">low</option>
+                            <option value="medium">medium</option>
+                            <option value="high">high</option>
+                        </select>
+                        <select value={actionEvidenceGapId} disabled={isReviewComplete} onChange={(event) => setActionEvidenceGapId(event.target.value)}>
+                            <option value="">No associated evidence gap</option>
+                            {createdGaps.map((gaps) => (
+                                <option value={gaps.id} key={gaps.id}>{gaps.title}</option>
+                            ))}
+                        </select>
+                        <button type="button" disabled={isReviewComplete} onClick={() => handleCreateActionItem()}>Create Action Item</button>
+                    </>)}
+
                     <div className="action-board">
                         <section className="action-column">
                             <h4>Open</h4>
