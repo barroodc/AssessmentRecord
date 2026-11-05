@@ -11,41 +11,40 @@ import React, {useState} from "react";
 export default function AssessmentRecordPage({record, clearSelection}) {
 
     const storageKey = `assessmentRecord:${record.assessmentRecordId}`;
-    const savedData = localStorage.getItem(storageKey);
-    const parsedSavedData = savedData ? JSON.parse(savedData) : null;
+    const [savedAssessment, setSavedAssessment] = useState(loadSavedAssessment);
 
     const [activeTab, setActiveTab] = useState("overview");
     const [isReviewerNotesOpen, setIsReviewerNotesOpen] = useState(false);
-    const [createdGaps, setCreatedGaps] = useState([]);
-    const [createdActionItems, setCreatedActionItems] = useState([]);
-    const [answers, setAnswers] = useState(() =>
+    const [createdGaps, setCreatedGaps] = useState(savedAssessment?.createdGaps ?? []);
+    const [createdActionItems, setCreatedActionItems] = useState(savedAssessment?.createdActionItems ?? []);
+    const [answers, setAnswers] = useState(() => savedAssessment?.answers ??
         (record.reviewQuestions ?? []).reduce((acc, question) => ({
             ...acc,
             [question.id]: question.answer
         }), {})
     );
 
-    const [notes, setNotes] = useState(() => (record.reviewQuestions ?? []).reduce((acc, note) =>({
+    const [notes, setNotes] = useState(() => savedAssessment?.notes ?? (record.reviewQuestions ?? []).reduce((acc, note) =>({
         ...acc,
         [note.id]: note.reviewerNotes ?? ""
          }), {})
     );
 
-    const [flags, setFlags] = useState(() => (record.reviewQuestions ?? []).reduce((acc, flag) =>({
+    const [flags, setFlags] = useState(() => savedAssessment?.flags ?? (record.reviewQuestions ?? []).reduce((acc, flag) =>({
         ...acc,
         [flag.id]: flag.flagged ?? false
         }), {})
     );
 
-    const [assessmentNotes, setAssessmentNotes] = useState("");
+    const [assessmentNotes, setAssessmentNotes] = useState(savedAssessment?.assessmentNotes ?? "");
 
-    const [decisionRationale, setDecisionRationale] = useState("");
+    const [decisionRationale, setDecisionRationale] = useState(savedAssessment?.decisionRationale ?? "");
 
-    const [evidenceStatuses, setEvidenceStatuses] = useState({});
+    const [evidenceStatuses, setEvidenceStatuses] = useState(savedAssessment?.evidenceStatuses ?? {});
 
-    const [reviewDecision, setReviewDecision] = useState(null);
+    const [reviewDecision, setReviewDecision] = useState(savedAssessment?.reviewDecision ?? null);
 
-    const [isReviewComplete, setIsReviewComplete] = useState(false);
+    const [isReviewComplete, setIsReviewComplete] = useState(savedAssessment?.isReviewComplete ?? false);
 
 
     const totalQuestions = (record.reviewQuestions ?? []).length;
@@ -157,6 +156,17 @@ export default function AssessmentRecordPage({record, clearSelection}) {
             return;
         }
         setIsReviewComplete(true);
+    }
+
+    function loadSavedAssessment() {
+        try {
+           const assessIdStoredValue = localStorage.getItem(storageKey);
+           return assessIdStoredValue ? JSON.parse(assessIdStoredValue) : null;
+        } catch(error) {
+            console.error(`Error reading or parsing localStorage key ${record.assessmentRecordId}`);
+            console.log(error);
+            return null;
+        }
     }
 
 
