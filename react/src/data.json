@@ -9,7 +9,98 @@
         "riskLevel": "Low",
         "createdDate": "2026-06-29",
         "daysOnBoard": 5,
-        "assignedAuditor": "Charlie Guzman"
+        "assignedAuditor": "Charlie Guzman",
+        "evidence": [
+            {
+                "evidenceId": "EV101",
+                "type": "Behavioral",
+                "platform": "Web",
+                "description": "Screenshot showing the Privacy Policy link within the Web application's Settings page."
+            },
+            {
+                "evidenceId": "EV102",
+                "type": "Behavioral",
+                "platform": "iOS",
+                "description": "Screen recording demonstrating navigation from iOS Settings to the Privacy Policy."
+            },
+            {
+                "evidenceId": "EV103",
+                "type": "Behavioral",
+                "platform": "Android",
+                "description": "Screen recording demonstrating navigation from Android Settings to the Privacy Policy."
+            },
+            {
+                "evidenceId": "EV104",
+                "type": "Technical",
+                "platform": "Web",
+                "description": "React component source code showing the Settings page Privacy Policy link and destination URL."
+            }
+        ],
+        "requiredPlatforms": [
+            "Web",
+            "iOS",
+            "Android"
+        ],
+        "reviewChecks": [
+            {
+                "id": "RC101",
+                "label": "Evidence reviewed",
+                "completed": false
+            },
+            {
+                "id": "RC102",
+                "label": "Platform coverage verified",
+                "completed": false
+            },
+            {
+                "id": "RC103",
+                "label": "Privacy policy navigation verified",
+                "completed": false
+            },
+            {
+                "id": "RC104",
+                "label": "Technical implementation reviewed",
+                "completed": false
+            }
+        ],
+        "reviewQuestions": [
+            {
+                "id": "RC101",
+                "label": "Privacy Policy link is visible in Web Settings",
+                "description": "Verify that authenticated users can locate the Privacy Policy link from the Web Settings page.",
+                "answer": null,
+                "evidenceIds": ["EV101", "EV104"],
+                "reviewerNotes": "",
+                "flagged": false
+            },
+            {
+                "id": "RC102",
+                "label": "Privacy Policy is accessible on iOS",
+                "description": "Verify that users can navigate to the Privacy Policy from the iOS Settings interface.",
+                "answer": null,
+                "evidenceIds": ["EV102"],
+                "reviewerNotes": "",
+                "flagged": false
+            },
+            {
+                "id": "RC103",
+                "label": "Privacy Policy is accessible on Android",
+                "description": "Verify that users can navigate to the Privacy Policy from the Android Settings interface.",
+                "answer": null,
+                "evidenceIds": ["EV103"],
+                "reviewerNotes": "",
+                "flagged": false
+            },
+            {
+                "id": "RC104",
+                "label": "Privacy Policy link directs users to the correct destination",
+                "description": "Verify that the Privacy Policy link opens the intended policy destination without broken navigation.",
+                "answer": null,
+                "evidenceIds": ["EV102", "EV103", "EV104"],
+                "reviewerNotes": "",
+                "flagged": false
+            }
+        ]
     },
     {
         "assessmentRecordId": "AR0002",
@@ -21,7 +112,92 @@
         "riskLevel": "Low",
         "createdDate": "2026-04-25",
         "daysOnBoard": 12,
-        "assignedAuditor": "Charlie Guzman"
+        "assignedAuditor": "Charlie Guzman",
+        "evidence": [
+            {
+                "evidenceId": "EV201",
+                "type": "Behavioral",
+                "platform": "Web",
+                "description": "Screenshot showing an AI data-use notice within the Web AI assistant interface after the user has opened the chat."
+            },
+            {
+                "evidenceId": "EV202",
+                "type": "Technical",
+                "platform": "Web",
+                "description": "React component source code for the AI notice banner. The submitted code does not demonstrate when the notice is triggered."
+            },
+            {
+                "evidenceId": "EV203",
+                "type": "Behavioral",
+                "platform": "iOS",
+                "description": "iOS screenshot showing the AI assistant conversation interface without a visible first-use notice."
+            }
+        ],
+        "requiredPlatforms": [
+            "Web",
+            "iOS",
+            "Android"
+        ],
+        "reviewChecks": [
+            {
+                "id": "RC201",
+                "label": "Evidence reviewed",
+                "completed": false
+            },
+            {
+                "id": "RC202",
+                "label": "First-use notice timing verified",
+                "completed": false
+            },
+            {
+                "id": "RC203",
+                "label": "Platform coverage verified",
+                "completed": false
+            },
+            {
+                "id": "RC204",
+                "label": "Notice content verified",
+                "completed": false
+            }
+        ],
+        "reviewQuestions": [
+            {
+                "id": "RC201",
+                "label": "AI data-use notice appears before first interaction on Web",
+                "description": "Verify that the notice is presented before users begin interacting with the AI assistant. The current screenshot only demonstrates that a notice exists after the assistant is opened.",
+                "answer": null,
+                "evidenceIds": ["EV201", "EV202"],
+                "reviewerNotes": "",
+                "flagged": false
+            },
+            {
+                "id": "RC202",
+                "label": "AI data-use notice appears before first interaction on iOS",
+                "description": "Verify that iOS users receive the required notice before their first AI interaction. The submitted screenshot does not demonstrate the notice.",
+                "answer": null,
+                "evidenceIds": ["EV203"],
+                "reviewerNotes": "",
+                "flagged": false
+            },
+            {
+                "id": "RC203",
+                "label": "AI data-use notice appears before first interaction on Android",
+                "description": "Verify first-use notice behavior on Android. No Android evidence has been submitted.",
+                "answer": null,
+                "evidenceIds": [],
+                "reviewerNotes": "",
+                "flagged": false
+            },
+            {
+                "id": "RC204",
+                "label": "Notice explains how AI interactions may be used",
+                "description": "Verify that the notice clearly explains that AI interactions may be used to improve AI models. The current technical evidence does not establish the complete notice text or its timing.",
+                "answer": null,
+                "evidenceIds": ["EV201", "EV202"],
+                "reviewerNotes": "",
+                "flagged": false
+            }
+        ]
     },
     {
         "assessmentRecordId": "AR0003",
