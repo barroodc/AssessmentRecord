@@ -46,6 +46,9 @@ export default function AssessmentRecordPage({record, clearSelection}) {
 
     const [isReviewComplete, setIsReviewComplete] = useState(savedAssessment?.isReviewComplete ?? false);
 
+    const [savedFeedback, setSavedFeedback] = useState("");
+
+
 
     const totalQuestions = (record.reviewQuestions ?? []).length;
     const answeredQuestions = (Object.values(answers).filter((actualQuestions) => actualQuestions !== null && actualQuestions !== undefined)).length;
@@ -152,10 +155,17 @@ export default function AssessmentRecordPage({record, clearSelection}) {
     }
 
     function handleCompleteReview() {
+
         if (completionBlockers.length > 0) {
             return;
         }
-        setIsReviewComplete(true);
+
+        const didSave = handleSaveAssessment(true);
+
+        if (didSave) {
+            setIsReviewComplete(true);
+        }
+
     }
 
     function loadSavedAssessment() {
@@ -169,7 +179,31 @@ export default function AssessmentRecordPage({record, clearSelection}) {
         }
     }
 
+    function handleSaveAssessment(completionStatus = isReviewComplete) {
+        const assessmentDataFields = {
+            createdGaps : createdGaps,
+            createdActionItems : createdActionItems,
+            answers : answers,
+            notes : notes,
+            flags : flags,
+            assessmentNotes : assessmentNotes,
+            decisionRationale : decisionRationale,
+            evidenceStatuses : evidenceStatuses,
+            reviewDecision : reviewDecision,
+            isReviewComplete : completionStatus
+        }
 
+        try {
+             localStorage.setItem(storageKey, JSON.stringify(assessmentDataFields));
+             setSavedFeedback(completionStatus ? "Review completed and saved" : "Draft saved successfully")
+             return true;
+        } catch (error) {
+            console.error(`Failed to save localStorage under key ${storageKey}`);
+            console.log(error);
+            setSavedFeedback("Unable to save assessment");
+            return false;
+        }
+    }
 
     return (
         <main>
@@ -193,7 +227,9 @@ export default function AssessmentRecordPage({record, clearSelection}) {
                                    totalChecks={totalChecks} completedChecks={completedChecks} openGapsCount={openGapsCount} missingPlatforms={missingPlatforms}
                     reviewedEvidenceCount={reviewedEvidenceCount} totalEvidenceCount={totalEvidenceCount} allEvidenceReviewed={allEvidenceReviewed} allPlatformsReviewed={allPlatformsReviewed}
                     findingsDocumented={findingsDocumented} decisionRationaleEntered={decisionRationaleEntered} reviewDecision={reviewDecision} setReviewDecision={setReviewDecision}
-                                   decisionRationale={decisionRationale} setDecisionRationale={setDecisionRationale} completionBlockers={completionBlockers} isReviewComplete={isReviewComplete} handleCompleteReview={handleCompleteReview}/>
+                                   decisionRationale={decisionRationale} setDecisionRationale={setDecisionRationale} completionBlockers={completionBlockers}
+                                   isReviewComplete={isReviewComplete} handleCompleteReview={handleCompleteReview} handleSaveAssessment={handleSaveAssessment}
+                    savedFeedback={savedFeedback}/>
                 )}
             </div>
 

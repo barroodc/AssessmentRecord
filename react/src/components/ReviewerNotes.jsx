@@ -3,7 +3,8 @@ import CompletionChecklist from "./CompletionChecklist.jsx"
 
 export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, setAssessmentNotes, totalChecks, completedChecks, openGapsCount, missingPlatforms,
                                       reviewedEvidenceCount, totalEvidenceCount, allEvidenceReviewed, allPlatformsReviewed, findingsDocumented, decisionRationaleEntered,
-                                          reviewDecision, setReviewDecision, decisionRationale, setDecisionRationale, completionBlockers,isReviewComplete, handleCompleteReview}) {
+                                          reviewDecision, setReviewDecision, decisionRationale, setDecisionRationale, completionBlockers,
+                                          isReviewComplete, handleCompleteReview, handleSaveAssessment, savedFeedback}) {
 
     const reviewDecisionButtons = ["Approved", "Approved with Follow-up", "Changes Required",
         "Unable to Verify", "Not Applicable"];
@@ -47,6 +48,8 @@ export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, 
                 <p>Review successfully completed</p>
             )}
             <button type="button" onClick={handleCompleteReview} disabled={completionBlockers.length > 0 || isReviewComplete === true}>{isReviewComplete === true ? "Review Completed" : "Complete Review"}</button>
+            <button type="button" onClick={() => handleSaveAssessment()}>Save Draft</button>
+            {savedFeedback && <p role="status">{savedFeedback}</p>}
             <button type="button" onClick={()=> setIsReviewerNotesOpen(false)}>Close</button>
         </aside>
     )
