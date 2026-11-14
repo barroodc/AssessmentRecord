@@ -4,7 +4,7 @@ export default function AssessmentSummary({totalEvidence, behavioralEvidence, te
                                           allPlatforms, totalChecks, completedChecks, completionPercentage}) {
     return (
         <section className="assessment-summary-card">
-            <h3 className="assessment-summary-card-title">Assessment Summary</h3>
+            <h3 className="assessment-summary-card-title">ASSESSMENT SUMMARY</h3>
             <div className="assessment-summary-grid">
                 <article>
                     <div className="assessment-evidence-count">{totalEvidence}</div>

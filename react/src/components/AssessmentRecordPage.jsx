@@ -214,7 +214,8 @@ export default function AssessmentRecordPage({record, clearSelection}) {
                     {activeTab === "overview" ? <AssessmentOverview record={record} setActiveTab={setActiveTab}
                                                                     setIsReviewerNotesOpen={setIsReviewerNotesOpen}
                                                                     totalQuestions={totalQuestions} answeredQuestions={answeredQuestions}
-                                                                    progressPercentage={progressPercentage} createdGaps={createdGaps} missingPlatforms={missingPlatforms}/> :
+                                                                    progressPercentage={progressPercentage} createdGaps={createdGaps} missingPlatforms={missingPlatforms}
+                        totalChecks={totalChecks} completedChecks={completedChecks}/> :
                         activeTab === "evidence" ? <AssessmentEvidence record={record} evidenceStatuses={evidenceStatuses} setEvidenceStatuses={setEvidenceStatuses} isReviewComplete={isReviewComplete}/> :
                             activeTab === "review" ? <AssessmentReview record={record} setCreatedGaps={setCreatedGaps} answers={answers} setAnswers={setAnswers}
                                                                        notes={notes} setNotes={setNotes} flags={flags} setFlags={setFlags} totalQuestions={totalQuestions}

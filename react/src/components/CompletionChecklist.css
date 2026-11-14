@@ -5,4 +5,7 @@ h4 {
 
 section label {
     display: flex;
+    font-size: 14px;
+    font-weight: 500;
 }
+

@@ -12,14 +12,37 @@ export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, 
     return (
         <aside className="reviewer-notes-panel">
             <h3>Reviewer Notes</h3>
-            <section>
+            <section className="review-status-section">
                 <h4>Review Status</h4>
-                <p>{completedChecks} of {totalChecks} checks complete</p>
-                <p>Open gaps: {openGapsCount}</p>
-                <p>{missingPlatforms.length > 1 ? `Missing Coverage: ${missingPlatforms.join(', ')}` : missingPlatforms.length === 1 ?
-                    `${missingPlatforms} coverage: Missing` : `Platform coverage: Complete`}</p>
-                <p>Evidence Reviewed: {reviewedEvidenceCount} of {totalEvidenceCount}</p>
+                <p className="review-progress-row">
+                    <span className="label">Review Progress:</span>
+                    <span className="value">{completedChecks} of {totalChecks} checks complete</span></p>
+                <p className="open-gaps-row">
+                    <span className="label">Open gaps:</span>
+                    <span className="value">{openGapsCount}</span></p>
+                <p className="missing-platforms-row">
+                    {missingPlatforms.length > 1 ? (
+                        <>
+                            <span className="label">Missing Coverage:</span>
+                            <span className="value">{missingPlatforms.join(', ')}</span>
+                        </>
+                    ) : missingPlatforms.length === 1 ? (
+                        <>
+                            <span className="label">{missingPlatforms} coverage:</span>
+                            <span className="value missing">Missing</span>
+                        </>
+                    ) : (
+                        <>
+                            <span className="label">Platform coverage:</span>
+                            <span className="value">Complete</span>
+                        </>
+                    )}
+                </p>
+                <p className="evidence-reviewed-title">
+                    <span className="label">Evidence Reviewed:</span>
+                    <span className="value">{reviewedEvidenceCount} of {totalEvidenceCount}</span></p>
             </section>
+            <h4>Reviewer Notes</h4>
             <textarea value={assessmentNotes} placeholder="Record overall observations, concerns, or context for this assessment..." onChange={(event) => setAssessmentNotes(event.target.value)} readOnly={isReviewComplete}/>
             <CompletionChecklist openGapsCount={openGapsCount} allEvidenceReviewed={allEvidenceReviewed} allPlatformsReviewed={allPlatformsReviewed} findingsDocumented={findingsDocumented} decisionRationaleEntered={decisionRationaleEntered}/>
 
@@ -47,10 +70,12 @@ export default function ReviewerNotes({setIsReviewerNotesOpen, assessmentNotes, 
             {isReviewComplete === true && (
                 <p>Review successfully completed</p>
             )}
-            <button type="button" onClick={handleCompleteReview} disabled={completionBlockers.length > 0 || isReviewComplete === true}>{isReviewComplete === true ? "Review Completed" : "Complete Review"}</button>
-            <button type="button" onClick={() => handleSaveAssessment()}>Save Draft</button>
-            {savedFeedback && <p role="status">{savedFeedback}</p>}
-            <button type="button" onClick={()=> setIsReviewerNotesOpen(false)}>Close</button>
+            <button className="review-btn" type="button" onClick={handleCompleteReview} disabled={completionBlockers.length > 0 || isReviewComplete === true}>{isReviewComplete === true ? "Review Completed" : "Complete Review"}</button>
+            <div className="save-and-close-section">
+                <button className={isReviewComplete === true ? "save-assessment-complete" : "save-assessment-incomplete"} type="button" onClick={() => handleSaveAssessment()}>Save Draft</button>
+                {savedFeedback && <p role="status">{savedFeedback}</p>}
+                <button className="close-btn" type="button" onClick={()=> setIsReviewerNotesOpen(false)}>Close</button>
+            </div>
         </aside>
     )
 }

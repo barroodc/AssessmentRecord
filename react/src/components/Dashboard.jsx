@@ -16,7 +16,7 @@ export default function Dashboard() {
 
     return (
         <>
-            <Header/>
+            {!selectedRecord && <Header />}
             {selectedRecord ? <AssessmentRecordPage record={selectedRecord} clearSelection={setSelectedAssessmentRecord}/> : <main>
                 <h1>Assessment Records</h1>
                 <p>Track active assessment records assigned to you and your peers.</p>
@@ -25,8 +25,6 @@ export default function Dashboard() {
                 <Filter />
                 <AssessmentRecordList search={search} selectAssessmentRecord={setSelectedAssessmentRecord}/>
             </main>}
-
-
         </>
 
     )

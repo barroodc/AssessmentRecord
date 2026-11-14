@@ -105,6 +105,7 @@
     {
         "assessmentRecordId": "AR0002",
         "assessmentRecordText": "The application displays a notice informing users that AI interactions may be used to improve AI models before first use.",
+        "riskCategory": "AI First-Use Notice Assessment",
         "status": "Active",
         "projectId": "AT948133",
         "engContact": "Tony Gifford",
@@ -118,19 +119,22 @@
                 "evidenceId": "EV201",
                 "type": "Behavioral",
                 "platform": "Web",
-                "description": "Screenshot showing an AI data-use notice within the Web AI assistant interface after the user has opened the chat."
+                "description": "Screenshot showing an AI data-use notice within the Web AI assistant interface after the user has opened the chat.",
+                "assetPath": "/mock-evidence/ar0002/ev201-web-notice.jpeg"
             },
             {
                 "evidenceId": "EV202",
                 "type": "Technical",
                 "platform": "Web",
-                "description": "React component source code for the AI notice banner. The submitted code does not demonstrate when the notice is triggered."
+                "description": "React component source code for the AI notice banner. The submitted code does not demonstrate when the notice is triggered.",
+                "assetPath": "/mock-evidence/ar0002/ev202-ai-notice-banner-code.png"
             },
             {
                 "evidenceId": "EV203",
                 "type": "Behavioral",
                 "platform": "iOS",
-                "description": "iOS screenshot showing the AI assistant conversation interface without a visible first-use notice."
+                "description": "iOS screenshot showing the AI assistant conversation interface without a visible first-use notice.",
+                "assetPath": "/mock-evidence/ar0002/ev203-ios-chat.jpeg"
             }
         ],
         "requiredPlatforms": [

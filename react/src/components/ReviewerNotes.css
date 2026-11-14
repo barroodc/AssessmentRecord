@@ -1,3 +1,4 @@
+
 .reviewer-notes-panel {
     top: 16px;
     align-self: flex-start;
@@ -12,6 +13,63 @@
     position: sticky;
 }
 
+.reviewer-notes-panel h3 {
+    font-size: 16px;
+    color: #0b1220;
+    font-weight: 850;
+}
+
+.reviewer-notes-panel h4 {
+    font-size: 14px;
+}
+
+.review-status-section h4 {
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: #4a5568;
+    margin-bottom: 12px;
+}
+
+.reviewer-notes-panel .review-status-section p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-status-section .label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.review-status-section .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0b1220;
+}
+
+.value.warning {
+    color: #b7791f;
+}
+
+.value.missing {
+    color: #c53030;
+}
+
+.reviewer-notes-panel textarea{
+    width: 100%;
+    min-height: 110px;
+    padding: 12px 14px;
+    border: 1px solid #dce4e8;
+    border-radius: 10px;
+    font: inherit;
+    resize: vertical;
+    font-size: 12px;
+    background-color: #f2f5f6;
+}
+
 .reviewer-decision {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -23,8 +81,8 @@
     align-items: center;
     justify-content: flex-start;
     min-height: 58px;
-    padding: 12px 18px;
-    font-size: 16px;
+    padding: 8px 12px;
+    font-size: 14px;
     font-weight: 600;
     color: #4a5568;
     background-color: #f2f4f6;
@@ -40,14 +98,66 @@
     background-color: #e8ecef;
 }
 
-.reviewer-decision button:active {
+.reviewer-decision button.selected {
     background-color: #267975;
     border-color: #267975;
     color: #ffffff;
 }
 
-.reviewer-decision button.selected {
-    background-color: #267975;
-    border-color: #267975;
-    color: #ffffff;
+.completion-blockers ul {
+    font-size: 14px;
+}
+
+.save-and-close-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+    width: 100%;
+}
+
+.save-and-close-section button,
+.review-btn {
+    box-sizing: border-box;
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    white-space: nowrap;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.review-btn {
+    background-color: #287F7D;
+    color: white;
+    border: none;
+}
+
+.review-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.save-assessment-complete {
+    background-color: #f1f3f5;
+    color: #1f2937;
+    border: none;
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.save-assessment-incomplete,
+.close-btn {
+    background-color: #f1f3f5;
+    color: #1f2937;
+    border: 1px solid #d1d5db;
+    font-weight: 500;
 }

@@ -8,7 +8,7 @@ export default function NeedsAttention({missingPlatforms, setActiveTab, openGaps
 
     return (
         <section className="needs-attention-card">
-            <h3 className="needs-attention-title">Needs Attention</h3>
+            <h3 className="needs-attention-title">NEEDS ATTENTION</h3>
             <p className="needs-attention-count">{attentionCount === 1 ? `${attentionCount} item needs attention` :
                 attentionCount > 1 ? `${attentionCount} items need attention` : `No items need attention`}</p>
             <article>

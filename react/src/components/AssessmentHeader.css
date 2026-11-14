@@ -1,0 +1,99 @@
+
+.assessment-metadata-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+hr {
+    color: #e5e7eb;
+}
+
+.assessment-metadata-card > .assessment-metadata-card-header-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.assessment-metadata-card > .assessment-metadata-card-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.assessment-metadata-card > .assessment-metadata-card-header-top > .assessment-metadata-card-header-top-left {
+    display: inline-flex;
+    gap: 20px;
+}
+
+.assessment-metadata-card > .assessment-metadata-card-header-top > .assessment-metadata-card-header-top-right > .back-to-dashboard-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: transparent;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    color: #111827;
+    cursor: pointer;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.2;
+    background-color: #e6f4ea;
+    color: #137333;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 500;
+
+}
+
+.assessment-record-header-bar {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.assessment-record-symbol {
+    background-color: #227f7a;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 8px 10px;
+    border-radius: 16px;
+    font-weight: bold;
+    display: inline;
+    margin-right: 20px;
+   text-align: center;
+}
+
+.assessment-record-header-bar-title {
+    display: inline-block;
+
+}
+
+.assessment-record-header-bar-title > p {
+    line-height: 1.5;
+}
+
+.assessment-record-header-bar-title > .auditlens-compliance-title {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.assessment-record-header-bar-title > .assessment-record-name {
+    color: #0b1220;
+    font-weight: bold;
+    font-size: 15px;
+}
