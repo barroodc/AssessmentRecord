@@ -3,6 +3,87 @@
     background-color: #eff6ff;
 }
 
+.auditor-reviews-and-findings {
+    background-color: white;
+}
+
+.review-progress-overview {
+    background-color: #f8fafb;
+    margin: 20px;
+    border-radius: 8px;
+    line-height: 2;
+    padding: 20px 30px;
+    font-size: 14px;
+}
+
+.review-progress-overview-top {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px;
+}
+
+.review-evidence-card-section {
+    background-color: #f8fafb;
+    margin: 20px;
+    border-radius: 8px;
+    line-height: 2;
+    padding: 20px 30px;
+    font-size: 14px;
+}
+
+.review-evidence-card-label-and-description {
+   line-height: 1.4;
+    flex: 1;
+}
+
+.review-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.review-card-body {
+    margin-top: 16px;
+}
+
+.review-selection-btns {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.review-selection-btns button {
+    background-color: transparent;
+    color: #4a5568;
+    border: transparent;
+    border-radius: 8px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.review-selection-btns > .selected-yes-btn {
+    background-color: #237E4B;
+    color: white;
+}
+
+.review-selection-btns > .selected-na-btn {
+    background-color: #1B242B;
+    color: white;
+}
+
+.review-selection-btns > .selected-no-btn {
+    background-color: #C22C2A;
+    color: white;
+}
+
+.selected-answer-text {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #4b5563;
+}
+
 .answered-questions-progress-track {
     width: 100%;
     height: 8px;
@@ -16,27 +97,74 @@
     background-color: #247c79;
 }
 
+.supporting-evidence-section-wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.supporting-evidence-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.supporting-evidence-chip-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
 .supporting-evidence-chip {
     display: inline-flex;
     width: fit-content;
     align-items: center;
-    margin-right: 12px;
-    gap: 8px;
-    padding: 6px 10px;
-    background-color: #ffffff;
-    border: 1px solid #d1d5db;
+    padding: 6px 16px;
+    background-color: #E0ECEB;
+    border: 1px solid #cbdad8;
     border-radius: 8px;
-    font-family: inherit;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 500;
-    color: #111827;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    color: #0d685d;
+    line-height: 1;
 }
 
+.no-evidence-text {
+    font-size: 13px;
+    color: #64748b;
+    font-style: italic;
+}
+
+.flag-outer-container > button:hover {
+    color: #dc2626;
+}
+
+
+/* This may be useless. Should consider removing */
 .flag-selected {
     color: #dc2626;
 }
 
 .no-flag-selected {
     color: #64748b;
+}
+
+.create-evidence-btn-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.create-evidence-gap-btn {
+    background-color: white;
+    border: 0 solid;
+    padding: 4px 10px;
+    border-radius: 10px;
+    color: #C22C2A;
+}
+
+.create-evidence-gap-btn:hover {
+    background-color: oklch(0.93 0.03 25);
 }

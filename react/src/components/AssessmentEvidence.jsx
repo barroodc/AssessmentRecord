@@ -31,7 +31,7 @@ export default function AssessmentEvidence({record, evidenceStatuses, setEvidenc
 
     return (
         <section className="evidence-section">
-            <h3 className="evidence-section-title">Submitted Evidence</h3>
+            <h3 className="evidence-section-title">SUBMITTED EVIDENCE</h3>
             <div className="evidence-type-filter-btns">
                 <button className="filter-btn" type="button" aria-pressed={evidenceFilter === "All"} onClick={() => {
                     setEvidenceFilter("All")
