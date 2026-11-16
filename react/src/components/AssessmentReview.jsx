@@ -73,7 +73,6 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                 return (
                     <section className="review-evidence-card-section" key={reviewItems.id}>
                         <article>
-                            {/* Top Row: Title/Description on Left, Buttons on Right */}
                             <div className="review-card-header">
                                 <div className="review-evidence-card-label-and-description">
                                     <h4>{reviewItems.label}</h4>
@@ -106,7 +105,6 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                                 </div>
                             </div>
 
-                            {/* Bottom Content: Supporting Evidence, Gap Form, Notes */}
                             <div className="review-card-body">
                                 <div className="supporting-evidence-section-wrapper">
                                     <h5 className="supporting-evidence-title">Supporting Evidence</h5>
@@ -118,7 +116,8 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                                                 </div>
                                             </section>
                                         )
-                                    }) : "No supporting evidence linked to this question."}
+                                    }) : <span className="no-evidence-text">No supporting evidence linked to this question.</span>
+                                    }
                                 </div>
 
                                 <div className="create-evidence-btn-container">
@@ -126,17 +125,71 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                                 </div>
 
                                 {activeGapQuestionId === reviewItems.id && isReviewComplete === false && (
-                                    <div>
-                                        <h5>Create Evidence Gap</h5>
-                                        <p>Creating a gap for {reviewItems.id}</p>
-                                        <button type="button" onClick={() =>{setActiveGapQuestionId(null); setGapTitle(""); setGapDescription(""); setRequestedEvidence("");}}>Cancel</button>
-                                        <label htmlFor="evidence-gap-title">Evidence Gap Title</label>
-                                        <input id={"evidence-gap-title"} value={gapTitle} placeholder="Describe the evidence gap" onChange={(event) => setGapTitle(event.target.value)}/>
-                                        <label htmlFor="evidence-gap-description">Evidence Gap Description</label>
-                                        <textarea id="evidence-gap-description" value={gapDescription} placeholder="Explain what evidence is missing..." onChange={(event) => setGapDescription(event.target.value)}/>
-                                        <label htmlFor="requested-evidence">Requested Evidence</label>
-                                        <textarea id="requested-evidence" value={requestedEvidence} onChange={(event) => setRequestedEvidence(event.target.value)}/>
-                                        <button type="button" onClick={() => handleCreateGap()}>Create Gap</button>
+                                    <div className="create-gap-card">
+                                        {/* Header Block */}
+                                        <div className="create-gap-header-row">
+                                            <div className="create-gap-header-left">
+                                                <h5>
+                                                    <Flag size={16} className="create-gap-flag-icon" />
+                                                    Create Evidence Gap
+                                                </h5>
+                                                <p className="create-gap-subtitle">
+                                                    Document missing or insufficient evidence for criterion {reviewItems.id}.
+                                                </p>
+                                            </div>
+                                            <span className="create-gap-criterion-id">{reviewItems.id}</span>
+                                        </div>
+                                        <div className="create-gap-field-group">
+                                            <label htmlFor="evidence-gap-title">Evidence Gap Title</label>
+                                            <input
+                                                id="evidence-gap-title"
+                                                className="create-gap-input"
+                                                value={gapTitle}
+                                                placeholder="e.g. First-use notice timing not demonstrated"
+                                                onChange={(event) => setGapTitle(event.target.value)}
+                                            />
+                                        </div>
+
+                                        <div className="create-gap-field-group">
+                                            <label htmlFor="evidence-gap-description">Evidence Gap Description</label>
+                                            <textarea
+                                                id="evidence-gap-description"
+                                                className="create-gap-textarea description-textarea"
+                                                value={gapDescription}
+                                                placeholder="Explain what the submitted evidence does not establish..."
+                                                onChange={(event) => setGapDescription(event.target.value)}
+                                            />
+                                        </div>
+
+                                        <div className="create-gap-field-group">
+                                            <label htmlFor="requested-evidence">Requested Evidence</label>
+                                            <textarea
+                                                id="requested-evidence"
+                                                className="create-gap-textarea requested-textarea"
+                                                value={requestedEvidence}
+                                                placeholder="Describe the additional screenshots, recordings, or code needed..."
+                                                onChange={(event) => setRequestedEvidence(event.target.value)}
+                                            />
+                                        </div>
+
+                                        <div className="create-gap-actions-row">
+                                            <button
+                                                type="button"
+                                                className="gap-action-btn btn-cancel"
+                                                onClick={() => {
+                                                    setActiveGapQuestionId(null);
+                                                    setGapTitle("");
+                                                    setGapDescription("");
+                                                    setRequestedEvidence("");
+                                                }}>Cancel
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="gap-action-btn btn-submit"
+                                                onClick={() => handleCreateGap()}
+                                            >+ Create Gap
+                                            </button>
+                                        </div>
                                     </div>
                                 )}
 

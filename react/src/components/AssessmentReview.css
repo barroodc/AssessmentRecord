@@ -168,3 +168,148 @@
 .create-evidence-gap-btn:hover {
     background-color: oklch(0.93 0.03 25);
 }
+
+.review-card-body textarea {
+    width: 100%;
+    min-height: 56px;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    color: #1e293b;
+    resize: none;
+    box-shadow: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.review-card-body textarea::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+}
+
+.create-gap-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.create-gap-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 16px;
+    margin-bottom: 4px;
+}
+
+.create-gap-header-left h5 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.create-gap-flag-icon {
+    color: #ef4444;
+}
+
+.create-gap-subtitle {
+    margin: 4px 0 0 0;
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.create-gap-criterion-id {
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+}
+
+.create-gap-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.create-gap-field-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.create-gap-input,
+.create-gap-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #1e293b;
+    outline: none;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.create-gap-input::placeholder,
+.create-gap-textarea::placeholder {
+    color: #94a3b8;
+}
+
+.description-textarea,
+.requested-textarea {
+    min-height: 72px;
+    line-height: 1.5;
+}
+
+.create-gap-actions-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.gap-action-btn {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.btn-cancel {
+    background-color: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-cancel:hover {
+    background-color: #e2e8f0;
+}
+
+.btn-submit {
+    background-color: #e2e8f0;
+    color: #94a3b8;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-submit:hover {
+    background-color: #cbd5e1;
+    color: #64748b;
+}
