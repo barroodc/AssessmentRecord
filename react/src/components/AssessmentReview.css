@@ -253,7 +253,7 @@
 .create-gap-textarea {
     width: 100%;
     padding: 12px 14px;
-    background-color: #f1f5f9;
+    background-color: #ffffff;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     font-family: inherit;
@@ -294,22 +294,22 @@
 }
 
 .btn-cancel {
-    background-color: #f1f5f9;
-    color: #64748b;
+    background-color: #FFFFFF;
+    color: #374151;
     border: 1px solid #cbd5e1;
 }
 
 .btn-cancel:hover {
-    background-color: #e2e8f0;
+    background-color: #F1F5F9;
 }
 
 .btn-submit {
-    background-color: #e2e8f0;
-    color: #94a3b8;
+    background-color: #0F766E;
+    color: #FFFFFF;
     border: 1px solid #cbd5e1;
 }
 
 .btn-submit:hover {
-    background-color: #cbd5e1;
+    background-color: #D6F5F3;
     color: #64748b;
 }

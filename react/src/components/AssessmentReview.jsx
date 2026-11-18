@@ -110,8 +110,8 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                                     <h5 className="supporting-evidence-title">Supporting Evidence</h5>
                                     {supportingEvidence.length > 0 ? supportingEvidence.map((evidence) => {
                                         return (
-                                            <section className="supporting-evidence-chip-container">
-                                                <div key={evidence.evidenceId} className={"supporting-evidence-chip"}>
+                                            <section key={evidence.evidenceId} className="supporting-evidence-chip-container">
+                                                <div className={"supporting-evidence-chip"}>
                                                     {evidence.evidenceId}-{evidence.platform}
                                                 </div>
                                             </section>
