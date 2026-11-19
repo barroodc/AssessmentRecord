@@ -313,3 +313,8 @@
     background-color: #D6F5F3;
     color: #64748b;
 }
+
+.unfilled-out-field {
+    font-size: 14px;
+    color: #DC3545;
+}

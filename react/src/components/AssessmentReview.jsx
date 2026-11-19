@@ -15,6 +15,8 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
 
     const [requestedEvidence, setRequestedEvidence] = useState("");
 
+    const [trackValidationError, setTrackValidationError] = useState("");
+
 
     function handleCreateGap() {
 
@@ -22,9 +24,10 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
             return
         }
 
+
         if (gapTitle.trim() === "" || gapDescription.trim() === "" || requestedEvidence.trim() === "") {
-            alert("please complete all fields");
-            return
+            setTrackValidationError("Please complete all required fields")
+            return;
         }
 
 
@@ -47,7 +50,7 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
         setGapTitle("")
         setGapDescription("")
         setRequestedEvidence("")
-
+        setTrackValidationError("")
         console.log(newGap);
     }
 
@@ -121,12 +124,16 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                                 </div>
 
                                 <div className="create-evidence-btn-container">
-                                    <button type="button" className="create-evidence-gap-btn" disabled={isReviewComplete} onClick={() => {setActiveGapQuestionId(reviewItems.id); setGapTitle(""); setGapDescription(""); setRequestedEvidence("");} }>+ Create evidence gap</button>
+                                    <button type="button" className="create-evidence-gap-btn" disabled={isReviewComplete} onClick={() => {setActiveGapQuestionId(reviewItems.id); setGapTitle(""); setGapDescription(""); setRequestedEvidence(""); setTrackValidationError("");} }>+ Create evidence gap</button>
                                 </div>
 
                                 {activeGapQuestionId === reviewItems.id && isReviewComplete === false && (
                                     <div className="create-gap-card">
-                                        {/* Header Block */}
+                                        {trackValidationError && (
+                                            <p className="unfilled-out-field" role="alert">
+                                                {trackValidationError}
+                                            </p>
+                                        )}
                                         <div className="create-gap-header-row">
                                             <div className="create-gap-header-left">
                                                 <h5>
@@ -148,6 +155,7 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                                                 placeholder="e.g. First-use notice timing not demonstrated"
                                                 onChange={(event) => setGapTitle(event.target.value)}
                                             />
+
                                         </div>
 
                                         <div className="create-gap-field-group">
@@ -181,6 +189,7 @@ export default function AssessmentReview({record, setCreatedGaps, answers, setAn
                                                     setGapTitle("");
                                                     setGapDescription("");
                                                     setRequestedEvidence("");
+                                                    setTrackValidationError("");
                                                 }}>Cancel
                                             </button>
                                             <button
